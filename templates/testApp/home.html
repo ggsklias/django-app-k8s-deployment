@@ -1,0 +1,16 @@
+{% extends "testApp/base.html" %}
+
+{% block content %}
+    <h1>Articles</h1>
+    <a href="{% url 'create_article' %}">Create article</a>
+
+    {% if articles %}
+        <ul>
+        {% for article in articles %}
+            <li><a href="{% url 'update_article' article.id %}">{{ article.title }}</a> with {{ article.word_count }}</li>
+        {% endfor %}
+        </ul>
+    {% else%}
+        <p>You have no articles yet.</p>
+    {% endif %}
+{% endblock content %}

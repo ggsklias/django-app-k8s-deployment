@@ -1,0 +1,17 @@
+{% extends "testApp/base.html" %}
+
+{% block content %}
+    <h1>Edit Article</h1>
+    <!-- | safe disables the automatic escape mechanism of django -->
+    <!-- {{ article.content | safe }} -->
+    <!-- pluralize returns s when above 1 -->
+    <p>{{ article.word_count }} word {{ article.word_count | pluralize }}.</p>
+    <p>Last edited on {{ article.updated_at | date:"jS F Y" }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}x
+        <button type="submit">Save</button>
+    </form>
+    <p><a href="{% url 'home' %}">Back to articles</a></p>
+    <p><a href="{% url 'delete_article' article.id %}">Delete article</a></p>
+{% endblock content %}
