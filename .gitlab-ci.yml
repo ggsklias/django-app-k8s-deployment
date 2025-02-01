@@ -24,6 +24,7 @@ docker-build:
   # Default branch is also tagged with `latest`
   script:
     - ls -la
+    - ls -ls /code
     - docker build --pull -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
     - |
