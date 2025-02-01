@@ -23,6 +23,7 @@ docker-build:
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
   # Default branch is also tagged with `latest`
   script:
+    - ls -la
     - docker build --pull -t "$DOCKER_IMAGE_NAME" .
     - docker push "$DOCKER_IMAGE_NAME"
     - |
