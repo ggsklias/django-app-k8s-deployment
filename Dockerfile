@@ -14,6 +14,10 @@ COPY pyproject.toml poetry.lock ./
 COPY README.md /code/
 COPY djangoarticleapp /code/djangoarticleapp
 
+RUN ls -la
+RUN pwd
+RUN ls -la /code
+
 RUN poetry check
 
 RUN poetry install
