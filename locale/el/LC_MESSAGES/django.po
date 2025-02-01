@@ -18,30 +18,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: testApp/models.py:20
+#: ArticleApp/models.py:20
 msgid "Article"
 msgstr ""
 
-#: testApp/models.py:21
+#: ArticleApp/models.py:21
 msgid "Articles"
 msgstr ""
 
-#: testApp/models.py:23
+#: ArticleApp/models.py:23
 msgid "title"
 msgstr ""
 
-#: testApp/models.py:24
+#: ArticleApp/models.py:24
 msgid "content"
 msgstr ""
 
-#: testApp/models.py:25
+#: ArticleApp/models.py:25
 msgid "word_count"
 msgstr ""
 
-#: testApp/models.py:26
+#: ArticleApp/models.py:26
 msgid "twitter_post"
 msgstr ""
 
-#: testApp/models.py:35
+#: ArticleApp/models.py:35
 msgid "creator"
 msgstr ""

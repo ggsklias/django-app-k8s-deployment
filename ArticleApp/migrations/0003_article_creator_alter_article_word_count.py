@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('testApp', '0002_create_superuser'),
+        ('ArticleApp', '0002_create_superuser'),
     ]
 
     operations = [

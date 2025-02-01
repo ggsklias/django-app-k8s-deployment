@@ -4,14 +4,14 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render#, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
-from testApp.models import Article
+from ArticleApp.models import Article
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-#from testApp.forms import CreateArticleForm
+#from ArticleApp.forms import CreateArticleForm
 
 # LoginRequiredMixin protects the access to logged in users
 class ArticleListView(LoginRequiredMixin, ListView):
-    template_name = "testApp/home.html"
+    template_name = "ArticleApp/home.html"
     model = Article
     context_object_name = "articles"
     
@@ -19,7 +19,7 @@ class ArticleListView(LoginRequiredMixin, ListView):
         return Article.objects.filter(creator=self.request.user).order_by("-created_at")
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
-    template_name = "testApp/article_create.html"
+    template_name = "ArticleApp/article_create.html"
     model = Article
     fields = ["title","status","content","twitter_post"]
     success_url = reverse_lazy("home")
@@ -28,9 +28,8 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         form.instance.creator = self.request.user
         return super().form_valid(form)
     
-
-class ArticleUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
-    template_name = "testApp/article_update.html"
+class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    template_name = "ArticleApp/article_update.html"
     model = Article
     fields = ["title","status","content","twitter_post"]
     success_url = reverse_lazy("home")
@@ -40,7 +39,7 @@ class ArticleUpdateView(LoginRequiredMixin,UserPassesTestMixin, UpdateView):
         return self.request.user == self.get_object().creator
 
 class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    template_name = "testApp/article_delete.html"
+    template_name = "ArticleApp/article_delete.html"
     model = Article
     success_url = reverse_lazy("home")
     context_object_name = "article"
@@ -53,7 +52,7 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # def home(request):
 #     articles = Article.objects.all()
-#     return render(request, "testApp/home.html", {"articles": articles})
+#     return render(request, "ArticleApp/home.html", {"articles": articles})
 
 # def create_article(request):
 #     if request.method == "POST":
@@ -71,4 +70,4 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #             return redirect("home")
 #     else:
 #         form = CreateArticleForm()
-#     return render(request, "testApp/article_create.html", {"form": form})
+#     return render(request, "ArticleApp/article_create.html", {"form": form})

@@ -1,5 +1,5 @@
 """
-URL configuration for djangocourse project.
+URL configuration for DjangoArticleApp project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/5.1/topics/http/urls/
@@ -20,7 +20,7 @@ from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('articles/', include("testApp.urls")),
+    path('articles/', include("ArticleApp.urls")),
     path('accounts/', include("allauth.urls")),
     path("", RedirectView.as_view(pattern_name="home")),
     path('__debug__/', include("debug_toolbar.urls")),

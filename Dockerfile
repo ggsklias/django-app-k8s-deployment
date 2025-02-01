@@ -12,7 +12,7 @@ RUN pip install poetry
 
 COPY pyproject.toml poetry.lock ./
 COPY README.md /code/
-COPY djangocourse /code/djangocourse
+COPY DjangoArticleApp /code/DjangoArticleApp
 
 RUN poetry check
 
