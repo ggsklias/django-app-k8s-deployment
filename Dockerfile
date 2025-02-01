@@ -19,8 +19,6 @@ RUN ls -la /code
 
 COPY djangoarticleapp /code/djangoarticleapp
 
-
-
 RUN poetry check
 
 RUN poetry install
