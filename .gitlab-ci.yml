@@ -9,8 +9,6 @@
 #
 # This template uses one generic job with conditional builds
 # for the default branch and all other (MR) branches.
-job:
-  cache: []
 
 docker-build:
   # Use the official docker image.
@@ -25,15 +23,20 @@ docker-build:
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
   # Default branch is also tagged with `latest`
   script:
+    - echo $CI_REGISTRY_IMAGE
+    - echo $CI_COMMIT_REF_SLUG
+    - echo $CI_REGISTRY_USER
+    - echo $CI_REGISTRY_PASSWORD
+    - echo $CI_REGISTRY
     - ls -la
     - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" .
     - ls -ls /code
-    - docker push "$DOCKER_IMAGE_NAME"
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
-        docker tag "$DOCKER_IMAGE_NAME" "$CI_REGISTRY_IMAGE:latest"
-        docker push "$CI_REGISTRY_IMAGE:latest"
-      fi
+    # - docker push "$DOCKER_IMAGE_NAME"
+    # - |
+    #   if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+    #     docker tag "$DOCKER_IMAGE_NAME" "$CI_REGISTRY_IMAGE:latest"
+    #     docker push "$CI_REGISTRY_IMAGE:latest"
+    #   fi
   # Run this job in a branch where a Dockerfile exists
   rules:
     - if: $CI_COMMIT_BRANCH
