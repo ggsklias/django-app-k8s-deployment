@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ArticleApp.models import Article, UserProfile
+from articleApp.models import Article, UserProfile
 from django.contrib.auth.admin import UserAdmin
 
 class ArticleAdmin(admin.ModelAdmin):

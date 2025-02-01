@@ -6,7 +6,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ArticleApp', '0004_alter_article_content_alter_article_creator_and_more'),
+        ('articleApp', '0004_alter_article_content_alter_article_creator_and_more'),
     ]
 
     operations = [

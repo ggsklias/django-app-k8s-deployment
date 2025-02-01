@@ -8,7 +8,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('ArticleApp', '0003_article_creator_alter_article_word_count'),
+        ('articleApp', '0003_article_creator_alter_article_word_count'),
     ]
 
     operations = [

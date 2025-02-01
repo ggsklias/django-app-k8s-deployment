@@ -4,7 +4,7 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import gettext_lazy as _
 
-from ArticleApp.managers import UserProfileManager
+from articleApp.managers import UserProfileManager
 # file related to the database model and what will be saved in the backend.
 
 ARTICLE_STATUS = (

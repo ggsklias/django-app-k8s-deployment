@@ -1,5 +1,5 @@
 from django.urls import path
-from ArticleApp.views import ArticleCreateView, ArticleListView, ArticleUpdateView, ArticleDeleteView
+from articleApp.views import ArticleCreateView, ArticleListView, ArticleUpdateView, ArticleDeleteView
 
 
 

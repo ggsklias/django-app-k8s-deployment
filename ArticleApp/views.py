@@ -4,14 +4,14 @@ from django.db.models.query import QuerySet
 from django.shortcuts import render#, redirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
-from ArticleApp.models import Article
+from articleApp.models import Article
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
-#from ArticleApp.forms import CreateArticleForm
+#from articleApp.forms import CreateArticleForm
 
 # LoginRequiredMixin protects the access to logged in users
 class ArticleListView(LoginRequiredMixin, ListView):
-    template_name = "ArticleApp/home.html"
+    template_name = "articleApp/home.html"
     model = Article
     context_object_name = "articles"
     
@@ -19,7 +19,7 @@ class ArticleListView(LoginRequiredMixin, ListView):
         return Article.objects.filter(creator=self.request.user).order_by("-created_at")
 
 class ArticleCreateView(LoginRequiredMixin, CreateView):
-    template_name = "ArticleApp/article_create.html"
+    template_name = "articleApp/article_create.html"
     model = Article
     fields = ["title","status","content","twitter_post"]
     success_url = reverse_lazy("home")
@@ -29,7 +29,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
-    template_name = "ArticleApp/article_update.html"
+    template_name = "articleApp/article_update.html"
     model = Article
     fields = ["title","status","content","twitter_post"]
     success_url = reverse_lazy("home")
@@ -39,7 +39,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         return self.request.user == self.get_object().creator
 
 class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    template_name = "ArticleApp/article_delete.html"
+    template_name = "articleApp/article_delete.html"
     model = Article
     success_url = reverse_lazy("home")
     context_object_name = "article"
@@ -52,7 +52,7 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 # def home(request):
 #     articles = Article.objects.all()
-#     return render(request, "ArticleApp/home.html", {"articles": articles})
+#     return render(request, "articleApp/home.html", {"articles": articles})
 
 # def create_article(request):
 #     if request.method == "POST":
@@ -70,4 +70,4 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 #             return redirect("home")
 #     else:
 #         form = CreateArticleForm()
-#     return render(request, "ArticleApp/article_create.html", {"form": form})
+#     return render(request, "articleApp/article_create.html", {"form": form})

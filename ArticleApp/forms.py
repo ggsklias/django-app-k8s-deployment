@@ -1,6 +1,6 @@
 from django import forms
-from ArticleApp.models import ARTICLE_STATUS
-from ArticleApp.models import Article
+from articleApp.models import ARTICLE_STATUS
+from articleApp.models import Article
 
 # File referring to html forms and what user will see.
 
