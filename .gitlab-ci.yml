@@ -24,8 +24,8 @@ docker-build:
   # Default branch is also tagged with `latest`
   script:
     - ls -la
-    - ls -ls /code
     - docker build --pull -t "$DOCKER_IMAGE_NAME" .
+    - ls -ls /code
     - docker push "$DOCKER_IMAGE_NAME"
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
