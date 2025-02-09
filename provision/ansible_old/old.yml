@@ -1,0 +1,21 @@
+    # - name: Prepare python
+    #   raw: |
+    #     sudo amazon-linux-extras enable python3.8
+    #     sudo dnf install -y python3.8 
+
+    # - name: Install pip for Python 3.8
+    #   command: /usr/bin/python3.8 -m ensurepip
+
+    # - name: Upgrade pip
+    #   command: /usr/bin/python3.8 -m pip install --upgrade pip
+
+    # - name: Install Python dependencies
+    #   pip:
+    #     name:
+    #       - boto3
+    #       - botocore
+    #     executable: /usr/local/bin/pip3.8
+
+    # - name: Set Python 3.8 as the default Ansible interpreter
+    #   set_fact:
+    #     ansible_python_interpreter: /usr/bin/python3.8

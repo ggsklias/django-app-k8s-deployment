@@ -1,0 +1,46 @@
+---
+- name: Ensure the project directory exists
+  file:
+    path: "/code"
+    state: directory
+
+- name: Copy pyproject.toml
+  copy:
+    src: /Users/geoskl/Dev/djangoarticleapp/pyproject.toml
+    dest: /code
+    owner: ec2-user
+    group: ec2-user
+
+- name: Copy poetry.lock
+  copy:
+    src: /Users/geoskl/Dev/djangoarticleapp/poetry.lock
+    dest: /code
+    owner: ec2-user
+    group: ec2-user
+
+- name: Copy README.md files
+  copy:
+    src: /Users/geoskl/Dev/djangoarticleapp/README.md
+    dest: /code
+    owner: ec2-user
+    group: ec2-user
+
+- name: Copy project files to the instance
+  copy:
+    src: /Users/geoskl/Dev/djangoarticleapp/
+    dest: /code
+    owner: ec2-user
+    group: ec2-user
+  
+- name: Copy start-django.sh to the server
+  ansible.builtin.copy:
+    src: /Users/geoskl/Dev/djangoarticleapp/start-django.sh
+    dest: /code/start-django.sh
+    mode: '0755'  # This ensures the file is executable
+
+- name: Install project dependencies using Poetry
+  command:
+    cmd: "/home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13 -m poetry install"
+    chdir: /code
+  become: true
+  become_user: "{{ ansible_user }}" 

@@ -1,0 +1,3 @@
+python_version: "3.13.0"
+ansible_user: ec2-user
+# ansible_user: root

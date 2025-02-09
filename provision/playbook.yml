@@ -1,0 +1,182 @@
+- hosts: master
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - python_install
+  tasks:
+
+- hosts: all
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - docker_install
+
+- hosts: master
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - start_app
+
+# ############################################
+
+
+#     - name: Configure Kubernetes repository
+#       copy:
+#         dest: /etc/yum.repos.d/kubernetes.repo
+#         content: |
+#           [kubernetes]
+#           name=Kubernetes
+#           baseurl=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
+#           enabled=1
+#           gpgcheck=1
+#           gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
+#         mode: '0644'
+#         owner: root
+#         group: root
+
+#     - name: "Installing kubeadm,kubelet kubectl program"
+#       yum:
+#         name:
+#             - kubelet
+#             - kubectl
+#             - kubeadm
+#         state: present
+#         use_backend: dnf
+
+#     - name: Remove swap entry from /etc/fstab to disable swap permanently
+#       lineinfile:
+#         path: /etc/fstab
+#         regexp: '.*swap.*'
+#         state: absent
+
+# - hosts: master
+#   gather_facts: yes
+#   become: yes
+#   tasks:
+#     - name: Initialize the Kubernetes cluster (if not already initialized)
+#       command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+#       register: kubeadm_init_output
+#       when: not kubeadm_init_output is defined
+
+#     - name: Create kubeadm token and capture join command
+#       shell: kubeadm token create --print-join-command
+#       register: join_command
+
+#     - name: Set the join command as a fact
+#       set_fact:
+#         kubeadm_join_command: "{{ join_command.stdout }}"
+
+#     - name: Print kubeadm_join_command
+#       debug:
+#         msg: "Print kubeadm_join_command {{ kubeadm_join_command }}"
+
+#     - name: Set up kubeconfig for kubectl (admin access) on master node
+#       shell: |
+#         mkdir -p $HOME/.kube
+#         cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+#         chown $(id -u):$(id -g) $HOME/.kube/config
+#       when: inventory_hostname == 'master' and kubeadm_init_output is succeeded
+
+#     - name: Install Calico networking on master node
+#       shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+#       # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+#       when: inventory_hostname == 'master' and kubeadm_init_output is succeeded
+
+# - hosts: workers
+#   gather_facts: yes  # Avoid failures due to missing Python
+#   become: yes
+#   tasks:
+#     - name: Print kubeadm_join_command
+#       debug:
+#         msg: "Print kubeadm_join_command {{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+#     - name: Fetch the kubeadm join command from the master node
+#       set_fact:
+#         kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  # Needed
+  # sudo kubeadm init --pod-network-cidr=192.168.0.0/16  --ignore-preflight-errors=all
+  #  mkdir -p $HOME/.kube
+  # sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  # sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+# sudo kubeadm join 172.31.25.173:6443 --token 393k07.etdorg8mxhg3tij3 \
+#        --discovery-token-ca-cert-hash sha256:bfb71735dfe36593a0c138981488ca7e1778f9aaff541f9b96fc785fcda696f0 
+  # Not needed:
+  # --apiserver-advertise-address=172.31.23.239
+  # vars:
+  #   ansible_python_interpreter: /usr/bin/python3.8  # Force correct Python path
+
+
+    # - name: Join worker node to the Kubernetes cluster
+    #   shell: "{{ kubeadm_join_command }}"
+    #   when: inventory_hostname != 'master'
+    #   environment:
+    #     KUBECONFIG: /etc/kubernetes/kubelet.conf
+
+# - name: Extract the kubeadm join command
+#   set_fact:
+#     kubeadm_join_command: >-
+#       {{ kubeadm_init_output.stdout | regex_search('kubeadm join (.*?)(\\n\\t|\\s)*$', multiline=True) }}
+
+# - name: Join worker nodes to the cluster
+#   hosts: worker_nodes
+#   gather_facts: no
+#   tasks:
+#     - name: Fetch the kubeadm join command from the control plane node
+#       slurp:
+#         src: /tmp/kubeadm_join_command.txt
+#       register: kubeadm_join_file
+
+#     - name: Decode the kubeadm join command
+#       set_fact:
+#         kubeadm_join_command: "{{ kubeadm_join_file.content | b64decode }}"
+
+#     - name: Join the worker node to the cluster
+#       command: "{{ kubeadm_join_command }}"
+#       become: yes
+
+
+
+#     - name: Set sysctl parameters for Kubernetes
+#       sysctl:
+#         name: "{{ item.name }}"
+#         value: "{{ item.value }}"
+#         state: present
+#         reload: yes
+#       loop:
+#         - { name: "net.bridge.bridge-nf-call-iptables", value: "1" }
+#         - { name: "net.bridge.bridge-nf-call-ip6tables", value: "1" }
+
+
+
+
+
+
+
+# - hosts: workers
+#   become: yes
+#   vars:
+#     master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] }}"  # Auto-detect master IP
+#   tasks:
+#     - name: Join worker nodes to cluster
+#       shell: kubeadm join {{ master_ip }}:6443 --token {{ token }} --discovery-token-ca-cert-hash {{ hash }}
