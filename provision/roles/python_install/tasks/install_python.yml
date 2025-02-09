@@ -1,0 +1,66 @@
+---
+- name: Ensure pyenv is available
+  vars:
+    python_version: "3.13.0"
+  ansible.builtin.shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    pyenv --version
+  register: pyenv_check
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: "{{ ansible_user }}" 
+
+- debug:
+    msg: "Pyenv version found: {{ pyenv_check.stdout }}"
+
+- name: Install Python {{ python_version }} using pyenv
+  vars:
+    python_version: "3.13.0"
+  ansible.builtin.shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    pyenv install -s {{ python_version }}
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: "{{ ansible_user }}" 
+
+- name: Set Python {{ python_version }} as global default
+  vars:
+    python_version: "3.13.0"
+  ansible.builtin.shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init --path)"
+    pyenv global {{ python_version }}
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: "{{ ansible_user }}" 
+
+- name: Verify Python version
+  ansible.builtin.shell: |
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    python --version
+  register: python_version_check
+  args:
+    executable: /bin/bash
+  become: true
+  become_user: "{{ ansible_user }}" 
+
+
+# - name: Set ansible_python_interpreter for all hosts
+#   lineinfile:
+#     path: /Users/geoskl/Dev/djangoarticleapp/provision/inventory.ini  # Replace with the actual path to your inventory.ini
+#     regexp: '^ansible_python_interpreter='  # Match the line that contains ansible_python_interpreter
+#     line: 'ansible_python_interpreter=/home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13'
+#     state: present  # Ensure the line is added or updated
+
+- debug:
+    msg: "Python version installed: {{ python_version_check.stdout }}"
+

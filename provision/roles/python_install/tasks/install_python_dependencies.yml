@@ -1,0 +1,24 @@
+---
+- name: Install pip3
+  vars:
+    ansible_python_interpreter: /home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13
+  dnf:
+    name: python3-pip
+    state: present
+
+- name: Install packaging
+  vars:
+    ansible_python_interpreter: /home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13
+  shell: "{{ ansible_python_interpreter }} -m pip install packaging"
+
+- name: Install Python dependencies
+  vars:
+    ansible_python_interpreter: /home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13
+  pip:
+    name:
+      - boto3
+      - botocore
+
+# - name: Remove breaking dependencies
+#   run_once: true
+#   shell: sudo rpm -e --nodeps python3-requests
