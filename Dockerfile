@@ -3,6 +3,7 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 RUN apt update && apt install gettext -y
+RUN apt install vim -y
 
 RUN mkdir /code
 
@@ -24,7 +25,8 @@ RUN poetry check
 RUN poetry install
 
 COPY . .
+RUN chmod +x /code/start-django.sh
 
 EXPOSE 8000
 
-ENTRYPOINT [ "poetry", "run", "python", "manage.py", "runserver", "0.0.0.0:8000" ]
+ENTRYPOINT [ "/code/start-django.sh" ]
