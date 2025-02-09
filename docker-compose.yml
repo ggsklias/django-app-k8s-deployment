@@ -1,0 +1,40 @@
+name: djangoarticleapp-local
+services:
+  db:
+    image: postgres
+    env_file:
+      - ./.env.docker
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+    ports:
+      - "5432:5432"
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # this is used gracefully handle processes within the docker container so that when the docker-compose
+    # system that passes a stop command to the running dockerfile command and everything shuts down
+    init: true
+    # The volumes syncs the local files to the running container
+    # Dockerfile modifies the permission of the start-django in the IMAGE, not the RUNNING IMAGE
+    # Then we bring again the local file to the running container
+    # When the container is started, we are using the file that is copied over that has incorrect permissions.
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env.docker
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+# specify volumes for postgres
+volumes:
+  postgres_data:
