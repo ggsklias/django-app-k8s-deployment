@@ -1,4 +1,4 @@
-{% extends "articleApp/base.html" %}
+{% extends "articleApp/layouts/base_form.html" %}
 
 {% block content %}
     <h1>Create Article</h1>
@@ -8,4 +8,5 @@
         <button type="submit">Save</button>
     </form>
     <a href="{% url 'home' %}">Back to articles</a>
+
 {% endblock content %}
