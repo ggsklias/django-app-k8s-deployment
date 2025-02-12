@@ -5,5 +5,4 @@
 - import_tasks: install_python.yml
 - import_tasks: verify_installation.yml
 - import_tasks: install_python_dependencies.yml
-- import_tasks: install_poetry.yml
-- import_tasks: install_project.yml
+# - import_tasks: install_poetry.yml

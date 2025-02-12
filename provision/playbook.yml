@@ -1,11 +1,26 @@
-- hosts: master
+# - hosts: all
+#   gather_facts: no  # Avoid failures due to missing Python
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   roles:
+#     - python_install
+
+- hosts: all
+  gather_facts: no  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - prerequisites_amazon_linux_2
+
+- hosts: all
   gather_facts: yes  # Avoid failures due to missing Python
   become: yes
   vars_files:
     - group_vars/all
   roles:
-    - python_install
-  tasks:
+    - prepare_os
 
 - hosts: all
   gather_facts: yes  # Avoid failures due to missing Python
@@ -15,78 +30,77 @@
   roles:
     - docker_install
 
+- hosts: all
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: kubernetes
+        tasks_from: install_kubernetes.yml
+
 - hosts: master
   gather_facts: yes  # Avoid failures due to missing Python
   become: yes
   vars_files:
     - group_vars/all
-  roles:
-    - start_app
+  tasks:
+    - name: Initialize master
+      include_role:
+        name: kubernetes
+        tasks_from: initialize_master.yml
+
+- hosts: workers
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: join_node
+      include_role:
+        name: kubernetes
+        tasks_from: join_node.yml
+
+
+# - hosts: all
+#   gather_facts: yes  # Avoid failures due to missing Python
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   tasks:
+#     - name: Install callico to all hosts
+#       include_role:
+#         name: kubernetes
+#         tasks_from: install_calico_to_all_hosts.yml
+# - hosts: master
+#   gather_facts: yes  # Avoid failures due to missing Python
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   roles:
+#     - project_install
+#   tasks:
+
+# - hosts: master
+#   gather_facts: yes  # Avoid failures due to missing Python
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   roles:
+#     - start_app
+
+# - hosts: master
+#   gather_facts: yes  # Avoid failures due to missing Python
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   roles:
+#     - start_app
 
 # ############################################
 
-
-#     - name: Configure Kubernetes repository
-#       copy:
-#         dest: /etc/yum.repos.d/kubernetes.repo
-#         content: |
-#           [kubernetes]
-#           name=Kubernetes
-#           baseurl=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
-#           enabled=1
-#           gpgcheck=1
-#           gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
-#         mode: '0644'
-#         owner: root
-#         group: root
-
-#     - name: "Installing kubeadm,kubelet kubectl program"
-#       yum:
-#         name:
-#             - kubelet
-#             - kubectl
-#             - kubeadm
-#         state: present
-#         use_backend: dnf
-
-#     - name: Remove swap entry from /etc/fstab to disable swap permanently
-#       lineinfile:
-#         path: /etc/fstab
-#         regexp: '.*swap.*'
-#         state: absent
-
-# - hosts: master
-#   gather_facts: yes
-#   become: yes
-#   tasks:
-#     - name: Initialize the Kubernetes cluster (if not already initialized)
-#       command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
-#       register: kubeadm_init_output
-#       when: not kubeadm_init_output is defined
-
-#     - name: Create kubeadm token and capture join command
-#       shell: kubeadm token create --print-join-command
-#       register: join_command
-
-#     - name: Set the join command as a fact
-#       set_fact:
-#         kubeadm_join_command: "{{ join_command.stdout }}"
-
-#     - name: Print kubeadm_join_command
-#       debug:
-#         msg: "Print kubeadm_join_command {{ kubeadm_join_command }}"
-
-#     - name: Set up kubeconfig for kubectl (admin access) on master node
-#       shell: |
-#         mkdir -p $HOME/.kube
-#         cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
-#         chown $(id -u):$(id -g) $HOME/.kube/config
-#       when: inventory_hostname == 'master' and kubeadm_init_output is succeeded
-
-#     - name: Install Calico networking on master node
-#       shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
-#       # kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-#       when: inventory_hostname == 'master' and kubeadm_init_output is succeeded
 
 # - hosts: workers
 #   gather_facts: yes  # Avoid failures due to missing Python

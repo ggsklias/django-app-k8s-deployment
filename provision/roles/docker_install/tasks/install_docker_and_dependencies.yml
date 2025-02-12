@@ -1,16 +1,31 @@
 ---
-- name: "Installing docker and iproute-tc"
-  package:
-    name:
-        - docker
-        - iproute-tc
-    state: present
+# Amazon Linux 2
+- name: Install required dependencies
+  shell: sudo yum install -y docker iproute-tc yum-utils device-mapper-persistent-data lvm2
+
+# Amazon Linux 2023
+# - name: "Installing docker and iproute-tc"
+#   yum:
+#     name:
+#       - docker
+#       - iproute-tc
+#       - yum-utils
+#       - device-mapper-persistent-data
+#       - lvm2
+#     state: present
 
 - name: Start and enable Docker
   service:
     name: docker
     state: started
     enabled: yes
+
+# - name: Install cri-dockerd
+#   shell: |
+#     wget https://github.com/Mirantis/cri-dockerd/releases/download/v0.3.16/cri-dockerd-0.3.16-3.fc35.x86_64.rpm
+#     sudo rpm -ivh cri-dockerd-0.3.16-3.fc35.x86_64.rpm
+#     systemctl start cri-dockerd
+#     systemctl enable cri-dockerd
 
 - name: Download Docker Compose
   get_url:
@@ -22,11 +37,3 @@
   file:
     path: /usr/local/bin/docker-compose
     mode: 'u+x'
-
-- name: Install dependencies
-  dnf:
-    name: 
-      - yum-utils
-      - device-mapper-persistent-data
-      - lvm2
-    state: present

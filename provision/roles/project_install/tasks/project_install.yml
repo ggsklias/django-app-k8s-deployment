@@ -38,9 +38,9 @@
     dest: /code/start-django.sh
     mode: '0755'  # This ensures the file is executable
 
-- name: Install project dependencies using Poetry
-  command:
-    cmd: "/home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13 -m poetry install"
-    chdir: /code
-  become: true
-  become_user: "{{ ansible_user }}" 
+# - name: Install project dependencies using Poetry
+#   command:
+#     cmd: "/home/ec2-user/.pyenv/versions/3.13.0/bin/python3.13 -m poetry install"
+#     chdir: /code
+#   become: true
+#   become_user: "{{ ansible_user }}" 

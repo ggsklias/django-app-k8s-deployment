@@ -7,5 +7,8 @@ provision/ssh_key.pem
 provision/ansible_old
 provision/.terraform
 provision/.terraform.lock.hcl
-provision/ansible_logs
+provision/ansible_logs*
 provision/exports.sh
+provision/terraform.tfstate.backup
+.ansible-lint
+provision/.terraform.tfstate.lock.info
