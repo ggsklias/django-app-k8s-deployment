@@ -1,0 +1,3 @@
+---
+- import_tasks: raw_python_installation.yml
+- import_tasks: prerequisites_amazon_linux_2.yml

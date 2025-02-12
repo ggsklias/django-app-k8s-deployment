@@ -1,0 +1,7 @@
+---
+- name: Include task to install on all hosts
+  include_tasks: install_kubernetes.yml
+
+- name: Include task to install on a single host
+  include_tasks: initialize_master.yml
+  when: inventory_hostname == "master"

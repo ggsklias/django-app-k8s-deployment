@@ -1,0 +1,11 @@
+---
+- name: Install required dependencies
+  shell: |
+    sudo yum -y groupinstall "Development Tools"
+    sudo yum -y install gcc openssl-devel bzip2-devel libffi-devel zlib-devel wget python3-pip
+
+- name: Install Python dependencies
+  pip:
+    name:
+      - boto3
+      - botocore

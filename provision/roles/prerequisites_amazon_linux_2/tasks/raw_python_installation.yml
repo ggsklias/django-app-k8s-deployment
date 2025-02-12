@@ -1,0 +1,6 @@
+---
+- name: Install required dependencies
+  raw: "sudo amazon-linux-extras enable python3.8"
+
+- name: Install required dependencies
+  raw: "sudo yum -y install python38"
