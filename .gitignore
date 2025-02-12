@@ -12,3 +12,4 @@ provision/exports.sh
 provision/terraform.tfstate.backup
 .ansible-lint
 provision/.terraform.tfstate.lock.info
+terraform.tfstate
