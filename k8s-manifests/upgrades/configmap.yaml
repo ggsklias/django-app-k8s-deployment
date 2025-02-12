@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: django-config
+data:
+  POSTGRES_DB: "your_db_name"
+  POSTGRES_USER: "your_db_user"
+  POSTGRES_PASSWORD: "your_db_password"
+  DATABASE_URL: "postgres://your_db_user:your_db_password@postgres:5432/your_db_name"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+data:
+  POSTGRES_DB: "your_db_name"
+  POSTGRES_USER: "your_db_user"
+  POSTGRES_PASSWORD: "your_db_password"
