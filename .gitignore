@@ -10,5 +10,8 @@ provision/.terraform.lock.hcl
 provision/ansible_logs
 provision/exports.sh
 .ansible-lint
+<<<<<<< HEAD
 .gitignore
 terraform.tfstate
+=======
+>>>>>>> a824284 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
