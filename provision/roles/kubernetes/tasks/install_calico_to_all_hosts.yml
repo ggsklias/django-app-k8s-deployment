@@ -1,5 +1,0 @@
----
-- name: Install Calico networking on master node
-  become: true
-  become_user: "{{ ansible_user }}"
-  shell: kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml

@@ -1,0 +1,73 @@
+--- 
+- name: Initialize the Kubernetes cluster (if not already initialized)
+  command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+  register: kubeadm_init_output
+
+- name: Create kubeadm token and capture join command
+  shell: kubeadm token create --print-join-command
+  register: join_command
+
+- name: Set the join command as a fact
+  set_fact:
+    kubeadm_join_command: "{{ join_command.stdout }}"
+
+- name: Check if folder exists
+  ansible.builtin.stat:
+    path: $HOME/.kube
+  register: folder_check
+
+- name: Set up kubeconfig for kubectl (admin access) on master node -  Execute command if folder does not exist
+  become: true
+  become_user: "{{ ansible_user }}" 
+  shell: |
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+  when: not folder_check.stat.exists
+
+- name: Restart Kubelet to apply Docker as container runtime
+  systemd:
+    name: kubelet
+    state: restarted
+
+- name: Wait for API server to respond
+  become: true
+  become_user: "{{ ansible_user }}" 
+  retries: 10
+  delay: 10
+  command: kubectl get nodes
+  register: kubectl_output
+  until: kubectl_output.rc == 0
+
+- name: Install Flannel networking on master node
+  become: true
+  become_user: "{{ ansible_user }}" 
+  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+
+- name: Patch Flannel ConfigMap to set VXLAN port to UDP 8472
+  k8s:
+    kubeconfig: /etc/kubernetes/admin.conf
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ConfigMap
+      metadata:
+        name: kube-flannel-cfg
+        namespace: kube-flannel
+      data:
+        net-conf.json: |
+          {
+            "Network": "10.244.0.0/16",
+            "EnableNFTables": false,
+            "Backend": {
+              "Type": "vxlan",
+              "Port": 8472
+            }
+          }
+  register: flannel_patch
+
+- name: Restart Flannel DaemonSet to apply new configuration
+  become: true
+  become_user: "{{ ansible_user }}" 
+  shell: kubectl rollout restart daemonset/kube-flannel-ds -n kube-flannel
+  when: flannel_patch.changed

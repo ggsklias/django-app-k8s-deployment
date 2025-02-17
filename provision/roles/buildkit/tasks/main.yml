@@ -1,0 +1,4 @@
+---
+# This file includes all other task files.
+- import_tasks: install_buildkit_and_dependencies.yml
+- import_tasks: build_image.yml

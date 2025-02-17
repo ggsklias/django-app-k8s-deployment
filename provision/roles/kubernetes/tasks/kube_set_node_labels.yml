@@ -1,0 +1,13 @@
+---
+- name: Register hostvar worker_hostname
+  set_fact:
+    worker_hostname: "{{ hostvars[groups['workers'][0]].worker_hostname }}"
+
+- name: Label the worker node
+  command: >
+    kubectl label node {{ worker_hostname }} node-type=worker
+  register: label_output
+
+- name: Debug output
+  debug:
+    var: label_output.stdout

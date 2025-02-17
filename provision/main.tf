@@ -132,6 +132,20 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  ingress {
+    from_port   = 8472
+    to_port     = 8472
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port   = 8285
+    to_port     = 8285
+    protocol    = "udp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   
   ingress {
     from_port   = 8000

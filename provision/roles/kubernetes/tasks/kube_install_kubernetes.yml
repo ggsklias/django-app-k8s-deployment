@@ -1,0 +1,33 @@
+---
+- name: Add Kubernetes repository
+  copy:
+    dest: /etc/yum.repos.d/kubernetes.repo
+    content: |
+      [kubernetes]
+      name=Kubernetes
+      baseurl=https://pkgs.k8s.io/core:/stable:/v1.26/rpm/
+      enabled=1
+      gpgcheck=1
+      gpgkey=https://pkgs.k8s.io/core:/stable:/v1.26/rpm/repodata/repomd.xml.key
+
+# Amazon Linux 2
+- name: Install required dependencies
+  shell: |
+    sudo yum install -y kubelet kubeadm kubectl
+
+- name: Copy Kubernetes provisioning files
+  copy:
+    src: /Users/geoskl/Dev/DevOpsApp/provision/k8s-manifests
+    dest: /home/ec2-user
+    owner: ec2-user
+    group: ec2-user
+
+# Amazon Linux 2023
+# - name: Install kubeadm, kubelet, and kubectl
+#   dnf:
+#     name:
+#       - kubelet
+#       - kubeadm
+#       - kubectl
+#     state: present
+#   notify: Restart kubelet

@@ -1,0 +1,66 @@
+---
+
+- name: Install required dependencies
+  shell: sudo yum -y install git curl unzip bash-completion runc
+
+- name: Install required dependencies
+  shell: sudo yum -y install runc containerd
+
+- name: Start containerd service
+  ansible.builtin.systemd:
+    name: containerd
+    state: started
+
+- name: Enable containerd to start on boot
+  ansible.builtin.systemd:
+    name: containerd
+    enabled: yes
+
+- name: Download BuildKit binary
+  get_url:
+    url: https://github.com/moby/buildkit/releases/download/v0.11.0/buildkit-v0.11.0.linux-amd64.tar.gz
+    dest: /tmp/buildkit.tar.gz
+
+- name: Extract BuildKit
+  unarchive:
+    src: /tmp/buildkit.tar.gz
+    dest: /tmp
+    remote_src: yes
+
+- name: Move buildkit binaries
+  shell: mv /tmp/bin/* /usr/local/bin/
+
+- name: Give insecure permissions to an existing file
+  ansible.builtin.file:
+    path: /usr/local/bin/buildctl
+    mode: '0755'
+
+- name: Enable and start BuildKit as a service
+  copy:
+    dest: /etc/systemd/system/buildkit.service
+    content: |
+      [Unit]
+      Description=BuildKit
+      After=network.target
+
+      [Service]
+      ExecStart=/usr/local/bin/buildkitd
+      Restart=always
+
+      [Install]
+      WantedBy=multi-user.target
+      
+- name: Start and enable BuildKit service
+  systemd:
+    name: buildkit
+    enabled: true
+    state: started
+
+# - name: Install required packages
+#   yum:
+#     name:
+#       - curl
+#       - git
+#       - unzip
+#       - bash-completion
+#     state: present

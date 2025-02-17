@@ -1,0 +1,9 @@
+---
+- name: Apply manifests 
+  shell: |
+    ls -la /home/{{ ansible_user }}/k8s-manifests
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-config.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-service.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgresql-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgres-service.yml
