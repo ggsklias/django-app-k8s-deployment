@@ -1,36 +1,32 @@
-# djangoarticleapp
- A Django Article App with full automation on DevOps
+# djangoarticleapp - Version 1
+ A Django Article App with fully automated deployment on AWS with Terraform and Ansible.
 
-## Versions used: 
-Ansible: 2.18.2
-Terraform v1.10.5
-
+## Overview
 This is a "one-button" deployment configured in AWS, Terraform and Ansible.
 The ansible playbook:
-- Installs prerequisites on the EC2 instances (Amazon Linux 2) to make it work with ansible: 
+- Installs prerequisites on the EC2 instances (Amazon Linux 2) to enable ansible 2.18.2
+- Installs djangoarticleapp on the worker host
 - Uses buildctl to build the images defined in the Dockerfile - docker-compose.yml
 - Uses containerd to load the images
 - Installs kubernetes on both instances
-- Initiates Kubernetes and installs other prerequisites 
+- Initiates Kubernetes on the master
 - Worker joins the master node
 - Kubernetes manifests applied on the master
 -- ConfigMap with the DB details
 -- Django Service and Deployment
 -- Postgres Service and Deployment
 - Returns the IP along with the Node port so that the app can be accessed
-There are no costs incurred in AWS as this is using EC2 instances in the free tier.
 
 ## How to start the app:
-0a) Clone the repo 
-0b) get AWS credentials (#link)
+1) Clone the repo 
+2) [Get AWS credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
 export AWS_ACCESS_KEY_ID=XXXX
 export AWS_SECRET_ACCESS_KEY=XXXX
-export AWS_DEFAULT_REGION=XXX
-1) Run python3 provision.py. This creates 2 ec2 instances on AWS and updates the inventory.ini so that ansible knows which host is the master and which is the worker host. 
-2) cd provision
-3) ansible-playbook -i inventory.ini playbook.yml
+3) Run python3 provision.py. This creates 2 ec2 instances on AWS and updates the inventory.ini so that ansible knows which host is the master and which is the worker host. 
+4) cd provision
+5) ansible-playbook -i inventory.ini playbook.yml
 
 
 # Notes: 
-1) The role: A) python_install can be used to install a specific python version on the hosts along with along with pyenv, poetry and python dependencies. 
-2) This project focuses on the deployment aspect. The DB secret key is exposed in the config map. In a next iteration it will be added in a vault so that security aspects are addressed.
+- This project focuses on the deployment aspect. The DB secret key is exposed in the config map. In a next iteration it will be added in a vault so that security aspects are addressed.
+- The deployment is using EC2 instances in the free tier so that no costs are incurred.  
