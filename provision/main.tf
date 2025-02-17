@@ -22,7 +22,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-  # availability_zone       = "eu-central-1a"
+  availability_zone       = "eu-central-1a"
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet"
@@ -33,7 +33,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-  # availability_zone = "eu-central-1a"
+  availability_zone = "eu-central-1a"
   tags = {
     Name = "private-subnet"
   }
@@ -68,7 +68,8 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_instance" "master" {
-  ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
+  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
+  #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
   # This is only for defaul
@@ -82,7 +83,8 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "worker" {
-  ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
+  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
+  # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
   # This is only for default vpcs apparently
@@ -111,11 +113,17 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  # ingress {
+  #   from_port   = -1
+  #   to_port     = -1
+  #   protocol    = "icmp"
+  # }
+
   ingress {
-    from_port   = 8
-    to_port     = 8
+    from_port   = -1
+    to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["10.0.1.0/24"]  # Allow ICMP from the subnet
+    cidr_blocks = ["10.0.1.0/24"]
   }
 
   ingress {

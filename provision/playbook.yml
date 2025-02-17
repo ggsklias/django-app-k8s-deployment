@@ -49,6 +49,17 @@
         name: kubernetes
         tasks_from: kube_install_kubernetes.yml
 
+- hosts: all
+  gather_facts: yes  # Avoid failures due to missing Python
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: kubernetes
+        tasks_from: install_kubernetes.yml
+
 - hosts: master
   gather_facts: yes  
   become: yes

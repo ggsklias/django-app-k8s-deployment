@@ -1,8 +1,10 @@
 ---
-- name: Debug home directory
-  debug:
-    msg: "Home directory is: {{ ansible_env.HOME }}"
+# - name: Debug home directory
+#   debug:
+#     msg: "Home directory is: {{ ansible_env.HOME }}"
+
 - name: Install required packages for building Python
+  yum:
   dnf:
     name: 
       - gcc

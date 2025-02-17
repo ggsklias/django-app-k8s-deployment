@@ -1,0 +1,25 @@
+---
+- name: Print kubeadm_join_command
+  debug:
+    msg: "Print kubeadm_join_command {{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+- name: Fetch the kubeadm join command from the master node
+  set_fact:
+    kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+- name: Join the worker node to the master
+  # become: true
+  # become_user: "{{ ansible_user }}"
+  ansible.builtin.shell:
+    cmd: "{{ kubeadm_join_command }}"
+    creates: /etc/kubernetes/kubelet.conf
+  environment:
+    KUBELET_EXTRA_ARGS: "--node-labels=role=worker"
+  register: join_status
+
+#     "msg": "Print kubeadm_join_command kubeadm join 10.0.1.213:6443 --token skmuf5.7e6x4rjpddiuqn7l --discovery-token-ca-cert-hash sha256:f18925cc4c61024bd2d2f16e1b8d075c691b33255538c5ae18cda58ca9d32742 "
+
+- name: Check if node joined successfully
+  ansible.builtin.debug:
+    msg: "Node successfully joined the Kubernetes cluster"
+  when: join_status.rc == 0
