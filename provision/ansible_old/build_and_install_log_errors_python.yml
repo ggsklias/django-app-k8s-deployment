@@ -1,0 +1,9 @@
+- name: Build and install Python 3.13
+  ansible.builtin.shell:
+    cmd: |
+      ./configure --enable-optimizations > /tmp/python_configure.log 2>&1
+      make > /tmp/python_make.log 2>&1
+      make altinstall > /tmp/python_install.log 2>&1
+    chdir: /tmp/Python-3.13.0
+  args:
+    creates: /usr/local/bin/python3.13

@@ -2,12 +2,6 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-# resource "aws_key_pair" "ssh_key" {
-#   key_name   = ""                # Specify the key pair name
-#   public_key = file("public-key.pub")  # Reference the public key file (you should have this after running ssh-keygen)
-# }
-
-
 # 1. VPC
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
@@ -22,11 +16,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-<<<<<<< HEAD
   availability_zone       = "eu-central-1a"
-=======
-  # availability_zone       = "eu-central-1a"
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet"
@@ -37,11 +27,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-<<<<<<< HEAD
   availability_zone = "eu-central-1a"
-=======
-  # availability_zone = "eu-central-1a"
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   tags = {
     Name = "private-subnet"
   }
@@ -76,40 +62,26 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_instance" "master" {
-<<<<<<< HEAD
-  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
-  #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
-=======
   ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
-  # This is only for defaul
-  # security_groups = ["allow-ssh-and-k8s"]
-  vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
-  subnet_id = aws_subnet.public.id
+  security_groups = ["allow-ssh-and-k8s"]
 
   tags = {
-    Name = "master"
+    Name = "k8s-master"
   }
 }
 
 resource "aws_instance" "worker" {
-<<<<<<< HEAD
-  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
-  # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
-=======
   ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
   # This is only for default vpcs apparently
   # security_groups = ["allow-ssh-and-k8s"]
-  vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
-  subnet_id = aws_subnet.public.id
-  
+  vpc_security_group_ids = [aws_security_group.web_sg.id]
+
   tags = {
-    Name = "worker"
+    Name = "k8s-worker"
   }
 }
 
@@ -129,50 +101,12 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-<<<<<<< HEAD
-  # ingress {
-  #   from_port   = -1
-  #   to_port     = -1
-  #   protocol    = "icmp"
-  # }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = ["10.0.1.0/24"]
-=======
-  ingress {
-    from_port   = 8
-    to_port     = 8
-    protocol    = "icmp"
-    cidr_blocks = ["10.0.1.0/24"]  # Allow ICMP from the subnet
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
-  }
-
   ingress {
     from_port   = 6443
     to_port     = 6443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-<<<<<<< HEAD
-
-  ingress {
-    from_port   = 8472
-    to_port     = 8472
-    protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 8285
-    to_port     = 8285
-    protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-=======
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   
   ingress {
     from_port   = 8000
@@ -202,13 +136,6 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-  ingress {
-    from_port   = 3306
-    to_port     = 3306
-    protocol    = "tcp"
-    cidr_blocks = ["10.0.1.0/24"]  # Allow MySQL traffic from the subnet
-  }
-
   egress {
     from_port   = 0
     to_port     = 0
@@ -217,13 +144,6 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
   }
 }
 
-# output "master_private_ip" {
-#   value = aws_instance.master.private_ip
-# }
-
-# output "worker_private_ip" {
-#   value = aws_instance.worker.private_ip
-# }
 
 output "master_ip" {
   value = aws_instance.master.public_ip

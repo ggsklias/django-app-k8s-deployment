@@ -1,0 +1,36 @@
+---
+- name: Set up Kubernetes worker nodes
+  hosts: control_plane
+  gather_facts: no
+  tasks:
+    - name: Initialize the Kubernetes cluster (if not already initialized)
+      command: kubeadm init --pod-network-cidr=10.244.0.0/16
+      register: kubeadm_init_output
+      when: not kubeadm_init_output is defined
+
+    - name: Extract the kubeadm join command
+      set_fact:
+        kubeadm_join_command: >-
+          {{ kubeadm_init_output.stdout | regex_search('kubeadm join .*') }}
+
+    - name: Save the kubeadm join command to a file
+      copy:
+        content: "{{ kubeadm_join_command }}"
+        dest: /tmp/kubeadm_join_command.txt
+
+- name: Join worker nodes to the cluster
+  hosts: worker_nodes
+  gather_facts: no
+  tasks:
+    - name: Fetch the kubeadm join command from the control plane node
+      slurp:
+        src: /tmp/kubeadm_join_command.txt
+      register: kubeadm_join_file
+
+    - name: Decode the kubeadm join command
+      set_fact:
+        kubeadm_join_command: "{{ kubeadm_join_file.content | b64decode }}"
+
+    - name: Join the worker node to the cluster
+      command: "{{ kubeadm_join_command }}"
+      become: yes
