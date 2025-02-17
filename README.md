@@ -23,9 +23,13 @@ The ansible playbook:
 export AWS_ACCESS_KEY_ID=XXXX
 export AWS_SECRET_ACCESS_KEY=XXXX
 3) Store the private key in the provision folder and update inventory.ini accordingly with the right path. 
-4) Run python3 provision.py. This creates 2 ec2 instances on AWS and updates the inventory.ini so that ansible knows which host is the master and which is the worker host. 
-5) cd provision
+4) cd provision
+5) Run python3 provision.py. This creates 2 ec2 instances on AWS and updates the inventory.ini so that ansible knows which host is the master and which is the worker host. 
 6) ansible-playbook -i inventory.ini playbook.yml
+7) Wait for the playbook to complete and connect to the app using the link provided by the ansible playbook
+
+## Tear down:
+8) terraform destroy -auto-approve
 
 
 # Notes: 
