@@ -1,9 +1,0 @@
----
-- name: Verify Python 3.13 installation
-  ansible.builtin.command: python3.13 --version
-  register: python_version_output
-  become: true
-  become_user: "{{ ansible_user }}" 
-
-- debug:
-    msg: "Python version installed: {{ python_version_output.stdout }}"

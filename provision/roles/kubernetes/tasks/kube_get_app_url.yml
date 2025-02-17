@@ -1,0 +1,13 @@
+---
+- name: Wait for 1 minute for Django app to be ready
+  wait_for:
+    timeout: 60
+
+- name: Get Django service NodePort
+  shell: |
+    kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
+  register: django_nodeport
+
+- name: Print application URL
+  debug:
+    msg: "http://{{ groups['workers'][0] }}:{{ django_nodeport.stdout }}"

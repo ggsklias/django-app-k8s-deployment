@@ -2,6 +2,11 @@ import subprocess
 import re
 import os, sys
 
+CURRENT_WORKING_DIR = os.getcwd()
+if "provision" not in CURRENT_WORKING_DIR:
+    CURRENT_WORKING_DIR = CURRENT_WORKING_DIR + "/provision"
+INVENTORY_INI_DIR = CURRENT_WORKING_DIR + "/inventory.ini"
+
 def check_environ():
     # Check if AWS credentials are set
     if all(key not in os.environ for key in ["AWS_ACCESS_KEY_ID", "AWS_SECRET_ACCESS_KEY"]):
@@ -12,7 +17,8 @@ def check_environ():
 
 def run_terraform():
     # Run Terraform and capture output
-    process = subprocess.run(["terraform", "apply", "-auto-approve"], text=True, capture_output=True)
+    tf_command = ["terraform", "-chdir=%s" % CURRENT_WORKING_DIR, "apply", "-auto-approve"]
+    process = subprocess.run(tf_command, text=True, capture_output=True)
     output = process.stdout
 
     # Extract IP addresses using regex
@@ -23,30 +29,43 @@ def run_terraform():
 
     return last_two_ips
 
+
+def read_inventory_and_update(inventory):
+    with open(INVENTORY_INI_DIR, "r") as file:
+        inventory = file.readlines()
+
+    updated_inventory = []
+    for line in inventory:
+        if line.startswith("[master]"):
+            updated_inventory.append("[master]\n")
+            updated_inventory.append(f"{master_ip} ansible_user=ec2-user\n")
+        elif line.startswith("[workers]"):
+            updated_inventory.append("[workers]\n")
+            updated_inventory.append(f"{worker_ip} ansible_user=ec2-user\n")
+        elif all(string not in line for string in ["[master]", "[workers]", "ansible_user"]):
+            updated_inventory.append(line)
+    
+    return updated_inventory
+
+def write_to_inventory(inventory):
+    if inventory:
+        with open(INVENTORY_INI_DIR, "w") as file:
+            file.writelines(inventory)
+    else:
+        raise ValueError("Inventory is empty")
+
 check_environ()
 
 last_two_ips = run_terraform()
 
 master_ip = last_two_ips[0]
 worker_ip = last_two_ips[1]
+
+updated_inventory = read_inventory_and_update(INVENTORY_INI_DIR)
+
+write_to_inventory(updated_inventory)
+
 # Print the IPs
 print("\n".join(last_two_ips))
 
-with open("inventory.ini", "r") as file:
-    inventory = file.readlines()
-
-updated_inventory = []
-for line in inventory:
-    if line.startswith("[master]"):
-        updated_inventory.append("[master]\n")
-        updated_inventory.append(f"{master_ip} ansible_user=ec2-user\n")
-    elif line.startswith("[workers]"):
-        updated_inventory.append("[workers]\n")
-        updated_inventory.append(f"{worker_ip} ansible_user=ec2-user\n")
-    elif all(string not in line for string in ["[master]", "[workers]", "ansible_user"]):
-        updated_inventory.append(line)
-
-# Step 5: Write back the updated inventory
-with open("inventory.ini", "w") as file:
-    file.writelines(updated_inventory)
 
