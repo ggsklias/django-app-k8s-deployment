@@ -1,5 +1,0 @@
-# ---
-- name: Restart shell
-  shell: source /home/ec2-user/.bashrc
-  args:
-    executable: /bin/bash

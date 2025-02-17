@@ -1,5 +1,0 @@
----
-- name: Start App On EC2 Instance
-  shell: docker-compose up --build
-  args:
-    chdir: /code
