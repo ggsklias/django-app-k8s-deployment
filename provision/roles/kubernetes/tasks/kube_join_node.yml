@@ -1,8 +1,4 @@
 ---
-- name: Print kubeadm_join_command
-  debug:
-    msg: "Print kubeadm_join_command {{ hostvars[groups['master'][0]].kubeadm_join_command }}"
-
 - name: Fetch the kubeadm join command from the master node
   set_fact:
     kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
