@@ -18,3 +18,4 @@ provision/terraform.tfstate
 provision/.terraform.tfstate.lock.info
 provision/k8s*
 provision/DevOpsApp.code-workspace
+.DS_Store
