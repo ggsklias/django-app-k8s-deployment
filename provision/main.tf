@@ -2,12 +2,6 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-# resource "aws_key_pair" "ssh_key" {
-#   key_name   = ""                # Specify the key pair name
-#   public_key = file("public-key.pub")  # Reference the public key file (you should have this after running ssh-keygen)
-# }
-
-
 # 1. VPC
 resource "aws_vpc" "main" {
   cidr_block       = "10.0.0.0/16"
@@ -22,7 +16,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-  # availability_zone       = "eu-central-1a"
+ #availability_zone       = "eu-central-1a"
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet"
@@ -33,7 +27,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-  # availability_zone = "eu-central-1a"
+ #availability_zone = "eu-central-1a"
   tags = {
     Name = "private-subnet"
   }
@@ -68,9 +62,12 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_instance" "master" {
-  ami           = "ami-0e82046e2f06c0a68" # Amazon Linux 2 - requires installation of newer python with latest ansible
+  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
+  #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
+  # This syntax is only for default vpcs
+  # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
   subnet_id = aws_subnet.public.id
 
@@ -80,10 +77,11 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "worker" {
-  ami           = "ami-0e82046e2f06c0a68" # Amazon Linux 2 - requires installation of newer python with latest ansible
+  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
+  # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
-  # This is only for default vpcs apparently
+  # This syntax is only for default vpcs
   # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
   subnet_id = aws_subnet.public.id
@@ -110,10 +108,10 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
   }
 
   ingress {
-    from_port   = 8
-    to_port     = 8
+    from_port   = -1
+    to_port     = -1
     protocol    = "icmp"
-    cidr_blocks = ["10.0.1.0/24"]  # Allow ICMP from the subnet
+    cidr_blocks = ["10.0.1.0/24"]
   }
 
   ingress {
@@ -179,14 +177,6 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
-
-# output "master_private_ip" {
-#   value = aws_instance.master.private_ip
-# }
-
-# output "worker_private_ip" {
-#   value = aws_instance.worker.private_ip
-# }
 
 output "master_ip" {
   value = aws_instance.master.public_ip
