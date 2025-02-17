@@ -22,11 +22,7 @@ resource "aws_vpc" "main" {
 resource "aws_subnet" "public" {
   vpc_id                  = aws_vpc.main.id
   cidr_block              = "10.0.1.0/24"
-<<<<<<< HEAD
-  availability_zone       = "eu-central-1a"
-=======
   # availability_zone       = "eu-central-1a"
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   map_public_ip_on_launch = true
   tags = {
     Name = "public-subnet"
@@ -37,11 +33,7 @@ resource "aws_subnet" "public" {
 resource "aws_subnet" "private" {
   vpc_id            = aws_vpc.main.id
   cidr_block        = "10.0.2.0/24"
-<<<<<<< HEAD
-  availability_zone = "eu-central-1a"
-=======
   # availability_zone = "eu-central-1a"
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   tags = {
     Name = "private-subnet"
   }
@@ -76,12 +68,7 @@ resource "aws_route_table_association" "public" {
 }
 
 resource "aws_instance" "master" {
-<<<<<<< HEAD
-  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
-  #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
-=======
   ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
   # This is only for defaul
@@ -95,12 +82,7 @@ resource "aws_instance" "master" {
 }
 
 resource "aws_instance" "worker" {
-<<<<<<< HEAD
-  ami           = "ami-0764af88874b6b852" # Amazon Linux 2
-  # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
-=======
   ami           = "ami-02ccbe126fe6afe82" # Amazon Linux 2023 AMI, which supports dnf
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
   # This is only for default vpcs apparently
@@ -129,25 +111,11 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-<<<<<<< HEAD
-  # ingress {
-  #   from_port   = -1
-  #   to_port     = -1
-  #   protocol    = "icmp"
-  # }
-
-  ingress {
-    from_port   = -1
-    to_port     = -1
-    protocol    = "icmp"
-    cidr_blocks = ["10.0.1.0/24"]
-=======
   ingress {
     from_port   = 8
     to_port     = 8
     protocol    = "icmp"
     cidr_blocks = ["10.0.1.0/24"]  # Allow ICMP from the subnet
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   }
 
   ingress {
@@ -156,23 +124,6 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-<<<<<<< HEAD
-
-  ingress {
-    from_port   = 8472
-    to_port     = 8472
-    protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 8285
-    to_port     = 8285
-    protocol    = "udp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-=======
->>>>>>> 2e2b419 (FULLY automated EC2 instance creation and ansible execution to deploy django app and postgress database on a Single EC2 instance)
   
   ingress {
     from_port   = 8000
