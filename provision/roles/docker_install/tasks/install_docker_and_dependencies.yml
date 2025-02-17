@@ -1,0 +1,32 @@
+---
+- name: "Installing docker and iproute-tc"
+  package:
+    name:
+        - docker
+        - iproute-tc
+    state: present
+
+- name: Start and enable Docker
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: Download Docker Compose
+  get_url:
+    url: "https://github.com/docker/compose/releases/latest/download/docker-compose-linux-x86_64"
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: Ensure Docker Compose is executable
+  file:
+    path: /usr/local/bin/docker-compose
+    mode: 'u+x'
+
+- name: Install dependencies
+  dnf:
+    name: 
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    state: present
