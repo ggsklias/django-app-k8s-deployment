@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: djangoarticleapp-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 8000          # Port exposed internally in the cluster
+      targetPort: 8000    # Port the app is listening on in the pod
+  selector:
+    app: djangoarticleapp  # Matches the labels of your pods

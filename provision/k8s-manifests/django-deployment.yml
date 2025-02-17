@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: djangoarticleapp
+  labels:
+    app: djangoarticleapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: djangoarticleapp
+  template:
+    metadata:
+      labels:
+        app: djangoarticleapp
+    spec:
+      # Due to the low resources of the nodes, confirm that DNS resolution is working for the db
+      initContainers:
+      - name: check-dns
+        image: busybox
+        command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo "Waiting for DNS..."; sleep 10; done']
+      nodeSelector:
+        node-type: worker
+      containers:
+      - name: web
+        image: djangoarticleapp:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: django-config
+        resources:
+          requests:
+            memory: "150Mi"
+            cpu: "150m"
+          limits:
+            memory: "256Mi"
+            cpu: "250m"
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8000
+        #   initialDelaySeconds: 40
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8000
+        #   initialDelaySeconds: 40
+        #   periodSeconds: 20
+
+
+        # volumeMounts:
+        # - name: code-volume
+        #   mountPath: /code                # Matches your Dockerfile WORKDIR
+      # volumes:
+      # - name: code-volume
+      #   emptyDir: {}                      # Temporary volume to hold local changes if needed

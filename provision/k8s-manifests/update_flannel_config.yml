@@ -1,0 +1,34 @@
+---
+- name: Update Flannel VXLAN Port Configuration
+  hosts: localhost
+  gather_facts: no
+  tasks:
+    - name: Patch the Flannel ConfigMap with VXLAN port 8472
+      k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: kube-flannel-cfg
+            namespace: kube-flannel
+          data:
+            net-conf.json: |
+              {
+                "Network": "10.244.0.0/16",
+                "EnableNFTables": false,
+                "Backend": {
+                  "Type": "vxlan",
+                  "Port": 8472
+                }
+              }
+      register: flannel_configmap_update
+
+    - name: Restart Flannel DaemonSet to apply configuration
+      k8s:
+        state: restarted
+        kind: DaemonSet
+        namespace: kube-flannel
+        name: kube-flannel-ds
+      when: flannel_configmap_update.changed
+

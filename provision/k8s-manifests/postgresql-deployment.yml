@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      nodeSelector:
+        node-type: worker
+      containers:
+      - name: postgres
+        image: postgres:latest  # Lock the version for stability (e.g., postgres:13)
+        ports:
+        - containerPort: 5432
+        envFrom:
+        - configMapRef:
+            name: django-config
+        volumeMounts:
+        - name: postgres-data
+          mountPath: /var/lib/postgresql/data
+      volumes:
+      - name: postgres-data
+        emptyDir:
+          sizeLimit: 2Gi  # Limit the size to 2GB

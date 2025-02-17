@@ -9,5 +9,3 @@ provision/.terraform
 provision/.terraform.lock.hcl
 provision/ansible_logs
 provision/exports.sh
-.ansible-lint
-terraform.tfstate
