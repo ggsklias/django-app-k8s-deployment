@@ -50,7 +50,29 @@
         tasks_from: kube_install_kubernetes.yml
 
 - hosts: all
-  gather_facts: yes  # Avoid failures due to missing Python
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: buildkit
+        tasks_from: buildkit_dependencies.yml
+
+- hosts: workers
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: buildkit
+        tasks_from: buildkit_build_image.yml
+
+- hosts: all
+  gather_facts: yes  
   become: yes
   vars_files:
     - group_vars/all
@@ -58,7 +80,7 @@
     - name: Include install_on_all tasks from install_kubernetes role
       include_role:
         name: kubernetes
-        tasks_from: install_kubernetes.yml
+        tasks_from: kube_install_kubernetes.yml
 
 - hosts: master
   gather_facts: yes  
@@ -118,10 +140,3 @@
 #   roles:
 #     - start_app
 
-# - hosts: all
-#   gather_facts: yes  
-#   become: yes
-#   vars_files:
-#     - group_vars/all
-#   roles:
-#     - docker_install
