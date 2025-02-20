@@ -32,8 +32,6 @@
     rsync_opts:
       - "--exclude=.venv"
       - "--exclude=.vscode"
-    # owner: ec2-user
-    # group: ec2-user
 
 - name: Copy start-django.sh to the server
   ansible.builtin.copy:
