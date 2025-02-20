@@ -6,28 +6,28 @@
 
 - name: Copy pyproject.toml
   copy:
-    src: /Users/geoskl/Dev/DevOpsApp/djangoarticleapp/pyproject.toml
+    src: ../djangoarticleapp/pyproject.toml
     dest: /code/pyproject.toml
     owner: ec2-user
     group: ec2-user
 
 - name: Copy poetry.lock
   copy:
-    src: /Users/geoskl/Dev/DevOpsApp/djangoarticleapp/poetry.lock
+    src: ../djangoarticleapp/poetry.lock
     dest: /code/poetry.lock
     owner: ec2-user
     group: ec2-user
 
 - name: Copy README.md files
   copy:
-    src: /Users/geoskl/Dev/DevOpsApp/djangoarticleapp/README.md
+    src: ../djangoarticleapp/README.md
     dest: /code/README.md
     owner: ec2-user
     group: ec2-user
 
 - name: Copy project files to the instance
   synchronize:
-    src: /Users/geoskl/Dev/DevOpsApp/djangoarticleapp/
+    src: ../djangoarticleapp/
     dest: /code
     rsync_opts:
       - "--exclude=.venv"
@@ -37,7 +37,7 @@
 
 - name: Copy start-django.sh to the server
   ansible.builtin.copy:
-    src: /Users/geoskl/Dev/DevOpsApp/djangoarticleapp/start-django.sh
+    src: ../djangoarticleapp/start-django.sh
     dest: /code/start-django.sh
     mode: '0755'  # This ensures the file is executable
 

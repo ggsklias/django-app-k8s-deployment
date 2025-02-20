@@ -17,7 +17,7 @@
 
 - name: Copy Kubernetes provisioning files
   copy:
-    src: /Users/geoskl/Dev/DevOpsApp/provision/k8s-manifests
+    src: ../provision/k8s-manifests
     dest: /home/ec2-user
     owner: ec2-user
     group: ec2-user

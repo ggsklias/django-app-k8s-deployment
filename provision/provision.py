@@ -26,7 +26,6 @@ def run_terraform():
 
     # Get the last two IPs
     last_two_ips = ips[-2:] if len(ips) >= 2 else ips
-
     return last_two_ips
 
 
