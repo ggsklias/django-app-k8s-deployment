@@ -55,7 +55,9 @@ build:
 
 provision:
   stage: provision
-  image: hashicorp/terraform:latest
+  image:
+    name: hashicorp/terraform:latest
+    entrypoint: [""]
   script:
     - cd provision
     - terraform init
