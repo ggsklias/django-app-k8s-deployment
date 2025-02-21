@@ -48,10 +48,10 @@ build:
   rules:
     - if: $CI_COMMIT_BRANCH
       exists:
-        - Dockerfile
-  artifacts:
-    paths:
-      - path/to/built/images  # if you need to persist artifacts
+        - djangoarticleapp/Dockerfile
+  # artifacts:
+  #   paths:
+  #     - path/to/built/images  # if you need to persist artifacts
 
 provision:
   stage: provision
