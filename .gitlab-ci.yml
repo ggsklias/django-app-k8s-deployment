@@ -73,6 +73,8 @@ deploy:
     entrypoint: [""]
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
+    - ls -la
+    - chmod 755 provision
     - cd provision
     - ansible-playbook -i inventory.ini playbook.yml
 
