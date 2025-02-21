@@ -11,7 +11,7 @@
 # for the default branch and all other (MR) branches.
 stages:
   - build
-  - provision
+  - provisionEC2
   - deploy
 
 variables:
@@ -54,7 +54,7 @@ build:
   #     - path/to/built/images  # if you need to persist artifacts
 
 provision:
-  stage: provision
+  stage: provisionEC2
   image:
     name: hashicorp/terraform:latest
     entrypoint: [""]
