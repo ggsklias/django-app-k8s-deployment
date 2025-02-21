@@ -1,4 +1,3 @@
-*.pem
 djangoarticleapp/.vscode
 djangoarticleapp/.venv
 djangoarticleapp/djangoarticleapp/migrations/__pycache__*
@@ -10,7 +9,6 @@ provision/.ansible_old
 provision/.terraform
 provision/.terraform.lock.hcl
 djangoarticleapp/.DS_Store
-provision/ansible_logs
 provision/exports.sh
 .ansible-lint
 provision/terraform.tfstate.backup
@@ -18,6 +16,5 @@ provision/terraform.tfstate
 provision/.terraform.tfstate.lock.info
 provision/k8s*
 provision/DevOpsApp.code-workspace
-provision/ansible_logs/ansible.log
 .DS_Store
 terraform.tfstate
