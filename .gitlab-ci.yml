@@ -68,7 +68,9 @@ provision:
 
 deploy:
   stage: deploy
-  image: williamyeh/ansible:alpine3  # Or a custom image with ansible installed
+  image: 
+    name: williamyeh/ansible:alpine3  # Or a custom image with ansible installed
+    entrypoint: [""]
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
     - ansible-playbook -i inventory.ini playbook.yml
