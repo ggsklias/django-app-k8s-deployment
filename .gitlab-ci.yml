@@ -76,6 +76,7 @@ deploy:
     - ls -la
     - chmod 755 provision
     - cd provision
+    - ls -la
     - ansible-playbook -i inventory.ini playbook.yml
 
 
