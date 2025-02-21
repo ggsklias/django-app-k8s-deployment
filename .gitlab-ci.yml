@@ -57,6 +57,7 @@ provision:
   stage: provision
   image: hashicorp/terraform:latest
   script:
+    - cd provision
     - terraform init
     - terraform apply -auto-approve
   artifacts:
