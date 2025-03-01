@@ -74,7 +74,7 @@ provision:
     # - terraform apply -auto-approve
   artifacts:
     paths:
-      - terraform.tfstate  # Persist state if needed
+      - .terraform.lock.hcl  # Persist state if needed
 
 deploy:
   stage: deploy
@@ -84,6 +84,7 @@ deploy:
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
     - ls -la
+    - ansible --version
     - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
@@ -94,7 +95,9 @@ deploy:
 
 wait:
   stage: wait
-  image: alpine:latest
+  image: 
+    name: alpine:latest
+    entrypoint: [""]
   script:
     - echo "Waiting for 60 seconds minutes before teardown..."
     - sleep 60
