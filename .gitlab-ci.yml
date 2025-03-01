@@ -69,6 +69,7 @@ provision:
     - cd provision
     - terraform init
     - python3 provision.py 
+    - ls -la
     # - terraform init
     # - terraform apply -auto-approve
   artifacts:
@@ -88,7 +89,7 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
     - ls -la
-    - cd provision
+    - cat inventory.ini
     - ansible-playbook -i inventory.ini playbook.yml
 
 wait:
@@ -100,7 +101,9 @@ wait:
 
 terraform_destroy:
   stage: terraform_destroy
-  image: hashicorp/terraform:light
+  image:
+    name: hashicorp/terraform:light
+    entrypoint: [""]
   script:
     - terraform init
     - terraform destroy -auto-approve

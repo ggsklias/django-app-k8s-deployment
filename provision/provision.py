@@ -17,16 +17,12 @@ def check_environ():
 
 def run_terraform():
     # Run Terraform and capture output
-    print("Working dir is %s" % CURRENT_WORKING_DIR)
     tf_command = ["terraform", "-chdir=%s" % CURRENT_WORKING_DIR, "apply", "-auto-approve"]
-    print ("Running Terraform command: %s" % " ".join(tf_command))
     process = subprocess.run(tf_command, text=True, capture_output=True)
     output = process.stdout
-    print(output)
 
     # Extract IP addresses using regex
     ips = re.findall(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', output)
-    print (ips)
 
     # Get the last two IPs
     last_two_ips = ips[-2:] if len(ips) >= 2 else ips
@@ -60,7 +56,6 @@ def write_to_inventory(inventory):
 check_environ()
 
 last_two_ips = run_terraform()
-print("Last two ips %s" % last_two_ips)
 
 master_ip = last_two_ips[0]
 worker_ip = last_two_ips[1]
