@@ -62,7 +62,7 @@ provision:
     - ls -la
     - apt-get update && apt-get install -y wget unzip
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
-    - unzip terraform_1.3.0_linux_amd64.zip -d /usr/local/bin/
+    - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - terraform version  # Verify installation
     - cd provision
     - python3 provision.py 
