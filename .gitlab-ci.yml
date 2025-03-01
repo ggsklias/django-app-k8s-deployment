@@ -76,6 +76,7 @@ provision:
     paths:
       - provision/.terraform.lock.hcl  # Persist state if needed
       - provision/terraform.tfstate 
+      - provision/inventory.ini
 
 deploy:
   stage: deploy
@@ -93,6 +94,8 @@ deploy:
     - ls -la
     - cat inventory.ini
     - ansible-playbook -i inventory.ini playbook.yml
+  dependencies:
+    - provision
 
 wait:
   stage: wait
@@ -109,6 +112,8 @@ terraform_destroy:
     name: hashicorp/terraform:light
     entrypoint: [""]
   script:
+    - cd provision
+    - ls -la
     - terraform init
     - terraform destroy -auto-approve
   dependencies:
