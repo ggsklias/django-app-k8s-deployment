@@ -54,7 +54,7 @@ build:
   #     - path/to/built/images  # if you need to persist artifacts
 
 provision:
-  stage: provisionEC2 with python script
+  stage: provisionEC2
   image:
     name: python:3.8
     entrypoint: [""]
