@@ -1,0 +1,915 @@
+2025-02-21 15:06:14,926 p=2901 u=geoskl n=ansible INFO| PLAY [all] ****************************************************************************************
+2025-02-21 15:06:14,933 p=2901 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] *******************************
+2025-02-21 15:06:18,223 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:06:18,930 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:06:18,935 p=2901 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] *******************************
+2025-02-21 15:06:24,631 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:06:25,319 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:06:25,326 p=2901 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] *******************************
+2025-02-21 15:07:17,252 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:23,207 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:23,212 p=2901 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install Python dependencies] *********************************
+2025-02-21 15:07:33,687 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:41,870 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:41,876 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Create the file for Forwarding IPv4 and iptables modules] **********************
+2025-02-21 15:07:42,524 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:42,530 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:42,533 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : configure Forwarding IPv4 and letting iptables see bridged traffic] ************
+2025-02-21 15:07:43,123 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:43,154 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:43,158 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe overlay] **************************************************************
+2025-02-21 15:07:43,781 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:43,786 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:43,791 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the overlay modules are loaded] ************************************
+2025-02-21 15:07:44,350 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:44,361 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:44,367 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : debug] *************************************************************************
+2025-02-21 15:07:44,383 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 15:07:44,386 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 15:07:44,388 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe br_netfilter] *********************************************************
+2025-02-21 15:07:44,974 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:45,007 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:45,010 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the br_netfilter modules are loaded] *******************************
+2025-02-21 15:07:45,548 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:45,551 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:45,554 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : debug] *************************************************************************
+2025-02-21 15:07:45,565 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 15:07:45,568 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 15:07:45,574 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Configure sysctl for Kubernetes networking] ************************************
+2025-02-21 15:07:46,800 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:46,806 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:46,810 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the net.bridge.bridge-nf-call-iptables, net.bridge.bridge-nf-call-ip6tables, net.ipv4.ip_forward system variables are set to 1] ***
+2025-02-21 15:07:47,366 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:47,378 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:47,381 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : debug] *************************************************************************
+2025-02-21 15:07:47,397 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 15:07:47,401 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 15:07:47,403 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Reload sysctl] *****************************************************************
+2025-02-21 15:07:47,935 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:47,952 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:47,954 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : Disable swap] ******************************************************************
+2025-02-21 15:07:48,502 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:48,516 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:48,520 p=2901 u=geoskl n=ansible INFO| TASK [prepare_os : install pre-requisites for python] *********************************************
+2025-02-21 15:07:54,869 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:55,598 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:55,605 p=2901 u=geoskl n=ansible INFO| RUNNING HANDLER [prepare_os : Reload sysctl] ******************************************************
+2025-02-21 15:07:56,164 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:07:56,169 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:56,175 p=2901 u=geoskl n=ansible INFO| PLAY [workers] ************************************************************************************
+2025-02-21 15:07:56,183 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:07:57,654 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:07:57,658 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Ensure the project directory exists] **************************************
+2025-02-21 15:07:58,243 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:58,249 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Copy pyproject.toml] ******************************************************
+2025-02-21 15:07:59,476 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:07:59,479 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Copy poetry.lock] *********************************************************
+2025-02-21 15:08:00,731 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:00,737 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Copy README.md files] *****************************************************
+2025-02-21 15:08:01,984 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:01,997 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Copy project files to the instance] ***************************************
+2025-02-21 15:08:02,624 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:02,627 p=2901 u=geoskl n=ansible INFO| TASK [project_install : Copy start-django.sh to the server] ***************************************
+2025-02-21 15:08:03,676 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:08:03,684 p=2901 u=geoskl n=ansible INFO| PLAY [all] ****************************************************************************************
+2025-02-21 15:08:03,686 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:08:04,817 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:08:04,887 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:08:04,890 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:08:04,915 p=2901 u=geoskl n=ansible INFO| included: buildkit for 18.199.85.136, 18.184.224.191
+2025-02-21 15:08:04,917 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] ***************************************************
+2025-02-21 15:08:07,499 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:07,766 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:07,770 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] ***************************************************
+2025-02-21 15:08:20,934 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:21,604 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:21,610 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] ********************************************************
+2025-02-21 15:08:23,203 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:23,291 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:23,296 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] **********************************************
+2025-02-21 15:08:24,718 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:24,772 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:24,775 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] ********************************************************
+2025-02-21 15:08:28,675 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:28,934 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:28,945 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ****************************************************************
+2025-02-21 15:08:33,702 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:35,590 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:35,600 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] **********************************************************
+2025-02-21 15:08:36,139 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:36,176 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:36,180 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] ***********************************
+2025-02-21 15:08:36,730 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:08:36,765 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:08:36,770 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] ******************************************
+2025-02-21 15:08:37,886 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:37,935 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:37,940 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] ***********************************************
+2025-02-21 15:08:38,819 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:08:38,820 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:08:38,829 p=2901 u=geoskl n=ansible INFO| PLAY [workers] ************************************************************************************
+2025-02-21 15:08:38,834 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:08:40,045 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:08:40,049 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:08:40,065 p=2901 u=geoskl n=ansible INFO| included: buildkit for 18.184.224.191
+2025-02-21 15:08:40,068 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] ***************************************************
+2025-02-21 15:10:14,507 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:10:14,513 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] **************************************************
+2025-02-21 15:10:48,053 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:10:48,059 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] *******************************************************************
+2025-02-21 15:11:01,274 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:01,280 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] *************************************************************************
+2025-02-21 15:11:01,903 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:01,910 p=2901 u=geoskl n=ansible INFO| PLAY [all] ****************************************************************************************
+2025-02-21 15:11:01,916 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:11:03,320 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:03,602 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:03,605 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:11:03,632 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136, 18.184.224.191
+2025-02-21 15:11:03,635 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] *****************************************************
+2025-02-21 15:11:04,741 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:04,775 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:04,781 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] *************************************************
+2025-02-21 15:11:22,483 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:25,911 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:25,919 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] ********************************************
+2025-02-21 15:11:33,959 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:37,358 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:37,371 p=2901 u=geoskl n=ansible INFO| PLAY [all] ****************************************************************************************
+2025-02-21 15:11:37,375 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:11:38,526 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:38,606 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:38,608 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:11:38,631 p=2901 u=geoskl n=ansible INFO| included: buildkit for 18.199.85.136, 18.184.224.191
+2025-02-21 15:11:38,633 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] ***************************************************
+2025-02-21 15:11:42,925 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:43,683 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:43,692 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] ***************************************************
+2025-02-21 15:11:46,819 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:47,191 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:47,198 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] ********************************************************
+2025-02-21 15:11:47,944 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:47,951 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:47,957 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] **********************************************
+2025-02-21 15:11:48,667 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:48,723 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:48,728 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] ********************************************************
+2025-02-21 15:11:49,997 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:51,115 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:51,122 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ****************************************************************
+2025-02-21 15:11:55,839 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:56,241 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:56,248 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] **********************************************************
+2025-02-21 15:11:56,823 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:11:56,824 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:11:56,828 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] ***********************************
+2025-02-21 15:11:57,394 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:57,412 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:57,418 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] ******************************************
+2025-02-21 15:11:58,414 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:58,450 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:58,456 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] ***********************************************
+2025-02-21 15:11:59,211 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:11:59,227 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:11:59,237 p=2901 u=geoskl n=ansible INFO| PLAY [workers] ************************************************************************************
+2025-02-21 15:11:59,240 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:12:00,448 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:12:00,451 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:12:00,466 p=2901 u=geoskl n=ansible INFO| included: buildkit for 18.184.224.191
+2025-02-21 15:12:00,469 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] ***************************************************
+2025-02-21 15:13:23,545 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:13:23,551 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] **************************************************
+2025-02-21 15:13:41,008 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:13:41,013 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] *******************************************************************
+2025-02-21 15:13:42,744 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:13:42,749 p=2901 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] *************************************************************************
+2025-02-21 15:13:43,457 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:13:43,465 p=2901 u=geoskl n=ansible INFO| PLAY [all] ****************************************************************************************
+2025-02-21 15:13:43,469 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:13:44,814 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:13:45,129 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:13:45,134 p=2901 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] **********************************
+2025-02-21 15:13:45,160 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136, 18.184.224.191
+2025-02-21 15:13:45,162 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] *****************************************************
+2025-02-21 15:13:46,146 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:13:46,208 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:13:46,215 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] *************************************************
+2025-02-21 15:13:49,704 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:13:51,897 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:13:51,904 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] ********************************************
+2025-02-21 15:13:58,010 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:13:58,280 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:13:58,289 p=2901 u=geoskl n=ansible INFO| PLAY [master] *************************************************************************************
+2025-02-21 15:13:58,292 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:13:59,390 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:13:59,394 p=2901 u=geoskl n=ansible INFO| TASK [Initialize master] **************************************************************************
+2025-02-21 15:13:59,422 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136
+2025-02-21 15:13:59,424 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Initialize the Kubernetes cluster (if not already initialized)] ****************
+2025-02-21 15:14:30,836 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:30,842 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Create kubeadm token and capture join command] *********************************
+2025-02-21 15:14:31,787 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:31,794 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Set the join command as a fact] ************************************************
+2025-02-21 15:14:31,815 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:14:31,820 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Check if folder exists] ********************************************************
+2025-02-21 15:14:32,384 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:14:32,387 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Set up kubeconfig for kubectl (admin access) on master node -  Execute command if folder does not exist] ***
+2025-02-21 15:14:33,012 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:33,016 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Kubelet to apply Docker as container runtime] **************************
+2025-02-21 15:14:33,950 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:33,955 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for API server to respond] ************************************************
+2025-02-21 15:14:35,093 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:35,099 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Install Flannel networking on master node] *************************************
+2025-02-21 15:14:36,920 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:36,924 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Patch Flannel ConfigMap to set VXLAN port to UDP 8472] *************************
+2025-02-21 15:14:39,529 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:39,535 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Flannel DaemonSet to apply new configuration] **************************
+2025-02-21 15:14:40,396 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:40,405 p=2901 u=geoskl n=ansible INFO| PLAY [workers] ************************************************************************************
+2025-02-21 15:14:40,409 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:14:41,638 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:14:41,642 p=2901 u=geoskl n=ansible INFO| TASK [join_node] **********************************************************************************
+2025-02-21 15:14:41,664 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.184.224.191
+2025-02-21 15:14:41,668 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Fetch the kubeadm join command from the master node] ***************************
+2025-02-21 15:14:41,680 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:14:41,682 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Join the worker node to the master] ********************************************
+2025-02-21 15:14:45,597 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:14:45,603 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Check if node joined successfully] *********************************************
+2025-02-21 15:14:45,621 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191] => {
+    "msg": "Node successfully joined the Kubernetes cluster"
+}
+2025-02-21 15:14:45,626 p=2901 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] ******************************************
+2025-02-21 15:14:45,642 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.184.224.191
+2025-02-21 15:14:45,645 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] **********************************************************
+2025-02-21 15:14:46,237 p=2901 u=geoskl n=ansible INFO| changed: [18.184.224.191]
+2025-02-21 15:14:46,242 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] **********************************************************
+2025-02-21 15:14:46,259 p=2901 u=geoskl n=ansible INFO| ok: [18.184.224.191]
+2025-02-21 15:14:46,264 p=2901 u=geoskl n=ansible INFO| PLAY [master] *************************************************************************************
+2025-02-21 15:14:46,267 p=2901 u=geoskl n=ansible INFO| TASK [Gathering Facts] ****************************************************************************
+2025-02-21 15:14:47,884 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:14:47,889 p=2901 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] ******************************************
+2025-02-21 15:14:47,913 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136
+2025-02-21 15:14:47,915 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Register hostvar worker_hostname] **********************************************
+2025-02-21 15:14:47,928 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:14:47,931 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Label the worker node] *********************************************************
+2025-02-21 15:14:48,785 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:48,789 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Debug output] ******************************************************************
+2025-02-21 15:14:48,804 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136] => {
+    "label_output.stdout": "node/ip-10-0-1-156.eu-central-1.compute.internal labeled"
+}
+2025-02-21 15:14:48,809 p=2901 u=geoskl n=ansible INFO| TASK [kube_apply_manifests yml] *******************************************************************
+2025-02-21 15:14:48,826 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136
+2025-02-21 15:14:48,830 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Apply manifests] ***************************************************************
+2025-02-21 15:14:52,029 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:14:52,035 p=2901 u=geoskl n=ansible INFO| TASK [kube_get_app_url yml] ***********************************************************************
+2025-02-21 15:14:52,053 p=2901 u=geoskl n=ansible INFO| included: kubernetes for 18.199.85.136
+2025-02-21 15:14:52,057 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for 1 minute for Django app to be ready] **********************************
+2025-02-21 15:15:53,040 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136]
+2025-02-21 15:15:53,046 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Get Django service NodePort] ***************************************************
+2025-02-21 15:15:54,341 p=2901 u=geoskl n=ansible INFO| changed: [18.199.85.136]
+2025-02-21 15:15:54,344 p=2901 u=geoskl n=ansible INFO| TASK [kubernetes : Print application URL] *********************************************************
+2025-02-21 15:15:54,356 p=2901 u=geoskl n=ansible INFO| ok: [18.199.85.136] => {
+    "msg": "http://18.184.224.191:31180"
+}
+2025-02-21 15:15:54,359 p=2901 u=geoskl n=ansible INFO| PLAY RECAP ****************************************************************************************
+2025-02-21 15:15:54,359 p=2901 u=geoskl n=ansible INFO| 18.184.224.191             : ok=80   changed=49   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-02-21 15:15:54,359 p=2901 u=geoskl n=ansible INFO| 18.199.85.136              : ok=76   changed=44   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-02-21 19:17:01,464 p=27035 u=geoskl n=ansible INFO| PLAY [all] ***********************************************************************************************
+2025-02-21 19:17:01,471 p=27035 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] **************************************
+2025-02-21 19:17:08,632 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:17:08,640 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:17:08,645 p=27035 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] **************************************
+2025-02-21 19:17:18,666 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:17:24,611 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:17:24,618 p=27035 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] **************************************
+2025-02-21 19:18:16,203 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:17,724 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:17,726 p=27035 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install Python dependencies] ****************************************
+2025-02-21 19:18:30,270 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:31,989 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:31,997 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Create the file for Forwarding IPv4 and iptables modules] *****************************
+2025-02-21 19:18:32,597 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:32,624 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:32,628 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : configure Forwarding IPv4 and letting iptables see bridged traffic] *******************
+2025-02-21 19:18:33,198 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:33,198 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:33,201 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe overlay] *********************************************************************
+2025-02-21 19:18:33,814 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:33,816 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:33,820 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the overlay modules are loaded] *******************************************
+2025-02-21 19:18:34,369 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:34,369 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:34,374 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ********************************************************************************
+2025-02-21 19:18:34,392 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 19:18:34,396 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 19:18:34,398 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe br_netfilter] ****************************************************************
+2025-02-21 19:18:34,952 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:34,962 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:34,965 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the br_netfilter modules are loaded] **************************************
+2025-02-21 19:18:35,518 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:35,529 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:35,535 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ********************************************************************************
+2025-02-21 19:18:35,553 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 19:18:35,556 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 19:18:35,560 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Configure sysctl for Kubernetes networking] *******************************************
+2025-02-21 19:18:36,763 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:36,764 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:36,767 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the net.bridge.bridge-nf-call-iptables, net.bridge.bridge-nf-call-ip6tables, net.ipv4.ip_forward system variables are set to 1] ***
+2025-02-21 19:18:37,334 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:37,335 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:37,337 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ********************************************************************************
+2025-02-21 19:18:37,357 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 19:18:37,361 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 19:18:37,363 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Reload sysctl] ************************************************************************
+2025-02-21 19:18:37,908 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:37,909 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:37,913 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : Disable swap] *************************************************************************
+2025-02-21 19:18:38,461 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:38,461 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:38,464 p=27035 u=geoskl n=ansible INFO| TASK [prepare_os : install pre-requisites for python] ****************************************************
+2025-02-21 19:18:44,186 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:44,356 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:44,367 p=27035 u=geoskl n=ansible INFO| RUNNING HANDLER [prepare_os : Reload sysctl] *************************************************************
+2025-02-21 19:18:44,919 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:44,923 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:44,927 p=27035 u=geoskl n=ansible INFO| PLAY [workers] *******************************************************************************************
+2025-02-21 19:18:44,934 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:18:46,253 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:18:46,259 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Ensure the project directory exists] *********************************************
+2025-02-21 19:18:46,824 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:46,828 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Copy pyproject.toml] *************************************************************
+2025-02-21 19:18:47,986 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:47,990 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Copy poetry.lock] ****************************************************************
+2025-02-21 19:18:49,156 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:49,161 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Copy README.md files] ************************************************************
+2025-02-21 19:18:50,323 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:50,331 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Copy project files to the instance] **********************************************
+2025-02-21 19:18:50,975 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:50,977 p=27035 u=geoskl n=ansible INFO| TASK [project_install : Copy start-django.sh to the server] **********************************************
+2025-02-21 19:18:51,938 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:18:51,943 p=27035 u=geoskl n=ansible INFO| PLAY [all] ***********************************************************************************************
+2025-02-21 19:18:51,946 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:18:52,993 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:18:53,149 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:18:53,155 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:18:53,184 p=27035 u=geoskl n=ansible INFO| included: buildkit for 3.124.8.94, 3.79.193.83
+2025-02-21 19:18:53,186 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **********************************************************
+2025-02-21 19:18:55,874 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:18:55,884 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:18:55,887 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **********************************************************
+2025-02-21 19:19:08,919 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:08,995 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:08,999 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] ***************************************************************
+2025-02-21 19:19:10,519 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:10,521 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:10,524 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] *****************************************************
+2025-02-21 19:19:11,877 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:11,878 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:11,881 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] ***************************************************************
+2025-02-21 19:19:15,305 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:15,324 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:15,332 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ***********************************************************************
+2025-02-21 19:19:20,743 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:20,801 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:20,811 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] *****************************************************************
+2025-02-21 19:19:21,354 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:21,355 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:21,359 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] ******************************************
+2025-02-21 19:19:21,896 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:19:21,902 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:19:21,906 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] *************************************************
+2025-02-21 19:19:23,036 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:23,036 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:23,038 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] ******************************************************
+2025-02-21 19:19:23,920 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:19:23,921 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:19:23,931 p=27035 u=geoskl n=ansible INFO| PLAY [workers] *******************************************************************************************
+2025-02-21 19:19:23,935 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:19:24,981 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:19:24,983 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:19:24,995 p=27035 u=geoskl n=ansible INFO| included: buildkit for 3.79.193.83
+2025-02-21 19:19:24,996 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] **********************************************************
+2025-02-21 19:20:43,529 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:20:43,536 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] *********************************************************
+2025-02-21 19:21:13,713 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:13,719 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] **************************************************************************
+2025-02-21 19:21:25,588 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:25,592 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] ********************************************************************************
+2025-02-21 19:21:26,213 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:26,220 p=27035 u=geoskl n=ansible INFO| PLAY [all] ***********************************************************************************************
+2025-02-21 19:21:26,225 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:21:27,546 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:21:27,938 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:21:27,943 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:21:27,970 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94, 3.79.193.83
+2025-02-21 19:21:27,973 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] ************************************************************
+2025-02-21 19:21:29,120 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:29,121 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:21:29,126 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] ********************************************************
+2025-02-21 19:21:46,457 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:21:48,510 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:48,518 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] ***************************************************
+2025-02-21 19:21:57,202 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:21:58,567 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:21:58,578 p=27035 u=geoskl n=ansible INFO| PLAY [all] ***********************************************************************************************
+2025-02-21 19:21:58,582 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:21:59,782 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:21:59,814 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:21:59,818 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:21:59,837 p=27035 u=geoskl n=ansible INFO| included: buildkit for 3.124.8.94, 3.79.193.83
+2025-02-21 19:21:59,839 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **********************************************************
+2025-02-21 19:22:04,089 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:22:04,245 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:22:04,253 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **********************************************************
+2025-02-21 19:22:07,341 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:22:07,362 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:22:07,368 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] ***************************************************************
+2025-02-21 19:22:08,060 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:08,061 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:08,065 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] *****************************************************
+2025-02-21 19:22:08,788 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:08,789 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:08,794 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] ***************************************************************
+2025-02-21 19:22:09,964 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:10,832 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:22:10,839 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ***********************************************************************
+2025-02-21 19:22:15,546 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:22:15,546 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:22:15,551 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] *****************************************************************
+2025-02-21 19:22:16,106 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:22:16,110 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:22:16,116 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] ******************************************
+2025-02-21 19:22:16,671 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:16,673 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:16,678 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] *************************************************
+2025-02-21 19:22:17,671 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:17,677 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:17,682 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] ******************************************************
+2025-02-21 19:22:18,402 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:18,408 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:22:18,414 p=27035 u=geoskl n=ansible INFO| PLAY [workers] *******************************************************************************************
+2025-02-21 19:22:18,417 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:22:19,481 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:22:19,485 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:22:19,506 p=27035 u=geoskl n=ansible INFO| included: buildkit for 3.79.193.83
+2025-02-21 19:22:19,508 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] **********************************************************
+2025-02-21 19:23:31,486 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:23:31,492 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] *********************************************************
+2025-02-21 19:23:48,311 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:23:48,315 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] **************************************************************************
+2025-02-21 19:23:50,027 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:23:50,032 p=27035 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] ********************************************************************************
+2025-02-21 19:23:50,587 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:23:50,591 p=27035 u=geoskl n=ansible INFO| PLAY [all] ***********************************************************************************************
+2025-02-21 19:23:50,593 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:23:51,914 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:23:52,200 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:23:52,204 p=27035 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *****************************************
+2025-02-21 19:23:52,227 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94, 3.79.193.83
+2025-02-21 19:23:52,229 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] ************************************************************
+2025-02-21 19:23:53,162 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:23:53,188 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:23:53,194 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] ********************************************************
+2025-02-21 19:23:56,718 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:23:58,530 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:23:58,538 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] ***************************************************
+2025-02-21 19:24:04,551 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:24:04,553 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:24:04,560 p=27035 u=geoskl n=ansible INFO| PLAY [master] ********************************************************************************************
+2025-02-21 19:24:04,563 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:24:05,618 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:24:05,621 p=27035 u=geoskl n=ansible INFO| TASK [Initialize master] *********************************************************************************
+2025-02-21 19:24:05,639 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94
+2025-02-21 19:24:05,641 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Initialize the Kubernetes cluster (if not already initialized)] ***********************
+2025-02-21 19:24:38,288 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:38,291 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Create kubeadm token and capture join command] ****************************************
+2025-02-21 19:24:39,154 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:39,158 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Set the join command as a fact] *******************************************************
+2025-02-21 19:24:39,168 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:24:39,171 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Check if folder exists] ***************************************************************
+2025-02-21 19:24:39,711 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:24:39,716 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Set up kubeconfig for kubectl (admin access) on master node -  Execute command if folder does not exist] ***
+2025-02-21 19:24:40,305 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:40,311 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Kubelet to apply Docker as container runtime] *********************************
+2025-02-21 19:24:41,200 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:41,206 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for API server to respond] *******************************************************
+2025-02-21 19:24:42,503 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:42,508 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Install Flannel networking on master node] ********************************************
+2025-02-21 19:24:44,309 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:44,316 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Patch Flannel ConfigMap to set VXLAN port to UDP 8472] ********************************
+2025-02-21 19:24:46,772 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:46,778 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Flannel DaemonSet to apply new configuration] *********************************
+2025-02-21 19:24:47,608 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:24:47,616 p=27035 u=geoskl n=ansible INFO| PLAY [workers] *******************************************************************************************
+2025-02-21 19:24:47,619 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:24:48,757 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:24:48,760 p=27035 u=geoskl n=ansible INFO| TASK [join_node] *****************************************************************************************
+2025-02-21 19:24:48,778 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.79.193.83
+2025-02-21 19:24:48,782 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Fetch the kubeadm join command from the master node] **********************************
+2025-02-21 19:24:48,796 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:24:48,798 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Join the worker node to the master] ***************************************************
+2025-02-21 19:25:10,550 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:25:10,554 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Check if node joined successfully] ****************************************************
+2025-02-21 19:25:10,570 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83] => {
+    "msg": "Node successfully joined the Kubernetes cluster"
+}
+2025-02-21 19:25:10,576 p=27035 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] *************************************************
+2025-02-21 19:25:10,593 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.79.193.83
+2025-02-21 19:25:10,596 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] *****************************************************************
+2025-02-21 19:25:11,129 p=27035 u=geoskl n=ansible INFO| changed: [3.79.193.83]
+2025-02-21 19:25:11,133 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] *****************************************************************
+2025-02-21 19:25:11,148 p=27035 u=geoskl n=ansible INFO| ok: [3.79.193.83]
+2025-02-21 19:25:11,154 p=27035 u=geoskl n=ansible INFO| PLAY [master] ********************************************************************************************
+2025-02-21 19:25:11,157 p=27035 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***********************************************************************************
+2025-02-21 19:25:13,026 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:25:13,030 p=27035 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] *************************************************
+2025-02-21 19:25:13,057 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94
+2025-02-21 19:25:13,059 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Register hostvar worker_hostname] *****************************************************
+2025-02-21 19:25:13,073 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:25:13,076 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Label the worker node] ****************************************************************
+2025-02-21 19:25:14,571 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:25:14,578 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Debug output] *************************************************************************
+2025-02-21 19:25:14,603 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94] => {
+    "label_output.stdout": "node/ip-10-0-1-225.eu-central-1.compute.internal labeled"
+}
+2025-02-21 19:25:14,610 p=27035 u=geoskl n=ansible INFO| TASK [kube_apply_manifests yml] **************************************************************************
+2025-02-21 19:25:14,626 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94
+2025-02-21 19:25:14,629 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Apply manifests] **********************************************************************
+2025-02-21 19:25:16,950 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:25:16,960 p=27035 u=geoskl n=ansible INFO| TASK [kube_get_app_url yml] ******************************************************************************
+2025-02-21 19:25:16,989 p=27035 u=geoskl n=ansible INFO| included: kubernetes for 3.124.8.94
+2025-02-21 19:25:16,994 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for 1 minute for Django app to be ready] *****************************************
+2025-02-21 19:26:17,934 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94]
+2025-02-21 19:26:17,940 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Get Django service NodePort] **********************************************************
+2025-02-21 19:26:18,855 p=27035 u=geoskl n=ansible INFO| changed: [3.124.8.94]
+2025-02-21 19:26:18,862 p=27035 u=geoskl n=ansible INFO| TASK [kubernetes : Print application URL] ****************************************************************
+2025-02-21 19:26:18,885 p=27035 u=geoskl n=ansible INFO| ok: [3.124.8.94] => {
+    "msg": "http://3.79.193.83:32031"
+}
+2025-02-21 19:26:18,889 p=27035 u=geoskl n=ansible INFO| PLAY RECAP ***********************************************************************************************
+2025-02-21 19:26:18,889 p=27035 u=geoskl n=ansible INFO| 3.124.8.94                 : ok=76   changed=44   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-02-21 19:26:18,889 p=27035 u=geoskl n=ansible INFO| 3.79.193.83                : ok=80   changed=49   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-02-21 19:37:41,653 p=31140 u=geoskl n=ansible INFO| PLAY [all] ***************************************************************************************
+2025-02-21 19:37:41,660 p=31140 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] ******************************
+2025-02-21 19:37:44,911 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:37:44,912 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:37:44,914 p=31140 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] ******************************
+2025-02-21 19:37:50,547 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:37:50,590 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:37:50,592 p=31140 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install required dependencies] ******************************
+2025-02-21 19:38:43,516 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:38:43,951 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:38:43,955 p=31140 u=geoskl n=ansible INFO| TASK [prerequisites_amazon_linux_2 : Install Python dependencies] ********************************
+2025-02-21 19:38:57,683 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:38:58,310 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:38:58,314 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Create the file for Forwarding IPv4 and iptables modules] *********************
+2025-02-21 19:38:58,896 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:38:58,902 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:38:58,904 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : configure Forwarding IPv4 and letting iptables see bridged traffic] ***********
+2025-02-21 19:38:59,453 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:38:59,467 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:38:59,469 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe overlay] *************************************************************
+2025-02-21 19:39:00,058 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:00,059 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:00,061 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the overlay modules are loaded] ***********************************
+2025-02-21 19:39:00,583 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:00,585 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:00,587 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ************************************************************************
+2025-02-21 19:39:00,598 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 19:39:00,601 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244] => {
+    "msg": [
+        "overlay               159744  0"
+    ]
+}
+2025-02-21 19:39:00,603 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : modprobe br_netfilter] ********************************************************
+2025-02-21 19:39:01,152 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:01,155 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:01,157 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the br_netfilter modules are loaded] ******************************
+2025-02-21 19:39:01,696 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:01,696 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:01,699 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ************************************************************************
+2025-02-21 19:39:01,711 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 19:39:01,714 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244] => {
+    "msg": [
+        "br_netfilter           32768  0",
+        "bridge                262144  1 br_netfilter"
+    ]
+}
+2025-02-21 19:39:01,717 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Configure sysctl for Kubernetes networking] ***********************************
+2025-02-21 19:39:02,913 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:02,914 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:02,917 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Verify that the net.bridge.bridge-nf-call-iptables, net.bridge.bridge-nf-call-ip6tables, net.ipv4.ip_forward system variables are set to 1] ***
+2025-02-21 19:39:03,454 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:03,454 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:03,456 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : debug] ************************************************************************
+2025-02-21 19:39:03,467 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 19:39:03,469 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244] => {
+    "msg": [
+        "net.bridge.bridge-nf-call-iptables = 0",
+        "net.bridge.bridge-nf-call-ip6tables = 0",
+        "net.ipv4.ip_forward = 0"
+    ]
+}
+2025-02-21 19:39:03,471 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Reload sysctl] ****************************************************************
+2025-02-21 19:39:03,991 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:03,995 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:03,997 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : Disable swap] *****************************************************************
+2025-02-21 19:39:04,532 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:04,532 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:04,534 p=31140 u=geoskl n=ansible INFO| TASK [prepare_os : install pre-requisites for python] ********************************************
+2025-02-21 19:39:10,449 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:10,451 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:10,455 p=31140 u=geoskl n=ansible INFO| RUNNING HANDLER [prepare_os : Reload sysctl] *****************************************************
+2025-02-21 19:39:11,011 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:11,048 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:11,054 p=31140 u=geoskl n=ansible INFO| PLAY [workers] ***********************************************************************************
+2025-02-21 19:39:11,058 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:39:12,395 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:39:12,400 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Ensure the project directory exists] *************************************
+2025-02-21 19:39:12,976 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:12,979 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Copy pyproject.toml] *****************************************************
+2025-02-21 19:39:14,144 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:14,149 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Copy poetry.lock] ********************************************************
+2025-02-21 19:39:15,387 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:15,393 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Copy README.md files] ****************************************************
+2025-02-21 19:39:16,548 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:16,552 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Copy project files to the instance] **************************************
+2025-02-21 19:39:17,153 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:17,156 p=31140 u=geoskl n=ansible INFO| TASK [project_install : Copy start-django.sh to the server] **************************************
+2025-02-21 19:39:18,164 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:39:18,172 p=31140 u=geoskl n=ansible INFO| PLAY [all] ***************************************************************************************
+2025-02-21 19:39:18,174 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:39:19,256 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:39:19,401 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:39:19,405 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:39:19,428 p=31140 u=geoskl n=ansible INFO| included: buildkit for 52.59.203.103, 3.70.245.244
+2025-02-21 19:39:19,430 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **************************************************
+2025-02-21 19:39:22,019 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:22,064 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:22,070 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **************************************************
+2025-02-21 19:39:35,101 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:35,160 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:35,166 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] *******************************************************
+2025-02-21 19:39:36,711 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:36,712 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:36,716 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] *********************************************
+2025-02-21 19:39:38,077 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:38,079 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:38,085 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] *******************************************************
+2025-02-21 19:39:40,981 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:41,019 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:41,027 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ***************************************************************
+2025-02-21 19:39:46,902 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:46,965 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:46,977 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] *********************************************************
+2025-02-21 19:39:47,522 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:47,523 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:47,527 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] **********************************
+2025-02-21 19:39:48,082 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:39:48,083 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:39:48,087 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] *****************************************
+2025-02-21 19:39:49,242 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:49,243 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:49,247 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] **********************************************
+2025-02-21 19:39:50,085 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:39:50,096 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:39:50,107 p=31140 u=geoskl n=ansible INFO| PLAY [workers] ***********************************************************************************
+2025-02-21 19:39:50,110 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:39:51,196 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:39:51,198 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:39:51,209 p=31140 u=geoskl n=ansible INFO| included: buildkit for 3.70.245.244
+2025-02-21 19:39:51,211 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] **************************************************
+2025-02-21 19:41:22,566 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:41:22,571 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] *************************************************
+2025-02-21 19:41:54,806 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:41:54,812 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] ******************************************************************
+2025-02-21 19:42:07,009 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:07,014 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] ************************************************************************
+2025-02-21 19:42:07,703 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:07,711 p=31140 u=geoskl n=ansible INFO| PLAY [all] ***************************************************************************************
+2025-02-21 19:42:07,717 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:42:09,143 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:09,360 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:09,365 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:42:09,407 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103, 3.70.245.244
+2025-02-21 19:42:09,413 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] ****************************************************
+2025-02-21 19:42:10,558 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:10,559 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:10,563 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] ************************************************
+2025-02-21 19:42:27,488 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:30,499 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:30,507 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] *******************************************
+2025-02-21 19:42:37,685 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:39,634 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:39,647 p=31140 u=geoskl n=ansible INFO| PLAY [all] ***************************************************************************************
+2025-02-21 19:42:39,652 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:42:40,888 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:40,893 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:40,896 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:42:40,920 p=31140 u=geoskl n=ansible INFO| included: buildkit for 52.59.203.103, 3.70.245.244
+2025-02-21 19:42:40,922 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **************************************************
+2025-02-21 19:42:45,074 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:45,316 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:45,323 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Install required dependencies] **************************************************
+2025-02-21 19:42:48,459 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:48,459 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:48,464 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Start containerd service] *******************************************************
+2025-02-21 19:42:49,169 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:49,170 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:49,180 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Enable containerd to start on boot] *********************************************
+2025-02-21 19:42:49,906 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:49,907 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:49,913 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Download BuildKit binary] *******************************************************
+2025-02-21 19:42:51,210 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:51,940 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:51,947 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Extract BuildKit] ***************************************************************
+2025-02-21 19:42:56,593 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:56,644 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:56,649 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Move buildkit binaries] *********************************************************
+2025-02-21 19:42:57,207 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:42:57,209 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:42:57,216 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Give insecure permissions to an existing file] **********************************
+2025-02-21 19:42:57,772 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:57,773 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:57,777 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Enable and start BuildKit as a service] *****************************************
+2025-02-21 19:42:58,777 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:58,778 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:58,780 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Start and enable BuildKit service] **********************************************
+2025-02-21 19:42:59,515 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:42:59,515 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:42:59,520 p=31140 u=geoskl n=ansible INFO| PLAY [workers] ***********************************************************************************
+2025-02-21 19:42:59,523 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:43:00,646 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:43:00,650 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:43:00,667 p=31140 u=geoskl n=ansible INFO| included: buildkit for 3.70.245.244
+2025-02-21 19:43:00,669 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Build the image with buildctl] **************************************************
+2025-02-21 19:44:22,620 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:22,626 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Load the image into containerd] *************************************************
+2025-02-21 19:44:40,898 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:40,903 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Pull Postgres] ******************************************************************
+2025-02-21 19:44:42,635 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:42,641 p=31140 u=geoskl n=ansible INFO| TASK [buildkit : Cleanup] ************************************************************************
+2025-02-21 19:44:43,302 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:43,311 p=31140 u=geoskl n=ansible INFO| PLAY [all] ***************************************************************************************
+2025-02-21 19:44:43,314 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:44:44,676 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:44:44,952 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:44:44,958 p=31140 u=geoskl n=ansible INFO| TASK [Include install_on_all tasks from install_kubernetes role] *********************************
+2025-02-21 19:44:44,985 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103, 3.70.245.244
+2025-02-21 19:44:44,987 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Add Kubernetes repository] ****************************************************
+2025-02-21 19:44:45,977 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:44:45,981 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:44:45,985 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Install required dependencies] ************************************************
+2025-02-21 19:44:49,499 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:44:51,545 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:51,553 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Copy Kubernetes provisioning files] *******************************************
+2025-02-21 19:44:56,756 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:44:56,761 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:44:56,767 p=31140 u=geoskl n=ansible INFO| PLAY [master] ************************************************************************************
+2025-02-21 19:44:56,769 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:44:57,835 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:44:57,839 p=31140 u=geoskl n=ansible INFO| TASK [Initialize master] *************************************************************************
+2025-02-21 19:44:57,864 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103
+2025-02-21 19:44:57,866 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Initialize the Kubernetes cluster (if not already initialized)] ***************
+2025-02-21 19:45:29,344 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:29,349 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Create kubeadm token and capture join command] ********************************
+2025-02-21 19:45:30,302 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:30,308 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Set the join command as a fact] ***********************************************
+2025-02-21 19:45:30,329 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:45:30,333 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Check if folder exists] *******************************************************
+2025-02-21 19:45:30,926 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:45:30,932 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Set up kubeconfig for kubectl (admin access) on master node -  Execute command if folder does not exist] ***
+2025-02-21 19:45:31,582 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:31,588 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Kubelet to apply Docker as container runtime] *************************
+2025-02-21 19:45:32,518 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:32,524 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for API server to respond] ***********************************************
+2025-02-21 19:45:33,737 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:33,743 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Install Flannel networking on master node] ************************************
+2025-02-21 19:45:35,486 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:35,489 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Patch Flannel ConfigMap to set VXLAN port to UDP 8472] ************************
+2025-02-21 19:45:38,244 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:38,248 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Restart Flannel DaemonSet to apply new configuration] *************************
+2025-02-21 19:45:38,953 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:45:38,960 p=31140 u=geoskl n=ansible INFO| PLAY [workers] ***********************************************************************************
+2025-02-21 19:45:38,963 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:45:40,051 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:45:40,054 p=31140 u=geoskl n=ansible INFO| TASK [join_node] *********************************************************************************
+2025-02-21 19:45:40,068 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 3.70.245.244
+2025-02-21 19:45:40,072 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Fetch the kubeadm join command from the master node] **************************
+2025-02-21 19:45:40,084 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:45:40,087 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Join the worker node to the master] *******************************************
+2025-02-21 19:46:02,313 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:46:02,319 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Check if node joined successfully] ********************************************
+2025-02-21 19:46:02,342 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244] => {
+    "msg": "Node successfully joined the Kubernetes cluster"
+}
+2025-02-21 19:46:02,348 p=31140 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] *****************************************
+2025-02-21 19:46:02,362 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 3.70.245.244
+2025-02-21 19:46:02,365 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] *********************************************************
+2025-02-21 19:46:03,025 p=31140 u=geoskl n=ansible INFO| changed: [3.70.245.244]
+2025-02-21 19:46:03,030 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Save hostname result] *********************************************************
+2025-02-21 19:46:03,049 p=31140 u=geoskl n=ansible INFO| ok: [3.70.245.244]
+2025-02-21 19:46:03,054 p=31140 u=geoskl n=ansible INFO| PLAY [master] ************************************************************************************
+2025-02-21 19:46:03,056 p=31140 u=geoskl n=ansible INFO| TASK [Gathering Facts] ***************************************************************************
+2025-02-21 19:46:04,817 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:46:04,821 p=31140 u=geoskl n=ansible INFO| TASK [Get worker hostname and set it to worker_hostname] *****************************************
+2025-02-21 19:46:04,846 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103
+2025-02-21 19:46:04,848 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Register hostvar worker_hostname] *********************************************
+2025-02-21 19:46:04,861 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:46:04,864 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Label the worker node] ********************************************************
+2025-02-21 19:46:06,098 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:46:06,103 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Debug output] *****************************************************************
+2025-02-21 19:46:06,122 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103] => {
+    "label_output.stdout": "node/ip-10-0-1-249.eu-central-1.compute.internal labeled"
+}
+2025-02-21 19:46:06,128 p=31140 u=geoskl n=ansible INFO| TASK [kube_apply_manifests yml] ******************************************************************
+2025-02-21 19:46:06,148 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103
+2025-02-21 19:46:06,151 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Apply manifests] **************************************************************
+2025-02-21 19:46:08,299 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:46:08,310 p=31140 u=geoskl n=ansible INFO| TASK [kube_get_app_url yml] **********************************************************************
+2025-02-21 19:46:08,336 p=31140 u=geoskl n=ansible INFO| included: kubernetes for 52.59.203.103
+2025-02-21 19:46:08,339 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Wait for 1 minute for Django app to be ready] *********************************
+2025-02-21 19:47:09,117 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103]
+2025-02-21 19:47:09,121 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Get Django service NodePort] **************************************************
+2025-02-21 19:47:09,877 p=31140 u=geoskl n=ansible INFO| changed: [52.59.203.103]
+2025-02-21 19:47:09,881 p=31140 u=geoskl n=ansible INFO| TASK [kubernetes : Print application URL] ********************************************************
+2025-02-21 19:47:09,897 p=31140 u=geoskl n=ansible INFO| ok: [52.59.203.103] => {
+    "msg": "http://3.70.245.244:32720"
+}
+2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| PLAY RECAP ***************************************************************************************
+2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| 3.70.245.244               : ok=80   changed=50   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| 52.59.203.103              : ok=76   changed=45   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

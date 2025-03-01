@@ -32,6 +32,6 @@ export AWS_SECRET_ACCESS_KEY=XXXX
 8) terraform destroy -auto-approve
 
 
-# Notes: 
+## Notes: 
 - This project focuses on the deployment aspect. The DB secret key is exposed in the config map. In a next iteration it will be added in a vault so that security aspects are addressed.
 - The deployment is using EC2 instances in the free tier so that no costs are incurred.  

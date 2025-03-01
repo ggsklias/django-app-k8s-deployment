@@ -162,6 +162,13 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  # etcd client url port
+  ingress {
+    from_port   = 2379
+    to_port     = 2379
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
   ingress {
     from_port   = 3306

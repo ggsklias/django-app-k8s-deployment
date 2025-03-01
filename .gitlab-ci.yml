@@ -60,8 +60,9 @@ provision:
     entrypoint: [""]
   script:
     - cd provision
-    - terraform init
-    - terraform apply -auto-approve
+    - python3 provision.py 
+    # - terraform init
+    # - terraform apply -auto-approve
   artifacts:
     paths:
       - terraform.tfstate  # Persist state if needed
@@ -76,6 +77,8 @@ deploy:
     - ls -la
     - chmod 755 provision
     - cd provision
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 600 ssh_key.pem
     - ls -la
     - ansible-playbook -i inventory.ini playbook.yml
 

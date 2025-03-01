@@ -13,6 +13,8 @@ WORKDIR /code
 
 RUN pip install poetry
 
+# RUN pip install --upgrade 'sentry-sdk[django]'
+
 COPY pyproject.toml poetry.lock ./
 COPY README.md /code/
 
