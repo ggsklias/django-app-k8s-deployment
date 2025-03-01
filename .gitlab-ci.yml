@@ -11,7 +11,7 @@
 # for the default branch and all other (MR) branches.
 stages:
   - build
-  - provisionEC2
+  - provision
   - deploy
   - wait
   - terraform_destroy
@@ -56,7 +56,7 @@ build:
   #     - path/to/built/images  # if you need to persist artifacts
 
 provision:
-  stage: provisionEC2
+  stage: provision
   image:
     name: python:3.8
     entrypoint: [""]
@@ -74,12 +74,13 @@ provision:
     # - terraform apply -auto-approve
   artifacts:
     paths:
-      - .terraform.lock.hcl  # Persist state if needed
+      - provision/.terraform.lock.hcl  # Persist state if needed
+      - provision/terraform.tfstate 
 
 deploy:
   stage: deploy
   image: 
-    name: williamyeh/ansible:alpine3  # Or a custom image with ansible installed
+    name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
@@ -111,7 +112,7 @@ terraform_destroy:
     - terraform init
     - terraform destroy -auto-approve
   dependencies:
-    - deploy
+    - provision
   rules:
     - when: always
 
