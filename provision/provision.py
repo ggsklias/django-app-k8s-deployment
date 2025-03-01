@@ -17,7 +17,9 @@ def check_environ():
 
 def run_terraform():
     # Run Terraform and capture output
+    print("Working dir is %s" % CURRENT_WORKING_DIR)
     tf_command = ["terraform", "-chdir=%s" % CURRENT_WORKING_DIR, "apply", "-auto-approve"]
+    print ("Running Terraform command: %s" % " ".join(tf_command))
     process = subprocess.run(tf_command, text=True, capture_output=True)
     output = process.stdout
 
