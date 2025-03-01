@@ -85,10 +85,14 @@ deploy:
     entrypoint: [""]
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
+    - ls -la
     - apt-get update && apt-get install -y rsync
+    - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
+    - ls -la
+    - cat inventory.ini
     - ansible-playbook -i inventory.ini playbook.yml
   dependencies:
     - provision
