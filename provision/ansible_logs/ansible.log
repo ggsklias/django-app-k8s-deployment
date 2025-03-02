@@ -913,3 +913,501 @@
 2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| PLAY RECAP ***************************************************************************************
 2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| 3.70.245.244               : ok=80   changed=50   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2025-02-21 19:47:09,901 p=31140 u=geoskl n=ansible INFO| 52.59.203.103              : ok=76   changed=45   unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-03-02 19:24:29,409 p=42201 u=geoskl n=ansible INFO| Starting galaxy collection install process
+2025-03-02 19:24:29,566 p=42201 u=geoskl n=ansible INFO| Nothing to do. All requested collections are already installed. If you want to reinstall them, consider using `--force`.
+2025-03-02 19:31:30,166 p=42989 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:30,166 p=42989 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:30,166 p=42989 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:30,166 p=42989 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:30,166 p=42989 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:30,169 p=42989 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:50,015 p=43066 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:50,015 p=43066 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:50,015 p=43066 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:50,015 p=43066 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:50,015 p=43066 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:50,017 p=43066 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:50,891 p=43090 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:50,891 p=43090 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:50,891 p=43090 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:50,891 p=43090 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:50,891 p=43090 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:50,893 p=43090 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:51,655 p=43116 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:51,655 p=43116 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:51,655 p=43116 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:51,655 p=43116 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:51,655 p=43116 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:51,656 p=43116 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:52,438 p=43139 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:52,438 p=43139 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:52,438 p=43139 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:52,438 p=43139 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:52,438 p=43139 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:52,439 p=43139 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:53,472 p=43165 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:53,472 p=43165 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:53,473 p=43165 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:53,473 p=43165 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:53,473 p=43165 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:53,474 p=43165 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:54,468 p=43193 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:54,468 p=43193 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:54,468 p=43193 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:54,468 p=43193 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:54,468 p=43193 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:54,470 p=43193 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:55,521 p=43219 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:55,521 p=43219 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:55,521 p=43219 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:55,521 p=43219 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:55,521 p=43219 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:55,523 p=43219 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:56,200 p=43242 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:56,200 p=43242 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:56,200 p=43242 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:56,200 p=43242 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:56,200 p=43242 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:56,201 p=43242 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:57,418 p=43268 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:57,418 p=43268 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:57,418 p=43268 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:57,418 p=43268 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:57,418 p=43268 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:57,420 p=43268 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:58,418 p=43291 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:58,418 p=43291 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:58,418 p=43291 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:58,418 p=43291 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:58,419 p=43291 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:58,420 p=43291 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:31:59,259 p=43318 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:31:59,259 p=43318 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:31:59,259 p=43318 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:31:59,259 p=43318 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:31:59,259 p=43318 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:31:59,261 p=43318 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:00,224 p=43344 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:00,224 p=43344 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:00,225 p=43344 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:00,225 p=43344 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:00,225 p=43344 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:00,226 p=43344 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:03,088 p=43374 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:03,089 p=43374 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:03,089 p=43374 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:03,089 p=43374 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:03,089 p=43374 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:03,090 p=43374 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:06,335 p=43411 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:06,335 p=43411 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:06,335 p=43411 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:06,335 p=43411 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:06,335 p=43411 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:06,337 p=43411 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:08,272 p=43439 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:08,272 p=43439 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:08,272 p=43439 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:08,272 p=43439 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:08,272 p=43439 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:08,274 p=43439 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:09,623 p=43466 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:09,623 p=43466 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:09,623 p=43466 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:09,623 p=43466 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:09,623 p=43466 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:09,625 p=43466 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:32:17,046 p=43509 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:32:17,046 p=43509 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:32:17,046 p=43509 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:32:17,046 p=43509 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:32:17,046 p=43509 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:32:17,047 p=43509 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:34:10,058 p=43727 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+auto plugin: inventory config '/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml'
+specifies unknown plugin 'community.aws.aws_ec2'
+
+2025-03-02 19:34:10,058 p=43727 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+yaml plugin: Plugin configuration YAML file, not YAML inventory
+
+2025-03-02 19:34:10,059 p=43727 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml with
+ini plugin: Invalid host pattern 'plugin:' supplied, ending in ':' is not allowed, this character is reserved
+to provide a port.
+
+2025-03-02 19:34:10,059 p=43727 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/test.yaml as an
+inventory source
+
+2025-03-02 19:34:10,059 p=43727 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 19:34:10,060 p=43727 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 19:35:24,381 p=43870 u=geoskl n=ansible INFO| Starting galaxy collection install process
+2025-03-02 19:35:24,501 p=43870 u=geoskl n=ansible INFO| Nothing to do. All requested collections are already installed. If you want to reinstall them, consider using `--force`.
