@@ -52,9 +52,6 @@ build:
     - if: $CI_COMMIT_BRANCH
       exists:
         - djangoarticleapp/Dockerfile
-  # artifacts:
-  #   paths:
-  #     - path/to/built/images  # if you need to persist artifacts
 
 provision_servers_and_install_k8s_cluster:
   stage: provision_servers_and_install_k8s_cluster
@@ -84,6 +81,8 @@ provision_servers_and_install_k8s_cluster:
       - provision/.terraform.lock.hcl  # Persist state if needed
       - provision/terraform.tfstate 
       - provision/inventory.ini
+  rules:
+    - when: manual
 
 deploy:
   stage: deploy
@@ -97,8 +96,9 @@ deploy:
     - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 600 ssh_key.pem
     - ls -la
+    - chmod 600 ssh_key.pem
+    - ls -la k8s-manifests/django-deployment.yml.j2
     - cat inventory.ini
     - ansible-playbook -i inventory.ini deploy_app.yml
   dependencies:
@@ -126,13 +126,8 @@ terraform_destroy:
   dependencies:
     - provision_servers_and_install_k8s_cluster
   rules:
-    - when: always
-
-  # artifacts:
-  #   paths:
-  #     - terraform.tfstate  # Persist state if needed
-
-
+    - when: manual
+  
 
 # provision_ansible_kubernetes_cluster:
 #   stage: provision_ansible_kubernetes_cluster
