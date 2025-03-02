@@ -19,13 +19,13 @@ from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.urls import path
 
-def trigger_error(request):
-    division_by_zero = 1 / 0
+# def trigger_error(request):
+#     division_by_zero = 1 / 0
 
-urlpatterns = [
-    path('sentry-debug/', trigger_error),
-    # ...
-]
+# urlpatterns = [
+#     path('sentry-debug/', trigger_error),
+#     # ...
+# ]
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include("articleApp.urls")),
