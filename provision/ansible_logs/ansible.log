@@ -1411,3 +1411,485 @@ inventory source
 }
 2025-03-02 19:35:24,381 p=43870 u=geoskl n=ansible INFO| Starting galaxy collection install process
 2025-03-02 19:35:24,501 p=43870 u=geoskl n=ansible INFO| Nothing to do. All requested collections are already installed. If you want to reinstall them, consider using `--force`.
+2025-03-02 22:06:29,818 p=60953 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:06:29,818 p=60953 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:06:29,871 p=60953 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:29,871 p=60953 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with ini plugin: Invalid host pattern '---' supplied,
+'---' is normally a sign this is a YAML file.
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml as an inventory source
+
+2025-03-02 22:06:29,877 p=60953 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:06:29,879 p=60953 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:06:41,930 p=61025 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:06:41,930 p=61025 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:06:41,984 p=61025 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:41,984 p=61025 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml as it did not pass its verify_file() method
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yaml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml with ini plugin: Invalid host pattern 'plugin:'
+supplied, ending in ':' is not allowed, this character is reserved to provide a port.
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yaml as an inventory source
+
+2025-03-02 22:06:41,989 p=61025 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:06:41,992 p=61025 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:07:21,628 p=61175 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:07:21,628 p=61175 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:07:21,677 p=61175 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:07:21,677 p=61175 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern 'plugin:'
+supplied, ending in ':' is not allowed, this character is reserved to provide a port.
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:07:21,681 p=61175 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:07:21,682 p=61175 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:10:11,842 p=61533 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:10:11,842 p=61533 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:10:11,897 p=61533 u=geoskl n=ansible WARNING| [WARNING]: Failed to load inventory plugin, skipping community.aws.aws_ec2
+
+2025-03-02 22:10:11,897 p=61533 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:11,897 p=61533 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern 'plugin:'
+supplied, ending in ':' is not allowed, this character is reserved to provide a port.
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:10:11,900 p=61533 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:10:11,903 p=61533 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:10:14,996 p=61566 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:10:14,996 p=61566 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:10:15,047 p=61566 u=geoskl n=ansible WARNING| [WARNING]: Failed to load inventory plugin, skipping community.aws.aws_ec2
+
+2025-03-02 22:10:15,047 p=61566 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:15,047 p=61566 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern 'plugin:'
+supplied, ending in ':' is not allowed, this character is reserved to provide a port.
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:10:15,049 p=61566 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:10:15,050 p=61566 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:11:34,545 p=61741 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:11:34,545 p=61741 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:11:34,596 p=61741 u=geoskl n=ansible WARNING| [WARNING]: Failed to load inventory plugin, skipping community.aws.aws_ec2
+
+2025-03-02 22:11:34,596 p=61741 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:34,597 p=61741 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:34,598 p=61741 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:34,598 p=61741 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:11:34,598 p=61741 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:11:34,598 p=61741 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:11:34,598 p=61741 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:11:34,599 p=61741 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern '---' supplied,
+'---' is normally a sign this is a YAML file.
+
+2025-03-02 22:11:34,599 p=61741 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:11:34,599 p=61741 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:11:34,599 p=61741 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:11:34,600 p=61741 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:11:36,220 p=61767 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:11:36,220 p=61767 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:11:36,271 p=61767 u=geoskl n=ansible WARNING| [WARNING]: Failed to load inventory plugin, skipping community.aws.aws_ec2
+
+2025-03-02 22:11:36,271 p=61767 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:36,271 p=61767 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:36,273 p=61767 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:11:36,273 p=61767 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern '---' supplied,
+'---' is normally a sign this is a YAML file.
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:11:36,274 p=61767 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:11:36,275 p=61767 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}
+2025-03-02 22:13:43,187 p=62015 u=geoskl n=ansible INFO| ansible-inventory [core 2.18.2]
+  config file = /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg
+  configured module search path = ['/Users/geoskl/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible
+  ansible collection location = /Users/geoskl/.ansible/collections:/usr/share/ansible/collections
+  executable location = /opt/homebrew/bin/ansible-inventory
+  python version = 3.13.1 (main, Dec  3 2024, 17:59:52) [Clang 15.0.0 (clang-1500.1.0.2.5)] (/opt/homebrew/Cellar/ansible/11.2.0/libexec/bin/python)
+  jinja version = 3.1.5
+  libyaml = True
+2025-03-02 22:13:43,187 p=62015 u=geoskl n=ansible INFO| Using /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/ansible.cfg as config file
+2025-03-02 22:13:43,238 p=62015 u=geoskl n=ansible WARNING| [WARNING]: Failed to load inventory plugin, skipping community.aws.aws_ec2
+
+2025-03-02 22:13:43,238 p=62015 u=geoskl n=ansible INFO| host_list declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:13:43,238 p=62015 u=geoskl n=ansible INFO| script declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible INFO| toml declined parsing /Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml as it did not pass its verify_file() method
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with auto plugin: inventory config
+'/Users/geoskl/Dev/DevOpsApp/django-app-k8s-deployment/provision/aws_ec2.yml' specifies unknown
+plugin 'community.aws.aws_ec2'
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/auto.py", line 52, in parse
+    raise AnsibleParserError("inventory config '{0}' specifies unknown plugin '{1}'".format(path, plugin_name))
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with yaml plugin: Plugin configuration YAML file, not
+YAML inventory
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/yaml.py", line 113, in parse
+    raise AnsibleParserError('Plugin configuration YAML file, not YAML inventory')
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible WARNING| [WARNING]:  * Failed to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml with ini plugin: Invalid host pattern '---' supplied,
+'---' is normally a sign this is a YAML file.
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible INFO|   File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/inventory/manager.py", line 292, in parse_source
+    plugin.parse(self._inventory, self._loader, source, cache=cache)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/ansible/11.2.0/libexec/lib/python3.13/site-packages/ansible/plugins/inventory/ini.py", line 137, in parse
+    raise AnsibleParserError(e)
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible WARNING| [WARNING]: Unable to parse /Users/geoskl/Dev/DevOpsApp/django-
+app-k8s-deployment/provision/aws_ec2.yml as an inventory source
+
+2025-03-02 22:13:43,240 p=62015 u=geoskl n=ansible WARNING| [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2025-03-02 22:13:43,242 p=62015 u=geoskl n=ansible INFO| {
+    "_meta": {
+        "hostvars": {}
+    },
+    "all": {
+        "children": [
+            "ungrouped"
+        ]
+    }
+}

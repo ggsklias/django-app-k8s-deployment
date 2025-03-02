@@ -15,7 +15,6 @@ provision/terraform.tfstate.backup
 provision/terraform.tfstate
 provision/ansible_logs/ansible.log
 provision/.terraform.tfstate.lock.info
-provision/k8s*
 provision/DevOpsApp.code-workspace
 .DS_Store
 terraform.tfstate
