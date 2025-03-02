@@ -104,7 +104,7 @@ wait:
     entrypoint: [""]
   script:
     - echo "Waiting for 60 seconds minutes before teardown..."
-    - sleep 60
+    - sleep 360
 
 terraform_destroy:
   stage: terraform_destroy

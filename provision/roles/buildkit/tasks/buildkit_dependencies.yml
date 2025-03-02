@@ -1,5 +1,4 @@
 ---
-
 - name: Install required dependencies
   shell: sudo yum -y install git curl unzip bash-completion runc
 
