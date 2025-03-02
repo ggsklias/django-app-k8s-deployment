@@ -98,7 +98,8 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - ls -la
     - chmod 600 ssh_key.pem
-    - ls -la k8s-manifests/django-deployment.yml.j2
+    - ls k8s-manifests/*
+    - ls k8s-manifests
     - cat inventory.ini
     - ansible-playbook -i inventory.ini deploy_app.yml
   dependencies:
