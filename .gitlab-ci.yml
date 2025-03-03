@@ -89,21 +89,20 @@ deploy:
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
+  - export ANSIBLE_COLLECTIONS_PATHS="/root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible_collections:/root/.ansible/collections:/usr/share/ansible/collections"
+  - ansible-galaxy collection list | grep kubernetes.core
+  - ansible-doc kubernetes.core.k8s_secret
   image: 
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
     - echo "Running Ansible playbook to configure EC2 instances"
-    - ls -la
     - apt-get update && apt-get install -y rsync
     - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - ls -la
     - chmod 600 ssh_key.pem
-    - ls k8s-manifests/*
-    - ls k8s-manifests
-    - cat inventory.ini
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
   # dependencies:
   #   - provision_servers_and_install_k8s_cluster
