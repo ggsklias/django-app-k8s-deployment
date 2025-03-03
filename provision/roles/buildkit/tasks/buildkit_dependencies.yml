@@ -1,6 +1,6 @@
 ---
 - name: Install required dependencies
-  shell: sudo yum -y install git curl unzip bash-completion runc
+  shell: sudo yum -y install git curl unzip bash-completion
 
 - name: Install required dependencies
   shell: sudo yum -y install runc containerd

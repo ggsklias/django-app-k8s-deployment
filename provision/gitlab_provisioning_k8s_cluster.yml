@@ -8,6 +8,19 @@
     - prerequisites_amazon_linux_2
     - prepare_os
 
+- hosts: all
+  gather_facts: yes # Avoid failures due to incompatible Python version
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - containerd
+  tasks:
+    - name: Install kubernetes
+      include_role:
+        name: kubernetes
+        tasks_from: kube_install_kubernetes.yml
+
 - hosts: workers
   gather_facts: yes  
   become: yes
@@ -15,29 +28,6 @@
     - group_vars/all
   roles:
     - project_install
-  tasks:
-
-- hosts: all
-  gather_facts: yes
-  become: yes
-  vars_files:
-    - group_vars/all
-  tasks:
-    - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
-        name: kubernetes
-        tasks_from: kube_install_kubernetes.yml
-
-- hosts: all
-  gather_facts: yes  
-  become: yes
-  vars_files:
-    - group_vars/all
-  tasks:
-    - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
-        name: kubernetes
-        tasks_from: kube_install_kubernetes.yml
 
 - hosts: master
   gather_facts: yes  
