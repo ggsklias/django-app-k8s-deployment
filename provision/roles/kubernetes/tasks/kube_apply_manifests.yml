@@ -1,24 +1,33 @@
 ---
-- name: Create GitLab registry pull secret
+- name: Create GitLab registry pull secret using k8s module
   kubernetes.core.k8s:
     state: present
-    namespace: default
-    name: gitlab-registry
-    type: kubernetes.io/dockerconfigjson
-    data:
-      .dockerconfigjson: >
-        {{
-          {
-            "auths": {
-              "registry.gitlab.com": {
-                "username": lookup('env', 'GITLAB_USERNAME'),
-                "password": lookup('env', 'GITLAB_REGISTRY_TOKEN'),
-                "email": lookup('env', 'GITLAB_EMAIL'),
-                "auth": (lookup('env', 'GITLAB_USERNAME') + ':' + lookup('env', 'GITLAB_REGISTRY_TOKEN')) | b64encode
-              }
-            }
-          } | to_json | b64encode
-        }}
+    definition: >
+      {{
+        {
+          "apiVersion": "v1",
+          "kind": "Secret",
+          "metadata": {
+            "name": "gitlab-registry",
+            "namespace": "default"
+          },
+          "type": "kubernetes.io/dockerconfigjson",
+          "data": {
+            ".dockerconfigjson": (
+              {
+                "auths": {
+                  "registry.gitlab.com": {
+                    "username": lookup('env', 'GITLAB_USERNAME'),
+                    "password": lookup('env', 'GITLAB_REGISTRY_TOKEN'),
+                    "email": lookup('env', 'GITLAB_EMAIL'),
+                    "auth": (lookup('env', 'GITLAB_USERNAME') + ':' + lookup('env', 'GITLAB_REGISTRY_TOKEN')) | b64encode
+                  }
+                }
+              } | to_json | b64encode
+            )
+          }
+        }
+      }}
 
 - name: Render django-deployment manifest with GitLab image
   template:
