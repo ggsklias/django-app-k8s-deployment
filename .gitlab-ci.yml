@@ -75,7 +75,7 @@ provision_servers_and_install_k8s_cluster:
     - chmod 600 ssh_key.pem
     - ls -la
     - cat inventory.ini
-    - ansible-playbook -i inventory.ini provision_kubernetes_cluster.yml
+    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml
   artifacts:
     paths:
       - provision/.terraform.lock.hcl  # Persist state if needed
@@ -89,9 +89,7 @@ deploy:
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
-  - export ANSIBLE_COLLECTIONS_PATHS="/root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible_collections:/root/.ansible/collections:/usr/share/ansible/collections"
-  - ansible-galaxy collection list | grep kubernetes.core
-  - ansible-doc kubernetes.core.k8s_secret
+  # - export ANSIBLE_COLLECTIONS_PATHS="/root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible_collections:/root/.ansible/collections:/usr/share/ansible/collections"
   image: 
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
@@ -101,7 +99,6 @@ deploy:
     - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - ls -la
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
   dependencies:
@@ -123,7 +120,6 @@ terraform_destroy:
     entrypoint: [""]
   script:
     - cd provision
-    - ls -la
     - terraform init
     - terraform destroy -auto-approve
   dependencies:
