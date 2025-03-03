@@ -16,7 +16,12 @@ variables:
 terraform_destroy:
   stage: cleanup
   cache:
-    key: infrastructure-cache  # Unique key for the cache
+    key: infrastructure-cache
+    paths:
+      - provision/.terraform.lock.hcl
+      - provision/terraform.tfstate
+      - provision/inventory.ini
+      - provision/infra-status.txt  # Add this to restore the status file
   image:
     name: hashicorp/terraform:light
     entrypoint: [""]
@@ -27,5 +32,7 @@ terraform_destroy:
     - rm infra-status.txt  # Remove the flag file
   dependencies:
     - provision_servers_and_install_k8s_cluster  # Use saved artifacts
-  when: manual                    # Make it a manual job
-  allow_failure: false            # Fail the pipeline if destroy fails
+  when: manual                     # Allow manual execution
+  allow_failure: true              # Allow to fail without failing the entire pipeline
+  rules:
+    - when: always    

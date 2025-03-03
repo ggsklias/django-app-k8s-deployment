@@ -4,6 +4,11 @@ build:
   stage: build
   cache:
     key: infrastructure-cache
+    paths:
+      - provision/.terraform.lock.hcl
+      - provision/terraform.tfstate
+      - provision/inventory.ini
+      - provision/infra-status.txt  # Add this to restore the status file
   services:
     - docker:dind
   variables:
