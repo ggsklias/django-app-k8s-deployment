@@ -1,4 +1,15 @@
 # Provisioning through Gitlab CI/CD pipeline
+- name: Wait for SSH on all hosts
+  hosts: all
+  tasks:
+    - name: Wait for SSH to become available
+      wait_for:
+        host: "{{ ansible_host }}"
+        port: 22
+        timeout: 300
+        state: started
+      delegate_to: localhost
+
 - hosts: all
   gather_facts: no # Avoid failures due to incompatible Python version
   become: yes

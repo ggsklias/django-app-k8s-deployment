@@ -73,7 +73,7 @@ provision_servers_and_install_k8s_cluster:
     - sleep 60
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
-    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml
+    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
   artifacts:
     paths:
       - provision/.terraform.lock.hcl  # Persist state if needed
@@ -87,7 +87,6 @@ deploy:
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
-  # - export ANSIBLE_COLLECTIONS_PATHS="/root/.local/share/pipx/venvs/ansible/lib/python3.12/site-packages/ansible_collections:/root/.ansible/collections:/usr/share/ansible/collections"
   image: 
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]

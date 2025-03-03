@@ -1,96 +1,99 @@
-# djangoarticleapp - Version 1
- A Django Article App with fully automated deployment on AWS with Gitlab CI/CD, Terraform and Ansible.
+# Deployment Processes
 
-# Deployment Process Description
+## Table of Contents
 
-This document outlines the complete process for provisioning infrastructure, setting up the Kubernetes cluster, deploying the Django application, and exposing the application.
+- [Summary](#summary)
+- [Local Deployment Process](#local-deployment-process)
+  - [Prerequisites](#prerequisites)
+  - [Actions](#actions)
+- [GitLab Deployment Process](#gitlab-deployment-process)
+  - [Prerequisites](#prerequisites-1)
+  - [Actions](#actions-1)
 
----
+## Summary
 
-### 1. Infrastructure Provisioning
+**AWS Infrastructure Deployment with Terraform, Ansible & Kubernetes**
 
-1. **Terraform:**
-   - **Objective:** Create the necessary cloud infrastructure.
-   - **Actions:**
-     - Spin up two EC2 instances (one for the master and one for the worker).
-     - Provision the VPC, security groups, subnets, and SSH permissions.
-
-2. **Ansible – Prerequisites Installation:**
-   - **Objective:** Prepare the newly provisioned EC2 instances for further configuration.
-   - **Actions:**
-     - Install required packages and dependencies on the Amazon Linux 2 instances to support the automation and subsequent application deployments (using Ansible 2.18.2).
-
----
-
-### 2. Application Deployment Setup
-
-1. **Django Article App Installation:**
-   - **Objective:** Deploy the core Django application.
-   - **Actions:**
-     - Configure the worker instance to host and run the Django article app.
-
-2. **Docker Image Build & Registry Integration:**
-   - **Objective:** Automate container image building and storage.
-   - **Actions:**
-     - Configure GitLab CI to build the Docker image for the Django article app whenever code changes occur.
-     - Push the built image to the GitLab Container Registry (tagged, for example, with the commit SHA).
-
-3. **Container Deployment:**
-   - **Objective:** Run the containerized application on the EC2 instance.
-   - **Actions:**
-     - Use containerd on the EC2 instance to pull the Docker image from the GitLab Container Registry.
-     - Load and run the container without manual intervention.
+- Developed infrastructure automation to deploy AWS resources using Terraform.
+- Automated provisioning with Ansible to:
+  - Install prerequisites on EC2 instances and configure Amazon Linux 2 for Kubernetes.
+  - Deploy a Django application with PostgreSQL on a Kubernetes worker node.
+  - Overcome the lack of native Docker support in Kubernetes by using buildkit and containerd.
+  - Expose the application to the web through “one-button” execution of the infrastructure.
+- Utilizes two deployment approaches:
+  - **Local Execution:** For testing and development with a single Ansible playbook.
+  - **GitLab Deployment:** For automated, production-ready deployments triggered via GitLab CI.
+  
+**Technologies:** Terraform, Ansible, Kubernetes, buildkit, Docker, Django, Python, PostgreSQL  
 
 ---
 
-### 3. Kubernetes Cluster Setup
+## Local Deployment Process
 
-1. **Kubernetes Installation (via Ansible):**
-   - **Objective:** Set up a container orchestration platform.
-   - **Actions:**
-     - Install Kubernetes components (e.g., kubeadm, kubectl, kubelet) on both the master and worker instances.
+### Prerequisites
 
-2. **Cluster Initialization & Node Joining:**
-   - **Objective:** Form a functional Kubernetes cluster.
-   - **Actions:**
-     - Initialize the Kubernetes master node.
-     - Join the worker node to the master node to complete the cluster formation.
+1. **AWS Environment Variables:**  
+   Export AWS environment variables locally to ensure proper communication with AWS.
 
-3. **Applying Kubernetes Manifests:**
-   - **Objective:** Deploy application components onto the Kubernetes cluster.
-   - **Actions:**
-     - Use Ansible to apply Kubernetes manifests on the master.
-     - Manifests include:
-       - A ConfigMap with database configuration details.
-       - A Deployment and Service for the Django application (referencing the GitLab Container Registry image).
-       - A Deployment and Service for the PostgreSQL database.
+2. **SSH Key:**  
+   Ensure that the `ssh_key.pem` is present in the local folder so that Ansible can connect to the EC2 instances.
+
+### Actions
+
+1. **Infrastructure Provisioning:**  
+   Run `python3 provision.py` to spin up the EC2 instances with the correct networking configuration.
+
+2. **Ansible Playbook Execution:**  
+   Execute the playbook with the following command:
+   ```bash
+   ansible-playbook -i inventory.ini manual_provisioning_cluster.yml
+   ```
+   This playbook performs the following tasks:
+   - Installs OS prerequisites (Python version, configures OS for Kubernetes), containerd, and buildkit.
+   - Builds the Docker image of the `djangoarticleapp` using buildkit and adds it to the containerd local registry.
+   - Installs Kubernetes.
+   - Initiates Kubernetes and ensures that the worker node joins the master.
+   - Applies all Kubernetes manifests, starting the Django application and PostgreSQL database on the worker node.
+   - Communicates the public IP address for accessing the application to the user.
 
 ---
 
-### 4. Application Access
+## GitLab Deployment Process
 
-1. **Objective:**
-   - Provide end users with the necessary access details.
-2. **Actions:**
-   - Return the public IP address and NodePort, enabling users to access the running Django application.
+### Prerequisites
 
+1. **AWS Environment Variables:**  
+   Add the AWS environment variables in GitLab CI/CD variables so that they are accessible during pipeline execution.
 
+2. **SSH Private Key:**  
+   Add the SSH private key to a GitLab variable called `SSH_PRIVATE_KEY`.
 
-## How to start the app:
-1) Clone the repo 
-2) [Get AWS credentials](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_access-keys.html)
-export AWS_ACCESS_KEY_ID=XXXX
-export AWS_SECRET_ACCESS_KEY=XXXX
-3) Store the private key in the provision folder and update inventory.ini accordingly with the right path. 
-4) cd provision
-5) Run python3 provision.py. This creates 2 ec2 instances on AWS and updates the inventory.ini so that ansible knows which host is the master and which is the worker host. 
-6) ansible-playbook -i inventory.ini playbook.yml
-7) Wait for the playbook to complete and connect to the app using the link provided by the ansible playbook
+3. **GitLab Registry Credentials:**  
+   Create GitLab variables for `GITLAB_EMAIL`, `GITLAB_USERNAME`, and `GITLAB_REGISTRY_TOKEN` to enable the creation of a Kubernetes secret for registry access.
 
-## Tear down:
-8) terraform destroy -auto-approve
+### Actions
 
+1. **Pipeline Trigger:**  
+   A code change triggers the GitLab pipeline which performs the following tasks:
 
-## Notes: 
-- This project focuses on the deployment aspect. The DB secret key is exposed in the config map. In a next iteration it will be added in a vault so that security aspects are addressed.
-- The deployment is using EC2 instances in the free tier so that no costs are incurred.  
+   - **Docker Image Build:**  
+     Builds the Docker image of the Django application and uploads it to the GitLab CI registry.
+
+   - **Infrastructure Provisioning:**  
+     Uses Terraform to provision EC2 instances with the proper networking.
+
+   - **OS and Kubernetes Configuration:**  
+     Uses Ansible to install OS prerequisites and configure Kubernetes and containerd on all hosts (without building the Django image) by running:  
+     ```bash
+     ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml
+     ```
+
+   - **Application Deployment:**  
+     Uses Ansible to deploy the application on the worker node by running:
+     ```bash
+     ansible-playbook -i inventory.ini deploy_app.yml
+     ```
+     This step applies manifests, starts the Django application and PostgreSQL database, and communicates the application IP to the user.
+
+   - **Post-Deployment:**  
+     Waits for 10 minutes before tearing down the Terraform-provisioned infrastructure.
