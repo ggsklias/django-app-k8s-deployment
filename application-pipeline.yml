@@ -1,0 +1,58 @@
+stages:
+  - build
+  - deploy
+  
+variables:
+  AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+  AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  TF_VAR_some_variable: "value"  # Example: any Terraform variables you need
+
+build:
+  # Use the official docker image.
+  image: docker:cli
+  stage: build
+  services:
+    - docker:dind
+  variables:
+    DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+  # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
+  # Default branch is also tagged with `latest`
+  script:
+    - echo $CI_REGISTRY_IMAGE
+    - echo $CI_COMMIT_REF_SLUG
+    - echo $CI_REGISTRY_USER
+    - echo $CI_REGISTRY_PASSWORD
+    - echo $CI_REGISTRY
+    - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" ./djangoarticleapp/
+    - docker push "$DOCKER_IMAGE_NAME"
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
+        docker tag "$DOCKER_IMAGE_NAME" "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+        docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHA"
+      fi
+  # Run this job in a branch where a Dockerfile exists
+  rules:
+    - if: $CI_COMMIT_BRANCH
+      exists:
+        - djangoarticleapp/Dockerfile
+
+deploy:
+  stage: deploy
+  before_script:
+  - ansible-galaxy collection install kubernetes.core
+  - ansible-galaxy collection install community.kubernetes
+  image: 
+    name: willhallonline/ansible:2.18.2-ubuntu-24.04
+    entrypoint: [""]
+  script:
+    - echo "Running Ansible playbook to configure EC2 instances"
+    - apt-get update && apt-get install -y rsync
+    - chmod 755 provision
+    - cd provision
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 600 ssh_key.pem
+    - ansible-playbook -i inventory.ini deploy_app.yml -vv
+  dependencies:
+    - provision_servers_and_install_k8s_cluster

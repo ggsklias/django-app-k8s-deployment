@@ -1,0 +1,43 @@
+stages:
+  - provision_servers_and_install_k8s_cluster
+
+variables:
+  AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+  AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  TF_VAR_some_variable: "value"  # Example: any Terraform variables you need
+
+provision_servers_and_install_k8s_cluster:
+  stage: provision_servers_and_install_k8s_cluster
+  image:
+    name: willhallonline/ansible:2.18.2-ubuntu-24.04
+    entrypoint: [""]
+  script:
+    - if [ ! -f infra-status.txt ]; then
+      echo "Infrastructure not provisioned! Exiting...";
+      exit 1;
+      fi
+    - echo "Building application..."
+    - echo "Provisioning EC2 instances using Terraform"
+    - apt-get update && apt-get install -y wget unzip
+    - apt-get update && apt-get install -y rsync
+    - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
+    - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
+    - terraform version  # Verify installation
+    - chmod 755 provision
+    - cd provision
+    - terraform init
+    - python3 provision.py 
+    - echo "Wait 90 seconds for the instances to be up and running before connecting with ansible to configure"
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 600 ssh_key.pem
+    - ls -la
+    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vvv
+    - echo "provisioned" > infra-status.txt  # Create a flag file
+  artifacts:
+    paths:
+      - provision/.terraform.lock.hcl  # Persist state if needed
+      - provision/terraform.tfstate
+      - provision/inventory.ini
+  rules:
+    - changes:
+        - provision/**  # Trigger only when infra files change
