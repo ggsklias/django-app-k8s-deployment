@@ -1,5 +1,5 @@
 stages:
-  - provision_servers_and_install_k8s_cluster
+  - provision
   - build
   - deploy
   - cleanup

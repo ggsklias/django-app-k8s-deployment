@@ -1,5 +1,5 @@
 provision_servers_and_install_k8s_cluster:
-  stage: provision_servers_and_install_k8s_cluster
+  stage: provision
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
@@ -26,6 +26,7 @@ provision_servers_and_install_k8s_cluster:
       - provision/.terraform.lock.hcl  # Persist state if needed
       - provision/terraform.tfstate
       - provision/inventory.ini
+      - provision/infra-status.txt
   rules:
     - changes:
         - provision/**  # Trigger only when infra files change
