@@ -1,6 +1,16 @@
+stages:
+  - provision_servers_and_install_k8s_cluster
+  - build
+  - deploy
+
 include:
   - local: 'infrastructure-pipeline.yml'
   - local: 'application-pipeline.yml'
+
+variables:
+  AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+  AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  TF_VAR_some_variable: "value"  # Example: any Terraform variables you need
 
 terraform_destroy:
   stage: cleanup
