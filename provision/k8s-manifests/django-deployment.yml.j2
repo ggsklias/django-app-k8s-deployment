@@ -27,6 +27,8 @@ spec:
       #   command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo "Waiting for DNS..."; sleep 10; done']
       nodeSelector:
         node-type: worker
+      imagePullSecrets:
+      - name: gitlab-registry
       containers:
       - name: web
         image: {{ gitlab_image }}:{{ commit_sha }}

@@ -53,36 +53,36 @@ build:
       exists:
         - djangoarticleapp/Dockerfile
 
-# provision_servers_and_install_k8s_cluster:
-#   stage: provision_servers_and_install_k8s_cluster
-#   image:
-#     name: willhallonline/ansible:2.18.2-ubuntu-24.04
-#     entrypoint: [""]
-#   script:
-#     - echo "Provisioning EC2 instances using Terraform"
-#     - apt-get update && apt-get install -y wget unzip
-#     - apt-get update && apt-get install -y rsync
-#     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
-#     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
-#     - terraform version  # Verify installation
-#     - chmod 755 provision
-#     - cd provision
-#     - terraform init
-#     - python3 provision.py 
-#     - echo "Running Ansible playbook to configure EC2 instances"
-#     - sleep 60
-#     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-#     - chmod 600 ssh_key.pem
-#     - ls -la
-#     - cat inventory.ini
-#     - ansible-playbook -i inventory.ini provision_kubernetes_cluster.yml
-#   artifacts:
-#     paths:
-#       - provision/.terraform.lock.hcl  # Persist state if needed
-#       - provision/terraform.tfstate 
-#       - provision/inventory.ini
-#   rules:
-#     - when: manual
+provision_servers_and_install_k8s_cluster:
+  stage: provision_servers_and_install_k8s_cluster
+  image:
+    name: willhallonline/ansible:2.18.2-ubuntu-24.04
+    entrypoint: [""]
+  script:
+    - echo "Provisioning EC2 instances using Terraform"
+    - apt-get update && apt-get install -y wget unzip
+    - apt-get update && apt-get install -y rsync
+    - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
+    - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
+    - terraform version  # Verify installation
+    - chmod 755 provision
+    - cd provision
+    - terraform init
+    - python3 provision.py 
+    - echo "Running Ansible playbook to configure EC2 instances"
+    - sleep 60
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 600 ssh_key.pem
+    - ls -la
+    - cat inventory.ini
+    - ansible-playbook -i inventory.ini provision_kubernetes_cluster.yml
+  artifacts:
+    paths:
+      - provision/.terraform.lock.hcl  # Persist state if needed
+      - provision/terraform.tfstate 
+      - provision/inventory.ini
+  rules:
+    - when: manual
 
 deploy:
   stage: deploy
@@ -104,32 +104,32 @@ deploy:
     - ls -la
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
-  # dependencies:
-  #   - provision_servers_and_install_k8s_cluster
+  dependencies:
+    - provision_servers_and_install_k8s_cluster
 
-# wait:
-#   stage: wait
-#   image: 
-#     name: alpine:latest
-#     entrypoint: [""]
-#   script:
-#     - echo "Waiting for 10 minutes before teardown..."
-#     - sleep 600
+wait:
+  stage: wait
+  image: 
+    name: alpine:latest
+    entrypoint: [""]
+  script:
+    - echo "Waiting for 10 minutes before teardown..."
+    - sleep 180
 
-# terraform_destroy:
-#   stage: terraform_destroy
-#   image:
-#     name: hashicorp/terraform:light
-#     entrypoint: [""]
-#   script:
-#     - cd provision
-#     - ls -la
-#     - terraform init
-#     - terraform destroy -auto-approve
-#   dependencies:
-#     - provision_servers_and_install_k8s_cluster
-#   rules:
-#     - when: manual
+terraform_destroy:
+  stage: terraform_destroy
+  image:
+    name: hashicorp/terraform:light
+    entrypoint: [""]
+  script:
+    - cd provision
+    - ls -la
+    - terraform init
+    - terraform destroy -auto-approve
+  dependencies:
+    - provision_servers_and_install_k8s_cluster
+  rules:
+    - when: always
   
 
 # provision_ansible_kubernetes_cluster:
