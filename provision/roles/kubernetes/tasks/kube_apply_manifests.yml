@@ -1,40 +1,10 @@
 ---
-- name: Create GitLab registry pull secret using k8s module
-  kubernetes.core.k8s:
-    state: present
-    definition: >
-      {{
-        {
-          "apiVersion": "v1",
-          "kind": "Secret",
-          "metadata": {
-            "name": "gitlab-registry",
-            "namespace": "default"
-          },
-          "type": "kubernetes.io/dockerconfigjson",
-          "data": {
-            ".dockerconfigjson": (
-              {
-                "auths": {
-                  "registry.gitlab.com": {
-                    "username": lookup('env', 'GITLAB_USERNAME'),
-                    "password": lookup('env', 'GITLAB_REGISTRY_TOKEN'),
-                    "email": lookup('env', 'GITLAB_EMAIL'),
-                    "auth": (lookup('env', 'GITLAB_USERNAME') + ':' + lookup('env', 'GITLAB_REGISTRY_TOKEN')) | b64encode
-                  }
-                }
-              } | to_json | b64encode
-            )
-          }
-        }
-      }}
-
 - name: Render django-deployment manifest with GitLab image
   template:
-    src: /builds/ggsklias/django-app-k8s-deployment/provision/k8s-manifests/django-deployment.yml.j2
+    src: "{{ lookup('env', 'CI_PROJECT_DIR') }}/django-deployment.yml.j2"
     dest: /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
   vars:
-    gitlab_image: "registry.gitlab.com/ggsklias/django-app-k8s-deployment"
+    gitlab_image: "{{ lookup('env', 'CI_REGISTRY_IMAGE') }}"
     commit_sha: "{{ lookup('env','CI_COMMIT_SHA') | default('latest') }}"
 
 - name: Apply manifests 
