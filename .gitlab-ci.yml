@@ -105,8 +105,8 @@ deploy:
     - ls k8s-manifests
     - cat inventory.ini
     - ansible-playbook -i inventory.ini deploy_app.yml -vvv
-  dependencies:
-    - provision_servers_and_install_k8s_cluster
+  # dependencies:
+  #   - provision_servers_and_install_k8s_cluster
 
 # wait:
 #   stage: wait
