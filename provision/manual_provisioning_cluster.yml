@@ -1,3 +1,4 @@
+# Manual provisioning playbook for deploying a Django app on a Kubernetes cluster through local environment
 - hosts: all
   gather_facts: no # Avoid failures due to incompatible Python version
   become: yes
@@ -16,27 +17,27 @@
     - project_install
   tasks:
 
-# - hosts: all
-#   gather_facts: yes  
-#   become: yes
-#   vars_files:
-#     - group_vars/all
-#   tasks:
-#     - name: Include install_on_all tasks from install_kubernetes role
-#       include_role:
-#         name: buildkit
-#         tasks_from: buildkit_dependencies.yml
+- hosts: all
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: buildkit
+        tasks_from: buildkit_dependencies.yml
 
-# - hosts: workers
-#   gather_facts: yes  
-#   become: yes
-#   vars_files:
-#     - group_vars/all
-#   tasks:
-#     - name: Include install_on_all tasks from install_kubernetes role
-#       include_role:
-#         name: buildkit
-#         tasks_from: buildkit_build_image.yml
+- hosts: workers
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: buildkit
+        tasks_from: buildkit_build_image.yml
 
 - hosts: all
   gather_facts: yes  

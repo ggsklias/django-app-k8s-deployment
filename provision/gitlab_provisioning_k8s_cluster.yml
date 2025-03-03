@@ -1,0 +1,79 @@
+# Provisioning through Gitlab CI/CD pipeline
+- hosts: all
+  gather_facts: no # Avoid failures due to incompatible Python version
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - prerequisites_amazon_linux_2
+    - prepare_os
+
+- hosts: workers
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  roles:
+    - project_install
+  tasks:
+
+- hosts: all
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: kubernetes
+        tasks_from: kube_install_kubernetes.yml
+
+- hosts: all
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Include install_on_all tasks from install_kubernetes role
+      include_role:
+        name: kubernetes
+        tasks_from: kube_install_kubernetes.yml
+
+- hosts: master
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Initialize master
+      include_role:
+        name: kubernetes
+        tasks_from: kube_initialize_master.yml
+
+- hosts: workers
+  gather_facts: yes  
+  become: yes
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: join_node
+      include_role:
+        name: kubernetes
+        tasks_from: kube_join_node.yml
+
+    - name: Get worker hostname and set it to worker_hostname
+      include_role:
+        name: kubernetes
+        tasks_from: kube_get_worker_hostname.yml
+
+- hosts: master
+  gather_facts: yes  
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Get worker hostname and set it to worker_hostname
+      include_role:
+        name: kubernetes
+        tasks_from: kube_set_node_labels.yml
