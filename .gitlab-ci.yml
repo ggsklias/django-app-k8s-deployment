@@ -2,6 +2,7 @@ stages:
   - provision_servers_and_install_k8s_cluster
   - build
   - deploy
+  - cleanup
 
 include:
   - local: 'infrastructure-pipeline.yml'
@@ -14,6 +15,9 @@ variables:
 
 terraform_destroy:
   stage: cleanup
+  image:
+    name: hashicorp/terraform:light
+    entrypoint: [""]
   script:
     - cd provision                # Change to provision directory
     - terraform init              # Re-initialize with saved config
