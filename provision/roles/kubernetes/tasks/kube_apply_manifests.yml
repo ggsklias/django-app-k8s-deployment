@@ -1,6 +1,6 @@
 ---
 - name: Create GitLab registry pull secret
-  kubernetes.core.k8s_secret:
+  kubernetes.core.k8s:
     state: present
     namespace: default
     name: gitlab-registry
