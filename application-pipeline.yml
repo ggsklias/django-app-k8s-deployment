@@ -7,6 +7,12 @@ build:
   variables:
     DOCKER_IMAGE_NAME: $CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG
   before_script:
+    # Check if infrastructure is provisioned
+    - echo "Checking if infrastructure is provisioned..."
+    - if [ ! -f infra-status.txt ]; then
+      echo "Infrastructure not provisioned! Exiting...";
+      exit 1;
+      fi
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
   # Default branch is also tagged with `latest`

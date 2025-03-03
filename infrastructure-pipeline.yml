@@ -1,14 +1,9 @@
-
 provision_servers_and_install_k8s_cluster:
   stage: provision_servers_and_install_k8s_cluster
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
-    - if [ ! -f infra-status.txt ]; then
-      echo "Infrastructure not provisioned! Exiting...";
-      exit 1;
-      fi
     - echo "Building application..."
     - echo "Provisioning EC2 instances using Terraform"
     - apt-get update && apt-get install -y wget unzip
