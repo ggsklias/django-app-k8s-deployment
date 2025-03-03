@@ -57,28 +57,6 @@
   tasks:
     - name: Include install_on_all tasks from install_kubernetes role
       include_role:
-        name: buildkit
-        tasks_from: buildkit_dependencies.yml
-
-- hosts: workers
-  gather_facts: yes  
-  become: yes
-  vars_files:
-    - group_vars/all
-  tasks:
-    - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
-        name: buildkit
-        tasks_from: buildkit_build_image.yml
-
-- hosts: all
-  gather_facts: yes  
-  become: yes
-  vars_files:
-    - group_vars/all
-  tasks:
-    - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
         name: kubernetes
         tasks_from: kube_install_kubernetes.yml
 
@@ -122,6 +100,28 @@
         tasks_from: kube_set_node_labels.yml
 
 # ############################################
+# - hosts: all
+#   gather_facts: yes  
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   tasks:
+#     - name: Include install_on_all tasks from install_kubernetes role
+#       include_role:
+#         name: buildkit
+#         tasks_from: buildkit_dependencies.yml
+
+# - hosts: workers
+#   gather_facts: yes  
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   tasks:
+#     - name: Include install_on_all tasks from install_kubernetes role
+#       include_role:
+#         name: buildkit
+#         tasks_from: buildkit_build_image.yml
+
 # - hosts: master
 #   gather_facts: yes  
 #   become: yes
@@ -129,4 +129,5 @@
 #     - group_vars/all
 #   roles:
 #     - start_app
+
 
