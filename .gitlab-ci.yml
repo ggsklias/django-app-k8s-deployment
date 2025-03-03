@@ -35,4 +35,5 @@ terraform_destroy:
   when: manual                     # Allow manual execution
   allow_failure: true              # Allow to fail without failing the entire pipeline
   rules:
-    - when: always    
+    - when: manual                 # Make it manually triggered
+      allow_failure: true    
