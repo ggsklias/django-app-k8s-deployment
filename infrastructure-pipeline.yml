@@ -21,12 +21,13 @@ provision_servers_and_install_k8s_cluster:
     - ls -la
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vvv
     - echo "provisioned" > infra-status.txt  # Create a flag file
-  artifacts:
+  cache:
+    key: infrastructure-cache  # Unique key for the cache
     paths:
-      - provision/.terraform.lock.hcl  # Persist state if needed
+      - provision/.terraform.lock.hcl
       - provision/terraform.tfstate
       - provision/inventory.ini
-      - provision/infra-status.txt
-  rules:
-    - changes:
-        - provision/**  # Trigger only when infra files change
+      - provision/infra-status.txt  # Save flag file as cache
+  # rules:
+  #   - changes:
+  #       - provision/**  # Trigger only when infra files change

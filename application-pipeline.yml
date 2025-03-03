@@ -2,6 +2,8 @@ build:
   # Use the official docker image.
   image: docker:cli
   stage: build
+  cache:
+    key: infrastructure-cache
   services:
     - docker:dind
   variables:
@@ -11,6 +13,7 @@ build:
     - echo "Checking if infrastructure is provisioned..."
     - ls -la
     - cd provision
+    - ls -la
     - if [ ! -f infra-status.txt ]; then
       echo "Infrastructure not provisioned! Exiting...";
       exit 1;
