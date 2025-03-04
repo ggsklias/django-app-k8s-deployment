@@ -5,7 +5,6 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
-  TF_VAR_some_variable: "value"  # Example: any Terraform variables you need
 
 build:
   # Use the official docker image.
@@ -48,13 +47,11 @@ deploy:
     entrypoint: [""]
   script:
     - apt-get update && apt-get install -y unzip curl
+    - apt-get update && apt-get install -y rsync
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - unzip awscliv2.zip
     - ./aws/install
-    - aws --version  # Check if installation was successful
     - aws s3 cp s3://$AWS_BUCKET_NAME/inventory.ini provision/inventory.ini 
-    - echo "Running Ansible playbook to configure EC2 instances"
-    - apt-get update && apt-get install -y rsync
     - chmod 755 provision
     - cd provision
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
