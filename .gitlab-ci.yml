@@ -1,3 +1,9 @@
+stages:
+  - provision   # Required for infra jobs
+  - build
+  - deploy
+  - cleanup     # If you have a cleanup stage
+
 include:
   - local: '.gitlab-ci-infra.yml'
     rules:
