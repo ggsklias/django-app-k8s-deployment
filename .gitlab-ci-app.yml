@@ -11,8 +11,6 @@ build:
   # Use the official docker image.
   image: docker:cli
   stage: build
-  needs:
-    - check_and_trigger_infra 
   services:
     - docker:dind
   variables:
@@ -42,8 +40,6 @@ build:
 
 deploy:
   stage: deploy
-  needs:
-    - check_and_trigger_infra 
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
