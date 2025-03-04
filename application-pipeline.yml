@@ -16,7 +16,7 @@ build:
   before_script:
     # Check if infrastructure is provisioned
     - echo "Checking if infrastructure is provisioned..."
-    - if [ ! -f provision/infra-status.txt ]; then
+    - if [ -f provision/infra-status.txt ]; then
       echo "Infrastructure not provisioned! Exiting...";
       exit 1;
       fi
