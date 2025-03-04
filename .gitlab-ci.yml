@@ -1,6 +1,10 @@
 include:
   - local: '.gitlab-ci-infra.yml'
-  # - local: '.gitlab-ci-app.yml'
+    rules:
+      - if: '$CI_COMMIT_MESSAGE =~ /infra/'
+  - local: '.gitlab-ci-app.yml'
+    rules:
+      - if: '$CI_COMMIT_MESSAGE =~ /django/'
 
 # stages:
 #   - triggers
