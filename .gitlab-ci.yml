@@ -7,22 +7,21 @@ choose_pipeline:
     - if echo "$CI_COMMIT_MESSAGE" | grep -iq "infra"; then
         echo "Detected 'infra' in commit message. Running infrastructure pipeline...";
         curl -X POST \
-          --data-urlencode "token=$CI_JOB_TOKEN" \
-          --data-urlencode "ref=$CI_COMMIT_REF_NAME" \
-          --data-urlencode "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
+          -F "token=$CI_JOB_TOKEN" \
+          -F "ref=$CI_COMMIT_REF_NAME" \
+          -F "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
           "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline";
       elif echo "$CI_COMMIT_MESSAGE" | grep -iq "djangoapp"; then
         echo "Detected 'djangoapp' in commit message. Running application pipeline...";
         curl -X POST \
-          --data-urlencode "token=$CI_JOB_TOKEN" \
-          --data-urlencode "ref=$CI_COMMIT_REF_NAME" \
-          --data-urlencode "variables[CI_CONFIG_PATH]=.gitlab-ci-app.yml" \
+          -F "token=$CI_JOB_TOKEN" \
+          -F "ref=$CI_COMMIT_REF_NAME" \
+          -F "variables[CI_CONFIG_PATH]=.gitlab-ci-app.yml" \
           "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline";
       else
         echo "No matching commit message pattern found. Skipping pipeline.";
         exit 0;
       fi
-
 # include:
 #   - local: '.gitlab-ci-infra.yml'
 #   # - local: '.gitlab-ci-app.yml'
