@@ -47,6 +47,10 @@ deploy:
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
+  cache:
+    key: infrastructure-cache
+    paths:
+      - provision/inventory.ini
   image: 
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
