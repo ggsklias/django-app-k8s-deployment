@@ -28,6 +28,6 @@ provision_servers_and_install_k8s_cluster:
       - provision/terraform.tfstate
       - provision/inventory.ini
       - provision/infra-status.txt  # Save flag file as cache
-  rules:
-    - changes:
-        - provision/**  # Trigger only when infra files change
+  # rules:
+  #   - changes:
+  #       - provision/**  # Trigger only when infra files change

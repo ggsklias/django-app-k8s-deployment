@@ -18,4 +18,4 @@ provision/.terraform.tfstate.lock.info
 provision/DevOpsApp.code-workspace
 .DS_Store
 terraform.tfstate
-__gitlab-ci.yml
+__gitlab-ci*.yml
