@@ -8,22 +8,27 @@ choose_pipeline:
     - echo "$CI_COMMIT_REF_NAME"
     - echo "$CI_PROJECT_ID"
     - |
-      if echo "$CI_COMMIT_MESSAGE" | grep -iq "infra"; then
-        echo "Detected 'infra' in commit message. Running infrastructure pipeline..."
-        curl -X POST \
-          --data "token=$CI_JOB_TOKEN" \
-          --data "ref=$CI_COMMIT_REF_NAME" \
-          --data "variables%5BCI_CONFIG_PATH%5D=.gitlab-ci-infra.yml" \
-          "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline"
-      elif echo "$CI_COMMIT_MESSAGE" | grep -iq "djangoapp"; then
-        echo "Detected 'djangoapp' in commit message. Running application pipeline..."
-        curl -X POST \
-          --data "token=$CI_JOB_TOKEN" \
-          --data "ref=$CI_COMMIT_REF_NAME" \
-          --data "variables%5BCI_CONFIG_PATH%5D=.gitlab-ci-app.yml" \
-          "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline"
+      if [[ "$CI_PIPELINE_SOURCE" == "push" ]]; then
+        if echo "$CI_COMMIT_MESSAGE" | grep -iq "infra"; then
+          echo "Detected 'infra' in commit message. Running infrastructure pipeline..."
+          curl -X POST \
+            --data "token=$CI_JOB_TOKEN" \
+            --data "ref=$CI_COMMIT_REF_NAME" \
+            --data "variables%5BCI_CONFIG_PATH%5D=.gitlab-ci-infra.yml" \
+            "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline"
+        elif echo "$CI_COMMIT_MESSAGE" | grep -iq "djangoapp"; then
+          echo "Detected 'djangoapp' in commit message. Running application pipeline..."
+          curl -X POST \
+            --data "token=$CI_JOB_TOKEN" \
+            --data "ref=$CI_COMMIT_REF_NAME" \
+            --data "variables%5BCI_CONFIG_PATH%5D=.gitlab-ci-app.yml" \
+            "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline"
+        else
+          echo "No matching commit message pattern found. Skipping pipeline."
+          exit 0
+        fi
       else
-        echo "No matching commit message pattern found. Skipping pipeline."
+        echo "Pipeline triggered by another pipeline, skipping recursive trigger."
         exit 0
       fi
 #   - local: '.gitlab-ci-infra.yml'
