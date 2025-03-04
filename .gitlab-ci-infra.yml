@@ -13,7 +13,7 @@ provision_servers_and_install_k8s_cluster:
     entrypoint: [""]
   script:
     - echo "Provisioning EC2 instances using Terraform"
-    - apt-get update && apt-get install -y wget unzip rsync gitlab_provisioning_k8s_cluster.yml
+    - apt-get update && apt-get install -y wget unzip rsync
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
