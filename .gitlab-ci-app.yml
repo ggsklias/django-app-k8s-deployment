@@ -1,18 +1,6 @@
-
-
-check_and_trigger_infra:
-  stage: check
-  image: amazon/aws-cli
-  script:
-    - aws s3 ls s3://$AWS_BUCKET_NAME/inventory.ini || {
-        echo "Infrastructure not found, triggering infra pipeline...";
-        curl -X POST -F token=$CI_JOB_TOKEN \
-        -F ref=main \
-        -F "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
-        "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline";
-        exit 1; } # Fail this job if no infra is found
-    - echo "Infrastructure is up!"
-  allow_failure: false  # Fail if infra is not up
+stages:
+  - build
+  - deploy
 
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
@@ -68,7 +56,7 @@ deploy:
     - unzip awscliv2.zip
     - ./aws/install
     - aws --version  # Check if installation was successful
-    - aws s3 cp s3://awsbucketgitlab13/inventory.ini provision/inventory.ini 
+    - aws s3 cp s3://$AWS_BUCKET_NAME/inventory.ini provision/inventory.ini 
     - echo "Running Ansible playbook to configure EC2 instances"
     - apt-get update && apt-get install -y rsync
     - chmod 755 provision
