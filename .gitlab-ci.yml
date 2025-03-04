@@ -1,30 +1,22 @@
-stages:
-  - route
+include:
+  - local: '.gitlab-ci-infra.yml'
+  # - local: '.gitlab-ci-app.yml'
 
-choose_pipeline:
-  stage: route
-  script:
-    - echo "$CI_JOB_TOKEN"
-    - echo "$CI_COMMIT_REF_NAME"
-    - echo "$CI_PROJECT_ID"
-    - |
-      if echo "$CI_COMMIT_MESSAGE" | grep -iq "infra"; then
-        echo "Detected 'infra' in commit message. Running infrastructure pipeline..."
-        curl --request POST \
-            --form token=glptt-da02dd452c77c2dd38876aeae7727363e3747cda \
-            --form ref=$CI_COMMIT_REF_NAME \
-            --form "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
-            "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/trigger/pipeline"
-      elif echo "$CI_COMMIT_MESSAGE" | grep -iq "djangoapp"; then
-        echo "Detected 'djangoapp' in commit message. Running application pipeline..."
-        curl --request POST \
-            --form token=glptt-da02dd452c77c2dd38876aeae7727363e3747cda \
-            --form ref=main \
-            --form "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
-            "${CI_API_V4_URL}/projects/$CI_PROJECT_ID/trigger/pipeline"
-      else
-        echo "No matching commit message pattern found. Skipping pipeline."
-        exit 0
-      fi
-#   - local: '.gitlab-ci-infra.yml'
-#   # - local: '.gitlab-ci-app.yml'
+# stages:
+#   - triggers
+
+# trigger_a:
+#   stage: triggers
+#   trigger:
+#     include: a/.gitlab-ci.yml
+#   rules:
+#     - changes:
+#         - a/*
+
+# trigger_b:
+#   stage: triggers
+#   trigger:
+#     include: b/.gitlab-ci.yml
+#   rules:
+#     - changes:
+#         - b/*
