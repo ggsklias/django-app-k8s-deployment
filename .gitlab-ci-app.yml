@@ -24,7 +24,7 @@ build:
     # - echo $CI_REGISTRY_USER
     # - echo $CI_REGISTRY_PASSWORD
     # - echo $CI_REGISTRY
-    - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" ./djangoarticleapp/Dockerfile
+    - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" ./djangoarticleapp
     - docker push "$DOCKER_IMAGE_NAME"
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
