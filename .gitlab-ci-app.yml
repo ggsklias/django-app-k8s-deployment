@@ -1,5 +1,7 @@
+
+
 check_and_trigger_infra:
-  stage: build
+  stage: check
   image: amazon/aws-cli
   script:
     - aws s3 ls s3://$AWS_BUCKET_NAME/inventory.ini || {

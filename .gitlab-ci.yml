@@ -1,3 +1,3 @@
 include:
   - local: '.gitlab-ci-infra.yml'
-  - local: '.gitlab-ci-app.yml'
+  # - local: '.gitlab-ci-app.yml'

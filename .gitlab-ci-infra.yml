@@ -37,10 +37,6 @@ provision_servers_and_install_k8s_cluster:
     - aws s3 cp .terraform.lock.hcl s3://AWS_BUCKET_NAME/.terraform.lock.hcl
     - aws s3 cp terraform.tfstate s3://AWS_BUCKET_NAME/terraform.tfstate
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
-  artifacts:
-    paths:
-      - provision/.terraform.lock.hcl  # Persist state if needed
-      - provision/terraform.tfstate
 
     
 terraform_destroy:
