@@ -1,7 +1,7 @@
 include:
   - local: '.gitlab-ci-infra.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /infra|both/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(infra|both)/'
   - local: '.gitlab-ci-app.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /django|both/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(django|both)/'
