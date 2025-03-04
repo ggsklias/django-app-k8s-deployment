@@ -4,19 +4,22 @@ stages:
 choose_pipeline:
   stage: route
   script:
+    - echo "$CI_JOB_TOKEN"
+    - echo "$CI_COMMIT_REF_NAME"
+    - echo "$CI_PROJECT_ID"
     - if echo "$CI_COMMIT_MESSAGE" | grep -iq "infra"; then
         echo "Detected 'infra' in commit message. Running infrastructure pipeline...";
         curl -X POST \
-          -F "token=$CI_JOB_TOKEN" \
-          -F "ref=$CI_COMMIT_REF_NAME" \
-          -F "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
+          --data "token=$CI_JOB_TOKEN" \
+          --data "ref=$CI_COMMIT_REF_NAME" \
+          --data "variables[CI_CONFIG_PATH]=.gitlab-ci-infra.yml" \
           "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline";
       elif echo "$CI_COMMIT_MESSAGE" | grep -iq "djangoapp"; then
         echo "Detected 'djangoapp' in commit message. Running application pipeline...";
         curl -X POST \
-          -F "token=$CI_JOB_TOKEN" \
-          -F "ref=$CI_COMMIT_REF_NAME" \
-          -F "variables[CI_CONFIG_PATH]=.gitlab-ci-app.yml" \
+          --data "token=$CI_JOB_TOKEN" \
+          --data "ref=$CI_COMMIT_REF_NAME" \
+          --data "variables[CI_CONFIG_PATH]=.gitlab-ci-app.yml" \
           "https://gitlab.com/api/v4/projects/$CI_PROJECT_ID/trigger/pipeline";
       else
         echo "No matching commit message pattern found. Skipping pipeline.";
