@@ -2,7 +2,7 @@
 
 kubectl apply -f https://github.com/external-secrets/external-secrets/releases/latest/download/external-secrets.yaml
 
-2) Create aws-secret-store.yaml
+2) Template for aws-secret-store.yaml
 apiVersion: external-secrets.io/v1beta1
 kind: SecretStore
 metadata:
@@ -17,7 +17,7 @@ spec:
           serviceAccountRef:
             name: django-secrets-sa
 
-3) Create django-secrets-sa.yaml
+3) Template for django-secrets-sa.yaml
 
 apiVersion: v1
 kind: ServiceAccount
