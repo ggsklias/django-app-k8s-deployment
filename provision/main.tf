@@ -66,7 +66,7 @@ resource "aws_instance" "master" {
   #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
-  iam_instance_profile = "secrets"
+  iam_instance_profile = "secretsRole"
   # This syntax is only for default vpcs
   # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
@@ -82,7 +82,7 @@ resource "aws_instance" "worker" {
   # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
-  iam_instance_profile = "secrets"
+  iam_instance_profile = "secretsRole"
   # This syntax is only for default vpcs
   # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
