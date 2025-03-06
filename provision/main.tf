@@ -66,6 +66,7 @@ resource "aws_instance" "master" {
   #ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
+  iam_instance_profile = "secrets"
   # This syntax is only for default vpcs
   # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
@@ -81,6 +82,7 @@ resource "aws_instance" "worker" {
   # ami           = "ami-099da3ad959447ffa" # Amazon Linux 2023 AMI, which supports dnf
   instance_type = "t2.micro"
   key_name      = "ssh_key" # Replace with your SSH key pair name
+  iam_instance_profile = "secrets"
   # This syntax is only for default vpcs
   # security_groups = ["allow-ssh-and-k8s"]
   vpc_security_group_ids = [aws_security_group.allow_ssh_and_k8s.id]
@@ -192,3 +194,30 @@ output "master_ip" {
 output "worker_ip" {
   value = aws_instance.worker.public_ip
 }
+
+# Creating a IAM role through terraform
+
+# # Create the IAM role for EC2
+# resource "aws_iam_role" "secrets" {
+#   name = "secrets"
+#   assume_role_policy = jsonencode({
+#     Version = "2012-10-17",
+#     Statement = [{
+#       Effect    = "Allow",
+#       Principal = { Service = "ec2.amazonaws.com" },
+#       Action    = "sts:AssumeRole"
+#     }]
+#   })
+# }
+
+# # Attach the AWS managed SecretsManagerReadWrite policy
+# resource "aws_iam_role_policy_attachment" "secrets_policy_attachment" {
+#   role       = aws_iam_role.secrets.name
+#   policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
+# }
+
+# # Create an instance profile that uses this role
+# resource "aws_iam_instance_profile" "secrets_profile" {
+#   name = "secrets"
+#   role = aws_iam_role.secrets.name
+# }

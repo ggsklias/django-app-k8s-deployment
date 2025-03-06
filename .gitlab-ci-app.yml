@@ -27,7 +27,7 @@ build:
     - echo $CI_COMMIT_BRANCH
     - echo $CI_DEFAULT_BRANCH
     - echo $DOCKER_IMAGE_NAME
-    - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" --build-arg AWS_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID" --build-arg AWS_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY" ./djangoarticleapp
+    - docker build --no-cache --progress plain --pull -t "$DOCKER_IMAGE_NAME" ./djangoarticleapp
     - docker push "$DOCKER_IMAGE_NAME"
     - |
       if [[ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ]]; then
