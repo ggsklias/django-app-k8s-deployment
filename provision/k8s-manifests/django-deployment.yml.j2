@@ -9,7 +9,7 @@ metadata:
     type: fullstack
 # applies to the Deployment object as a whole (defining things like the number of replicas and the selector for matching pods)
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: djangoarticleapp
@@ -31,7 +31,7 @@ spec:
       - name: gitlab-registry
       containers:
       - name: web
-        image: {{ gitlab_image }}:impelemnt-secret-for-db
+        image: {{ gitlab_image }}:{{ commit_sha }}
         imagePullPolicy: Always
         ports:
         - containerPort: 8000
@@ -57,11 +57,3 @@ spec:
         #     port: 8000
         #   initialDelaySeconds: 40
         #   periodSeconds: 20
-
-
-        # volumeMounts:
-        # - name: code-volume
-        #   mountPath: /code                # Matches your Dockerfile WORKDIR
-      # volumes:
-      # - name: code-volume
-      #   emptyDir: {}                      # Temporary volume to hold local changes if needed
