@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, ListView, DeleteView, UpdateView
 from articleApp.models import Article
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.http import JsonResponse
 
 #from articleApp.forms import CreateArticleForm
 
@@ -47,7 +48,8 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     def test_func(self) -> bool | None:
         return self.request.user == self.get_object().creator
 
-
+def healthz(request):
+    return JsonResponse({'status': 'ok'})
 
 
 # def home(request):

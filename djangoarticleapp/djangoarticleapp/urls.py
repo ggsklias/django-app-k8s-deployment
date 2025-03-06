@@ -18,18 +18,13 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic.base import RedirectView
 from django.urls import path
+from articleApp.views import healthz
 
-# def trigger_error(request):
-#     division_by_zero = 1 / 0
-
-# urlpatterns = [
-#     path('sentry-debug/', trigger_error),
-#     # ...
-# ]
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('articles/', include("articleApp.urls")),
     path('accounts/', include("allauth.urls")),
     path("", RedirectView.as_view(pattern_name="home")),
     path('__debug__/', include("debug_toolbar.urls")),
+    path('healthz/', healthz, name='healthz'),
 ]
