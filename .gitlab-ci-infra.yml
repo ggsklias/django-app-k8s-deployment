@@ -37,7 +37,6 @@ terraform_destroy:
     name: hashicorp/terraform:1.10.5
     entrypoint: [""]
   script:
-    - sleep 60
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli 
     - cd provision
