@@ -53,14 +53,14 @@ def get_secret():
         # https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
         raise e
 
-    return get_secret_value_response['SecretString']
+    return json.loads(get_secret_value_response['SecretString'])
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = get_secret()
+SECRET_KEY = get_secret()["password"]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
