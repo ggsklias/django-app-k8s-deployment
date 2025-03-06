@@ -49,4 +49,4 @@ terraform_destroy:
     - aws s3 rm s3://$AWS_BUCKET_NAME/inventory.ini
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform.tfstate
     - aws s3 rm s3://$AWS_BUCKET_NAME/.terraform.lock.hcl
-  when: always                     # Allow manual execution
+  when: manual                     # Allow manual execution
