@@ -38,6 +38,7 @@ terraform_destroy:
     name: hashicorp/terraform:1.10.5
     entrypoint: [""]
   script:
+    - sleep 60
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli 
     - cd provision
@@ -48,4 +49,4 @@ terraform_destroy:
     - aws s3 rm s3://$AWS_BUCKET_NAME/inventory.ini
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform.tfstate
     - aws s3 rm s3://$AWS_BUCKET_NAME/.terraform.lock.hcl
-  when: manual                     # Allow manual execution
+  when: always                     # Allow manual execution
