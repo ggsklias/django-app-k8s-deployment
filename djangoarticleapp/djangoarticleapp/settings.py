@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 import boto3
 from botocore.exceptions import ClientError
+import json
 
 def get_secret():
 
