@@ -43,7 +43,13 @@ spec:
         envFrom:
         - configMapRef:
             name: django-config
-
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          failureThreshold: 3
         {# resources:
           requests:
             memory: "150Mi"
