@@ -23,7 +23,6 @@ provision_servers_and_install_k8s_cluster:
     - terraform init
     - python3 ../scripts/provision.py
     - cd ../
-    - echo "Wait 90 seconds for the instances to be up and running before connecting with ansible to configure"
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
     - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
@@ -31,7 +30,9 @@ provision_servers_and_install_k8s_cluster:
     - sleep 90
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
-    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
+    - ls -la
+    - cat ssh_key.pem
+    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -v
     
 terraform_destroy:
   stage: cleanup
@@ -42,8 +43,6 @@ terraform_destroy:
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli 
     - cd provision/terraform
-    # - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl .terraform.lock.hcl  
-    # - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate terraform.tfstate 
     - terraform init              # Re-initialize with saved config
     - terraform destroy -auto-approve  # Run destroy command
     - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
