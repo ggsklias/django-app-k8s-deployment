@@ -25,12 +25,12 @@ provision_servers_and_install_k8s_cluster:
     - python3 ../scripts/provision.py
     - cd ../
     - echo "Wait 90 seconds for the instances to be up and running before connecting with ansible to configure"
-    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 600 ssh_key.pem
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
     - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - cd ansible
+    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+    - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
     
 terraform_destroy:
