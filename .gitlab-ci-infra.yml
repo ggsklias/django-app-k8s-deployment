@@ -23,7 +23,7 @@ provision_servers_and_install_k8s_cluster:
     - cd provision/terraform
     - terraform init
     - python3 ../scripts/provision.py
-    - cd ../ansible
+    - cd ../
     - echo "Wait 90 seconds for the instances to be up and running before connecting with ansible to configure"
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
