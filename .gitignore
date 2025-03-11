@@ -14,6 +14,7 @@ provision/exports.sh
 provision/terraform/terraform.tfstate.backup
 provision/terraform/terraform.tfstate
 provision/ansible_logs/ansible.log
+provision/ansible/ssh_key.pem
 provision/terraform/.terraform.tfstate.lock.info
 provision/DevOpsApp.code-workspace
 .DS_Store

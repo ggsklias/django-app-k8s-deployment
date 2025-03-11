@@ -19,7 +19,6 @@ provision_servers_and_install_k8s_cluster:
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - unzip awscliv2.zip
     - ./aws/install
-    - chmod 755 provision
     - cd provision/terraform
     - terraform init
     - python3 ../scripts/provision.py
@@ -29,6 +28,7 @@ provision_servers_and_install_k8s_cluster:
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
     - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - cd ansible
+    - sleep 90
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
