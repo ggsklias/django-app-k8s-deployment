@@ -6,28 +6,28 @@
 
 - name: Copy pyproject.toml
   copy:
-    src: ../djangoarticleapp/pyproject.toml
+    src: "{{ playbook_dir | dirname | dirname }}djangoarticleapp/"
     dest: /code/pyproject.toml
     owner: ec2-user
     group: ec2-user
 
 - name: Copy poetry.lock
   copy:
-    src: ../djangoarticleapp/poetry.lock
+    src: "{{ playbook_dir | dirname | dirname }}djangoarticleapp/"
     dest: /code/poetry.lock
     owner: ec2-user
     group: ec2-user
 
 - name: Copy README.md files
   copy:
-    src: ../djangoarticleapp/README.md
+    src: "{{ playbook_dir | dirname | dirname }}djangoarticleapp/"
     dest: /code/README.md
     owner: ec2-user
     group: ec2-user
 
 - name: Copy project files to the instance
   synchronize:
-    src: ../djangoarticleapp/
+    src: "{{ playbook_dir | dirname | dirname }}djangoarticleapp/"
     dest: /code
     rsync_opts:
       - "--exclude=.venv"
@@ -35,7 +35,7 @@
 
 - name: Copy start-django.sh to the server
   ansible.builtin.copy:
-    src: ../djangoarticleapp/start-django.sh
+    src: ../../djangoarticleapp/start-django.sh
     dest: /code/start-django.sh
     mode: '0755'  # This ensures the file is executable
 

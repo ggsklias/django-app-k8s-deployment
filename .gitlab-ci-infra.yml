@@ -20,15 +20,16 @@ provision_servers_and_install_k8s_cluster:
     - unzip awscliv2.zip
     - ./aws/install
     - chmod 755 provision
-    - cd provision
+    - cd provision/terraform
     - terraform init
-    - python3 provision.py 
+    - python3 ../scripts/provision.py
+    - cd ../ansible
     - echo "Wait 90 seconds for the instances to be up and running before connecting with ansible to configure"
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
-    - aws s3 cp inventory.ini s3://$AWS_BUCKET_NAME/inventory.ini
-    - aws s3 cp .terraform.lock.hcl s3://$AWS_BUCKET_NAME/.terraform.lock.hcl
-    - aws s3 cp terraform.tfstate s3://$AWS_BUCKET_NAME/terraform.tfstate
+    - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
+    - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
+    - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -vv
     
 terraform_destroy:
@@ -39,12 +40,12 @@ terraform_destroy:
   script:
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli 
-    - cd provision
-    - aws s3 cp s3://$AWS_BUCKET_NAME/.terraform.lock.hcl .terraform.lock.hcl  
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform.tfstate terraform.tfstate 
+    - cd provision/terraform
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl .terraform.lock.hcl  
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate terraform.tfstate 
     - terraform init              # Re-initialize with saved config
     - terraform destroy -auto-approve  # Run destroy command
-    - aws s3 rm s3://$AWS_BUCKET_NAME/inventory.ini
-    - aws s3 rm s3://$AWS_BUCKET_NAME/terraform.tfstate
-    - aws s3 rm s3://$AWS_BUCKET_NAME/.terraform.lock.hcl
+    - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
+    - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
+    - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
   when: manual                     # Allow manual execution

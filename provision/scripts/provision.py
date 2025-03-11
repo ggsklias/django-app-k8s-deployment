@@ -1,11 +1,38 @@
 import subprocess
 import re
 import os, sys
+from pathlib import Path
 
-CURRENT_WORKING_DIR = os.getcwd()
-if "provision" not in CURRENT_WORKING_DIR:
-    CURRENT_WORKING_DIR = CURRENT_WORKING_DIR + "/provision"
-INVENTORY_INI_DIR = CURRENT_WORKING_DIR + "/inventory.ini"
+TERRAFORM_DIR = ""
+ANSIBLE_DIR = ""
+INVENTORY_INI_DIR = ""
+FOLDER_LIST = ["terraform", "ansible"]
+
+
+def find_dir_in_current_or_parent(folder_name):
+    # Get the current working directory
+    cwd = Path.cwd()
+    
+    candidate = cwd / folder_name
+    if candidate.exists() and candidate.is_dir():
+        return candidate.resolve()
+    
+    # Otherwise, check in the parent directory
+    parent_candidate = cwd.parent / folder_name
+    if parent_candidate.exists() and parent_candidate.is_dir():
+        return parent_candidate.resolve()
+
+    # Folder not found in either location
+    return None
+
+for folder in FOLDER_LIST:
+    result = find_dir_in_current_or_parent(folder)
+    if result:
+        if "terraform" in result.as_posix():
+            TERRAFORM_DIR = result.as_posix()
+        elif "ansible" in result.as_posix():
+            ANSIBLE_DIR = result.as_posix()
+            INVENTORY_INI_DIR = ANSIBLE_DIR + "/" + "inventory.ini"
 
 def check_environ():
     # Check if AWS credentials are set
@@ -17,7 +44,7 @@ def check_environ():
 
 def run_terraform():
     # Run Terraform and capture output
-    tf_command = ["terraform", "-chdir=%s" % CURRENT_WORKING_DIR, "apply", "-auto-approve"]
+    tf_command = ["terraform", "-chdir=%s" % TERRAFORM_DIR, "apply", "-auto-approve"]
     process = subprocess.run(tf_command, text=True, capture_output=True)
     output = process.stdout
 
