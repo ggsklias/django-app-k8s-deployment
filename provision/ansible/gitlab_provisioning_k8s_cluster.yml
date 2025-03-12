@@ -33,13 +33,13 @@
         name: kubernetes
         tasks_from: kube_install_kubernetes.yml
 
-- hosts: workers
-  gather_facts: yes  
-  become: yes
-  vars_files:
-    - group_vars/all
-  roles:
-    - project_install
+# - hosts: workers
+#   gather_facts: yes  
+#   become: yes
+#   vars_files:
+#     - group_vars/all
+#   roles:
+#     - project_install
 
 - hosts: master
   gather_facts: yes  
