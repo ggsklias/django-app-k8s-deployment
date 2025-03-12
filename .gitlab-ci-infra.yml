@@ -28,12 +28,8 @@ provision_servers_and_install_k8s_cluster:
     - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - chmod 755 ansible
     - cd ansible
-    - sleep 90
-    - pwd
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
-    - ls -la
-    - cat ssh_key.pem
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -v
     
 terraform_destroy:
