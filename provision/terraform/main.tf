@@ -68,7 +68,7 @@ module "server_master" {
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
   iam_instance_profile = "secretsRole"
-  ssh_key              = "ssh_key"
+  ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "master"
@@ -81,7 +81,7 @@ module "server_worker" {
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
   iam_instance_profile = "secretsRole"
-  ssh_key              = "ssh_key"
+  ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "worker"
@@ -90,7 +90,7 @@ module "server_worker" {
 
 output "public_ip_master" {
   value = module.server_master.public_ip
-  
+
 }
 
 output "public_ip_worker" {
