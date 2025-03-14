@@ -109,7 +109,7 @@ resource "aws_lb" "app_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.allow_ssh_and_k8s.id]
-  subnets            = aws_subnet.public.id
+  subnets            = [aws_subnet.public.id]
 
   tags = {
     Environment = var.environment
