@@ -1,6 +1,10 @@
 --- 
+- name: Debug every variable for each host in inventory_hostname
+  debug:
+    msg: "{{hostvars[groups['nginx'][0]].ansible_host}}"
+
 - name: Initialize the Kubernetes cluster (if not already initialized)
-  command: kubeadm init --pod-network-cidr=10.244.0.0/16 --ignore-preflight-errors=all
+  command: kubeadm init --pod-network-cidr=10.244.0.0/16 --control-plane-endpoint {{hostvars[groups['nginx'][0]].ansible_host}}:6443 --ignore-preflight-errors=all
   register: kubeadm_init_output
 
 - name: Create kubeadm token and capture join command
@@ -10,6 +14,22 @@
 - name: Set the join command as a fact
   set_fact:
     kubeadm_join_command: "{{ join_command.stdout }}"
+
+- name: Show the join command
+  debug:
+    msg: "{{ kubeadm_join_command }}"
+
+- name: Create kubeadm token and capture join command
+  shell: kubeadm init phase upload-certs --upload-certs
+  register: certificates
+
+- name: Set the certificates command as a fact
+  set_fact:
+    kubeadm_certificate_key: "{{ certificates.stdout }}"
+    
+- name: Extract clean certificate key (last non-empty line)
+  set_fact:
+    kubeadm_certificate_key_clean: "{{ kubeadm_certificate_key.splitlines() | reject('equalto', '') | list | last }}"
 
 - name: Check if folder exists
   ansible.builtin.stat:

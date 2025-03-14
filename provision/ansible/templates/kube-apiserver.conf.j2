@@ -1,0 +1,10 @@
+upstream kube_apiserver {
+    server {{ hostvars[groups['master'][0]].ansible_host }}:6443;
+    server {{ hostvars[groups['master'][1]].ansible_host }}:6443;
+    server {{ hostvars[groups['master'][2]].ansible_host }}:6443;
+}
+
+server {
+    listen 6443;
+    proxy_pass kube_apiserver;
+}

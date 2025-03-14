@@ -54,6 +54,18 @@
 - name: Reload sysctl
   command: sysctl --system
 
+- name: Disable swap
+  shell: |
+    swapoff -a
+    sed -i '/ swap / s/^/#/' /etc/fstab
+
+- name: install pre-requisites for python
+  pip:
+    name:
+      - openshift
+      - pyyaml
+      - kubernetes 
+
 # - name: Ensure SELinux is disabled
 #   ansible.builtin.selinux:
 #     state: disabled
@@ -68,22 +80,3 @@
 #     path: /etc/selinux/config
 #     regexp: '^SELINUX='
 #     line: 'SELINUX=permissive'
-
-- name: Disable swap
-  shell: |
-    swapoff -a
-    sed -i '/ swap / s/^/#/' /etc/fstab
-
-# Cannot be installed on Amazon Linux 2
-# - name: Install pip3
-#   # yum:
-#   dnf:
-#     name: python3-pip
-#     state: present
-    
-- name: install pre-requisites for python
-  pip:
-    name:
-      - openshift
-      - pyyaml
-      - kubernetes 

@@ -3,7 +3,11 @@
   set_fact:
     kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
 
-- name: Join the worker node to the master
+- name: Show the join command
+  debug:
+    msg: "{{ kubeadm_join_command }}"
+
+- name: Join the worker nodes to the master
   ansible.builtin.shell:
     cmd: "{{ kubeadm_join_command }}"
     creates: /etc/kubernetes/kubelet.conf

@@ -1,0 +1,44 @@
+{
+  "public_ip_master": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "3.76.197.234",
+      "63.177.65.5",
+      "3.75.99.5"
+    ]
+  },
+  "public_ip_nginx": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string"
+      ]
+    ],
+    "value": [
+      "63.177.111.77"
+    ]
+  },
+  "public_ip_worker": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "18.194.123.60",
+      "35.159.247.204"
+    ]
+  }
+}

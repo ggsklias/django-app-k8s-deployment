@@ -62,8 +62,8 @@ resource "aws_route_table_association" "public" {
 }
 
 
-module "server_master" {
-  source = "./server"
+module "masters" {
+  source = "./modules/master"
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
@@ -72,11 +72,12 @@ module "server_master" {
   subnet_id            = aws_subnet.public.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "master"
+  instance_count       = 3
 
 }
 
-module "server_worker" {
-  source = "./server"
+module "workers" {
+  source = "./modules/worker"
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
@@ -85,16 +86,36 @@ module "server_worker" {
   subnet_id            = aws_subnet.public.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "worker"
+  instance_count       = 2
+
+}
+
+module "nginx" {
+  source = "./modules/nginx"
+
+  ami                  = "ami-0764af88874b6b852"
+  size                 = "t2.micro"
+  iam_instance_profile = "secretsRole"
+  ec2_ssh_key          = "ssh_key"
+  subnet_id            = aws_subnet.public.id
+  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
+  instance_name        = "worker"
+  instance_count       = 1
 
 }
 
 output "public_ip_master" {
-  value = module.server_master.public_ip
+  value = flatten(module.masters.public_ip)
 
 }
 
 output "public_ip_worker" {
-  value = module.server_worker.public_ip
+  value = flatten(module.workers.public_ip)
+
+}
+
+output "public_ip_nginx" {
+  value = flatten(module.nginx.public_ip)
 
 }
 
@@ -168,7 +189,7 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
   # etcd client url port
   ingress {
     from_port   = 2379
-    to_port     = 2379
+    to_port     = 2380
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }

@@ -1,0 +1,40 @@
+---
+- name: Install Nginx using amazon-linux-extras
+  shell: | 
+      yum -y clean metadata
+      amazon-linux-extras enable nginx1
+      yum -y clean metadata
+      yum -y install nginx
+      yum -y install nginx-mod-stream
+
+- name: Create directory for stream configurations
+  file:
+    path: /etc/nginx/stream-conf.d
+    state: directory
+
+- name: Wait for stream configuration directory to exist
+  wait_for:
+    path: /etc/nginx/stream-conf.d
+    state: present
+    timeout: 30
+
+- name: Deploy Nginx stream configuration for kube-apiserver load balancing
+  template:
+    src: templates/kube-apiserver.conf.j2
+    dest: /etc/nginx/stream-conf.d/kube-apiserver.conf
+  notify: Reload Nginx
+
+- name: Ensure top-level stream block exists in nginx.conf
+  blockinfile:
+    path: /etc/nginx/nginx.conf
+    marker: "# {mark} ANSIBLE STREAM BLOCK"
+    block: |
+      stream {
+          include /etc/nginx/stream-conf.d/*.conf;
+      }
+  notify: Reload Nginx
+
+# - name: Reload Nginx
+#   service:
+#     name: nginx
+#     state: reloaded

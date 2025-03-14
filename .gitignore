@@ -11,6 +11,9 @@ provision/terraform/.terraform.lock.hcl
 djangoarticleapp/.DS_Store
 provision/exports.sh
 .ansible-lint
+.ansible*
+.vscode*
+provision/ansible/test.yml
 provision/terraform/terraform.tfstate.backup
 provision/terraform/terraform.tfstate
 provision/ansible_logs/ansible.log

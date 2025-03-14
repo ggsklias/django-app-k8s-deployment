@@ -4,6 +4,14 @@
     kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
   register: django_nodeport
 
-- name: Print application URL
+- name: Get Django service External IP
+  shell: kubectl get svc djangoarticleapp-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+  register: django_external_ip
+
+- name: Print application URL - Django service External IP
+  debug:
+    msg: "http://{{ groups['workers'][0] }}:{{ django_nodeport.stdout }}"
+
+- name: Print application URL - worker IP
   debug:
     msg: "http://{{ groups['workers'][0] }}:{{ django_nodeport.stdout }}"
