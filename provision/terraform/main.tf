@@ -13,15 +13,26 @@ resource "aws_vpc" "main" {
 }
 
 # 2. Public Subnet (Web Server)
-resource "aws_subnet" "public" {
+resource "aws_subnet" "public1" {
   vpc_id     = aws_vpc.main.id
   cidr_block = "10.0.1.0/24"
-  #availability_zone       = "eu-central-1a"
+  availability_zone       = "eu-central-1a"
   map_public_ip_on_launch = true
   tags = {
-    Name = "public-subnet"
+    Name = "public-subnet-1"
   }
 }
+
+resource "aws_subnet" "public2" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "10.0.3.0/24"
+  availability_zone       = "eu-central-1b"
+  map_public_ip_on_launch = true
+  tags = {
+    Name = "public-subnet-2"
+  }
+}
+
 
 # 3. Private Subnet (PostgreSQL)
 resource "aws_subnet" "private" {
@@ -69,7 +80,7 @@ module "masters" {
   size                 = "t2.micro"
   iam_instance_profile = "secretsRole"
   ec2_ssh_key          = "ssh_key"
-  subnet_id            = aws_subnet.public.id
+  subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "master"
   instance_count       = 3
@@ -83,7 +94,7 @@ module "workers" {
   size                 = "t2.micro"
   iam_instance_profile = "secretsRole"
   ec2_ssh_key          = "ssh_key"
-  subnet_id            = aws_subnet.public.id
+  subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "worker"
   instance_count       = 2
@@ -97,7 +108,7 @@ module "nginx" {
   size                 = "t2.micro"
   iam_instance_profile = "secretsRole"
   ec2_ssh_key          = "ssh_key"
-  subnet_id            = aws_subnet.public.id
+  subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "worker"
   instance_count       = 1
@@ -109,7 +120,7 @@ resource "aws_lb" "app_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.allow_ssh_and_k8s.id]
-  subnets            = [aws_subnet.public.id]
+  subnets            = [aws_subnet.public1.id, aws_subnet.public2.id]
 
   tags = {
     Environment = var.environment
