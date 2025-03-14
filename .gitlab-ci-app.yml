@@ -62,7 +62,7 @@ deploy:
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
   
-terraform_LB_deployment:
+load_balancer:
   stage: load_balancer
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
