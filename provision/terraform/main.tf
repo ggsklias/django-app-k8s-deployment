@@ -68,7 +68,10 @@ resource "aws_route_table" "public" {
 
 # 6. Associate Public Subnet with Public Route Table
 resource "aws_route_table_association" "public" {
-  subnet_id      = aws_subnet.public.id
+    for_each       = {
+    public1 = aws_subnet.public1.id
+    public2 = aws_subnet.public2.id
+  }
   route_table_id = aws_route_table.public.id
 }
 
