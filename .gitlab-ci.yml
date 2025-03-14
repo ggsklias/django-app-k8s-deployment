@@ -2,6 +2,7 @@ stages:
   - provision   # Required for infra jobs
   - build
   - deploy
+  - load_balancer # If you have a load balancer stage
   - cleanup     # If you have a cleanup stage
 
 include:
