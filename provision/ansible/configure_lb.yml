@@ -1,0 +1,9 @@
+- hosts: master
+  gather_facts: yes  
+  become: true
+  become_user: "{{ ansible_user }}"
+  tasks:
+    - name: kube_get_app_url yml
+      include_role:
+        name: kubernetes
+        tasks_from: kube_get_app_url.yml

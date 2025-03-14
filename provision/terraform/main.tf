@@ -104,6 +104,53 @@ module "nginx" {
 
 }
 
+resource "aws_lb" "app_alb" {
+  name               = "k8s-app-alb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.allow_ssh_and_k8s.id]
+  subnets            = aws_subnet.public.id
+
+  tags = {
+    Environment = var.environment
+    Application = "djangoarticleapp"
+  }
+}
+
+resource "aws_lb_target_group" "app_tg" {
+  name        = "k8s-app-tg"
+  port        = var.node_port
+  protocol    = "HTTP"
+  target_type = "instance"
+  vpc_id      = aws_vpc.main.id
+
+  health_check {
+    protocol            = "HTTP"
+    path                = "/healthz/"
+    matcher             = "200"
+    interval            = 30
+    timeout             = 5
+    healthy_threshold   = 3
+    unhealthy_threshold = 3
+  }
+}
+
+resource "aws_lb_listener" "app_listener" {
+  load_balancer_arn = aws_lb.app_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app_tg.arn
+  }
+}
+
+output "alb_dns_name" {
+  value       = aws_lb.app_alb.dns_name
+  description = "The DNS name of the application ALB"
+}
+
 output "public_ip_master" {
   value = flatten(module.masters.public_ip)
 

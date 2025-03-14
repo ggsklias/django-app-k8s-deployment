@@ -8,10 +8,16 @@
   shell: kubectl get svc djangoarticleapp-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
   register: django_external_ip
 
+- name: Update ALB configuration with new node_port
+  command: terraform apply -var "node_port={{ django_nodeport.stdout | int }}" -auto-approve
+  args:
+    chdir: ../terraform
+
 - name: Print application URL - Django service External IP
   debug:
-    msg: "http://{{ groups['workers'][0] }}:{{ django_nodeport.stdout }}"
+    msg: "http://{{ django_external_ip.stdout }}:{{ django_nodeport.stdout }}"
 
 - name: Print application URL - worker IP
   debug:
-    msg: "http://{{ groups['workers'][0] }}:{{ django_nodeport.stdout }}"
+    msg: "http://{{ groups['workers'][0].ansible_host }}:{{ django_nodeport.stdout }}"
+

@@ -1,6 +1,7 @@
 stages:
   - build
   - deploy
+  - load_balancer
 
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
@@ -60,3 +61,21 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
+  
+terraform_LB_deployment:
+stage: load_balancer
+image:
+  name: willhallonline/ansible:2.18.2-ubuntu-24.04
+  entrypoint: [""]
+script:
+  - echo "Provisioning EC2 instances using Terraform"
+  - apt-get update && apt-get install -y wget unzip rsync curl
+  - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
+  - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
+  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  - unzip awscliv2.zip
+  - ./aws/install
+  - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
+  - cd provision/ansible
+  - ansible-playbook -i inventory.ini configure_lb.yml -vv
+when: manual
