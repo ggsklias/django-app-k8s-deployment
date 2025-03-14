@@ -21,7 +21,9 @@ provision_servers_and_install_k8s_cluster:
     - ./aws/install
     - cd provision/terraform
     - terraform init
-    - python3 ../scripts/provision.py
+    - terraform apply -auto-approve
+    - tf output -json > output.json
+    - python3 create_inv.py
     - cd ../
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
