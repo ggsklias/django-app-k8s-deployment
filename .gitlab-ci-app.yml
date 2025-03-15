@@ -75,10 +75,16 @@ load_balancer:
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - unzip awscliv2.zip
     - ./aws/install
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate provision/terraform/terraform.tfstate
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl provision/terraform/.terraform.lock.hcl
     - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
+    - cd provision/terraform
+    - terraform init
+    - cd ../ansible
     - chmod 755 provision/ansible
     - cd provision/ansible
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
+    - ls -la
     - ansible-playbook -i inventory.ini configure_lb.yml -vv
   when: manual
