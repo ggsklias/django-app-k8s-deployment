@@ -1,5 +1,13 @@
 - hosts: master
   gather_facts: yes  
+  tasks:
+    - name: configure_lb yml
+      include_role:
+        name: kubernetes
+        tasks_from: kube_apply_terraform.yml
+
+- hosts: master
+  gather_facts: yes  
   become: true
   become_user: "{{ ansible_user }}"
   tasks:
