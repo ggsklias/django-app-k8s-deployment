@@ -1,7 +1,0 @@
----
-- name: Update ALB configuration with new node_port
-  delegate_to: localhost
-  run_once: true
-  command: terraform apply -var "node_port={{ django_nodeport.stdout | int }}" -auto-approve
-  args:
-    chdir: "{{ playbook_dir }}/../terraform"
