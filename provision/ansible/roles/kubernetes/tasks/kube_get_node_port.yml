@@ -13,5 +13,5 @@
 - name: Write NodePort value to .env file
   copy:
     content: "NODE_PORT={{ django_nodeport.stdout }}"
-    dest: .env
+    dest: "{{ lookup('env', 'CI_PROJECT_DIR') }}/.env"
   delegate_to: localhost
