@@ -106,6 +106,7 @@ update_target_group:
     entrypoint: [""]
   script:
     - *default_terraform
+    - echo $NODE_PORT
     # Use single quotes around node_port so that it is interpreted as a number
     - terraform apply -var 'node_port=${NODE_PORT}' -auto-approve
 
