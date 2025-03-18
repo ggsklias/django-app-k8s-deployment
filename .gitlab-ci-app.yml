@@ -84,10 +84,9 @@ get_node_port:
     - echo "Provisioning EC2 instances using Terraform"
     - *default_ansible
     - ansible-playbook -i inventory.ini get_node_port.yml -vv
-  when: manual
   artifacts:
-  reports:
-    dotenv: .env
+    reports:
+      dotenv: .env
 
 detach_listener:
   stage: terraform_detach
