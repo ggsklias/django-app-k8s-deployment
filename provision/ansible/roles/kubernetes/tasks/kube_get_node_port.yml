@@ -1,0 +1,17 @@
+---
+- name: Get Django service NodePort
+  become: true
+  become_user: "{{ ansible_user }}"
+  shell: |
+    kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
+  register: django_nodeport
+
+- name: Print Node port
+  debug: 
+    var: django_nodeport.stdout
+
+- name: Write NodePort value to .env file
+  copy:
+    content: "NODE_PORT={{ django_nodeport.stdout }}"
+    dest: .env
+

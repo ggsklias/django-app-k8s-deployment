@@ -1,0 +1,9 @@
+---
+- hosts: master
+  gather_facts: yes  
+  tasks:
+    - name: kube_get_node_port yml
+      include_role:
+        name: kubernetes
+        tasks_from: kube_get_node_port.yml
+      when: hostvars[inventory_hostname].role == "primary"

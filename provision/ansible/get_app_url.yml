@@ -6,3 +6,4 @@
       include_role:
         name: kubernetes
         tasks_from: kube_get_app_url.yml
+      when: hostvars[inventory_hostname].role == "primary"

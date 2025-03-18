@@ -132,6 +132,22 @@ resource "aws_lb" "app_alb" {
   }
 }
 
+resource "aws_lb_listener" "app_listener" {
+  load_balancer_arn = aws_lb.app_alb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.app_tg.arn
+  }
+}
+
+output "alb_dns_name" {
+  value       = aws_lb.app_alb.dns_name
+  description = "The DNS name of the application ALB"
+}
+
 resource "aws_lb_target_group" "app_tg" {
   name        = "k8s-app-tg"
   port        = var.node_port
@@ -150,21 +166,6 @@ resource "aws_lb_target_group" "app_tg" {
   }
 }
 
-resource "aws_lb_listener" "app_listener" {
-  load_balancer_arn = aws_lb.app_alb.arn
-  port              = 80
-  protocol          = "HTTP"
-
-  default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app_tg.arn
-  }
-}
-
-output "alb_dns_name" {
-  value       = aws_lb.app_alb.dns_name
-  description = "The DNS name of the application ALB"
-}
 
 output "public_ip_master" {
   value = flatten(module.masters.public_ip)

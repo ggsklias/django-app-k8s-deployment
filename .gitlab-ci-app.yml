@@ -1,7 +1,29 @@
 stages:
   - build
   - deploy
-  - load_balancer
+  - get_node_port
+  - terraform_detach
+  - terraform_update
+  - terraform_reattach
+  - get_app_url
+
+.default_terraform: &default_terraform
+  - apk update && apk add --no-cache unzip curl aws-cli
+  - cd provision/terraform
+  - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate .
+  - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl .
+  - terraform init
+
+.default_ansible: &default_ansible
+  - apt-get update && apt-get install -y unzip curl
+  - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+  - unzip awscliv2.zip
+  - ./aws/install
+  - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
+  - chmod 755 provision/ansible
+  - cd provision/ansible
+  - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
+  - chmod 600 ssh_key.pem
 
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
@@ -50,41 +72,60 @@ deploy:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
-    - apt-get update && apt-get install -y unzip curl
-    - apt-get update && apt-get install -y rsync
-    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    - unzip awscliv2.zip
-    - ./aws/install
-    - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
-    - chmod 755 provision/ansible
-    - cd provision/ansible
-    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 600 ssh_key.pem
+    - *default_ansible
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
   
-load_balancer:
-  stage: load_balancer
+get_node_port:
+  stage: get_node_port
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
     - echo "Provisioning EC2 instances using Terraform"
-    - apt-get update && apt-get install -y wget unzip rsync curl
-    - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
-    - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
-    - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-    - unzip awscliv2.zip
-    - ./aws/install
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate provision/terraform/terraform.tfstate
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl provision/terraform/.terraform.lock.hcl
-    - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
-    - cd provision/terraform
-    - terraform init
-    - cd ../
-    - chmod 755 ansible
-    - cd ansible
-    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 600 ssh_key.pem
-    - ls -la
-    - ansible-playbook -i inventory.ini configure_lb.yml -vv
+    - *default_ansible
+    - ansible-playbook -i inventory.ini get_node_port.yml -vv
   when: manual
+  artifacts:
+  reports:
+    dotenv: .env
+
+detach_listener:
+  stage: terraform_detach
+  image:
+    name: hashicorp/terraform:1.10.5
+    entrypoint: [""]
+  script:
+    - echo $NODE_PORT
+    - *default_terraform
+    - echo $NODE_PORT
+    - terraform apply -target=aws_lb_listener.app_listener_detach -auto-approve
+
+update_target_group:
+  stage: terraform_update
+  image:
+    name: hashicorp/terraform:1.10.5
+    entrypoint: [""]
+  script:
+    - *default_terraform
+    - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
+
+reattach_listener:
+  stage: terraform_reattach
+  image:
+    name: hashicorp/terraform:1.10.5
+    entrypoint: [""]
+  script:
+    - *default_terraform
+    - terraform apply -target=aws_lb_listener.app_listener -auto-approve
+
+get_app_url:
+  stage: get_app_url
+  before_script:
+  - ansible-galaxy collection install kubernetes.core
+  - ansible-galaxy collection install community.kubernetes
+  image: 
+    name: willhallonline/ansible:2.18.2-ubuntu-24.04
+    entrypoint: [""]
+  script:
+    - *default_ansible
+    - ansible-playbook -i inventory.ini get_app_url.yml -vv
