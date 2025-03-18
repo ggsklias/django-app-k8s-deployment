@@ -97,7 +97,7 @@ detach_listener:
     - echo $NODE_PORT
     - *default_terraform
     - echo $NODE_PORT
-    - terraform apply -target=aws_lb_listener.app_listener_detach -auto-approve
+    - terraform apply -var "listener_mode=detach" -auto-approve
 
 update_target_group:
   stage: terraform_update
@@ -115,7 +115,7 @@ reattach_listener:
     entrypoint: [""]
   script:
     - *default_terraform
-    - terraform apply -target=aws_lb_listener.app_listener -auto-approve
+    - terraform apply -var "listener_mode=forward" -auto-approve
 
 get_app_url:
   stage: get_app_url

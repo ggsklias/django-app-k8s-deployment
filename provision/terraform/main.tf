@@ -138,8 +138,26 @@ resource "aws_lb_listener" "app_listener" {
   protocol          = "HTTP"
 
   default_action {
-    type             = "forward"
-    target_group_arn = aws_lb_target_group.app_tg.arn
+    type             = var.listener_mode == "detach" ? "fixed-response" : "forward" # If listener_mode is detach, use fixed-response, otherwise forward
+    
+    dynamic "fixed_response" {
+      for_each = var.listener_mode == "detach" ? [1] : []
+      content {
+        content_type = "text/plain"
+        message_body = "Service temporarily unavailable"
+        status_code  = "503"
+      }
+    }
+    
+    dynamic "forward" {
+      for_each = var.listener_mode != "detach" ? [1] : []
+      content {
+        target_group {
+          arn    = aws_lb_target_group.app_tg.arn
+        }
+      }
+    }
+
   }
 }
 
