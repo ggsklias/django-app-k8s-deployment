@@ -106,7 +106,8 @@ update_target_group:
     entrypoint: [""]
   script:
     - *default_terraform
-    - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
+    # Use single quotes around node_port so that it is interpreted as a number
+    - terraform apply -var 'node_port=${NODE_PORT}' -auto-approve
 
 reattach_listener:
   stage: terraform_reattach

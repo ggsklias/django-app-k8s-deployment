@@ -14,4 +14,4 @@
   copy:
     content: "NODE_PORT={{ django_nodeport.stdout }}"
     dest: .env
-
+  delegate_to: localhost

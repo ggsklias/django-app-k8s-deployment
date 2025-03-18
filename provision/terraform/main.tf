@@ -168,7 +168,7 @@ output "alb_dns_name" {
 
 resource "aws_lb_target_group" "app_tg" {
   name        = "k8s-app-tg"
-  port        = var.node_port
+  port        = tonumber(var.node_port)
   protocol    = "HTTP"
   target_type = "instance"
   vpc_id      = aws_vpc.main.id
