@@ -2,21 +2,22 @@
 - name: Get Django service NodePort
   become: true
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.command: |
     kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
   register: django_nodeport
+  changed_when: django_nodeport.rc != 0
 
 - name: Get Django service External IP
   become: true
   become_user: "{{ ansible_user }}"
-  shell: kubectl get svc djangoarticleapp-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+  ansible.builtin.command: kubectl get svc djangoarticleapp-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
   register: django_external_ip
+  changed_when: django_external_ip.rc != 0
 
 - name: Print application URL - Django service External IP
-  debug:
+  ansible.builtin.debug:
     msg: "http://{{ django_external_ip.stdout }}:{{ django_nodeport.stdout }}"
 
-- name: Print application URL - worker IP
-  debug:
-    msg: "http://{{ groups['workers'][0].ansible_host }}:{{ django_nodeport.stdout }}"
-
+# - name: Print application URL - worker IP
+#   debug:
+#     msg: "http://{{ groups['workers'][0].ansible_host }}:{{ django_nodeport.stdout }}"
