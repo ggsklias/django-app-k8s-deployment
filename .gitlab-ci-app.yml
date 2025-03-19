@@ -107,6 +107,7 @@ get_app_url:
   before_script:
   - ansible-galaxy collection install kubernetes.core
   - ansible-galaxy collection install community.kubernetes
+  - ansible-galaxy collection install community.aws
   image: 
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
