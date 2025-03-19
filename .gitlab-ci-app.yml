@@ -107,7 +107,7 @@ update_target_group:
   script:
     - *default_terraform
     - echo $NODE_PORT
-    # Use single quotes around node_port so that it is interpreted as a number
+    # Use double quotes around node_port so that it is interpreted as a number
     - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
 
 reattach_listener:
