@@ -9,8 +9,10 @@
       include_role:
         name: kubernetes
         tasks_from: kube_create_gitlab_secret.yml
+      when: hostvars[inventory_hostname].role == "primary"
 
     - name: kube_apply_manifests yml
       include_role:
         name: kubernetes
         tasks_from: kube_apply_manifests.yml
+      when: hostvars[inventory_hostname].role == "primary"
