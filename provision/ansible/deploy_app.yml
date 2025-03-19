@@ -1,18 +1,19 @@
-- hosts: master
-  gather_facts: yes  
+- name: Configure gitlab secret and apply manifests
+  hosts: master
+  gather_facts: true
   become: true
   become_user: "{{ ansible_user }}"
   vars_files:
     - group_vars/all
   tasks:
-    - name: kube_apply_manifests yml
-      include_role:
+    - name: Execute kube_apply_manifests yml
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_create_gitlab_secret.yml
       when: hostvars[inventory_hostname].role == "primary"
 
-    - name: kube_apply_manifests yml
-      include_role:
+    - name: Execute kube_apply_manifests yml
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_apply_manifests.yml
       when: hostvars[inventory_hostname].role == "primary"

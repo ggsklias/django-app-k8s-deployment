@@ -1,34 +1,40 @@
---- 
+---
 - name: Debug every variable for each host in inventory_hostname
-  debug:
-    msg: "{{hostvars[groups['nginx'][0]].ansible_host}}"
+  ansible.builtin.debug:
+    msg: "{{ hostvars[groups['nginx'][0]].ansible_host }}"
 
 - name: Initialize the Kubernetes cluster (if not already initialized)
-  command: kubeadm init --pod-network-cidr=10.244.0.0/16 --control-plane-endpoint {{hostvars[groups['nginx'][0]].ansible_host}}:6443 --ignore-preflight-errors=all
+  ansible.builtin.command: >
+    kubeadm init --pod-network-cidr=10.244.0.0/16
+    --control-plane-endpoint {{ hostvars[groups['nginx'][0]].ansible_host }}:6443
+    --ignore-preflight-errors=all
   register: kubeadm_init_output
+  changed_when: kubeadm_init_output.rc != 0
 
 - name: Create kubeadm token and capture join command
-  shell: kubeadm token create --print-join-command
+  ansible.builtin.command: kubeadm token create --print-join-command
   register: join_command
+  changed_when: join_command.rc != 0
 
 - name: Set the join command as a fact
-  set_fact:
+  ansible.builtin.set_fact:
     kubeadm_join_command: "{{ join_command.stdout }}"
 
 - name: Show the join command
-  debug:
+  ansible.builtin.debug:
     msg: "{{ kubeadm_join_command }}"
 
 - name: Create kubeadm token and capture join command
-  shell: kubeadm init phase upload-certs --upload-certs
+  ansible.builtin.command: kubeadm init phase upload-certs --upload-certs
   register: certificates
+  changed_when: certificates.rc != 0
 
 - name: Set the certificates command as a fact
-  set_fact:
+  ansible.builtin.set_fact:
     kubeadm_certificate_key: "{{ certificates.stdout }}"
-    
+
 - name: Extract clean certificate key (last non-empty line)
-  set_fact:
+  ansible.builtin.set_fact:
     kubeadm_certificate_key_clean: "{{ kubeadm_certificate_key.splitlines() | reject('equalto', '') | list | last }}"
 
 - name: Check if folder exists
@@ -38,31 +44,36 @@
 
 - name: Set up kubeconfig for kubectl (admin access) on master node -  Execute command if folder does not exist
   become: true
-  become_user: "{{ ansible_user }}" 
-  shell: |
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.shell: |
     mkdir -p $HOME/.kube
     sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
   when: not folder_check.stat.exists
+  register: kubeconfig
+  changed_when: kubeconfig.rc != 0
 
 - name: Restart Kubelet to apply Docker as container runtime
-  systemd:
+  ansible.builtin.systemd:
     name: kubelet
     state: restarted
 
 - name: Wait for API server to respond
   become: true
-  become_user: "{{ ansible_user }}" 
+  become_user: "{{ ansible_user }}"
   retries: 10
   delay: 10
-  command: kubectl get nodes
+  ansible.builtin.command: kubectl get nodes
   register: kubectl_output
   until: kubectl_output.rc == 0
+  changed_when: kubectl_output.rc != 0
 
 - name: Install Flannel networking on master node
   become: true
-  become_user: "{{ ansible_user }}" 
-  shell: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+  register: flannel_install
+  changed_when: flannel_install.rc != 0
 
 - name: Patch Flannel ConfigMap to set VXLAN port to UDP 8472
   k8s:
@@ -85,9 +96,4 @@
             }
           }
   register: flannel_patch
-
-- name: Restart Flannel DaemonSet to apply new configuration
-  become: true
-  become_user: "{{ ansible_user }}" 
-  shell: kubectl rollout restart daemonset/kube-flannel-ds -n kube-flannel
-  when: flannel_patch.changed
+  notify: Restart Flannel DaemonSet to apply new configuration

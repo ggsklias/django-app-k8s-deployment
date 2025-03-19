@@ -1,4 +1,11 @@
 - name: Restart kubelet
-  systemd:
+  ansible.builtin.systemd:
     name: kubelet
     state: restarted
+
+- name: Restart Flannel DaemonSet to apply new configuration
+  become: true
+  become_user: "{{ ansible_user }}"
+  ansible.builtin.command: kubectl rollout restart daemonset/kube-flannel-ds -n kube-flannel
+  register: restart_flannel
+  changed_when: restart_flannel.rc != 0
