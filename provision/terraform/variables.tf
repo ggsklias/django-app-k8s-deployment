@@ -10,14 +10,14 @@ variable "environment" {
   default     = "staging"
 }
 
-variable "listener_mode" {
-  description = "Listener mode: 'detach' for fixed-response, 'forward' for normal operation"
-  type        = string
-  default     = "forward"
-}
-
 variable "target_group_arn" {
   description = "The ARN of the target group for normal operation"
   type        = string
   default     = ""
 }
+
+# variable "listener_mode" {
+#   description = "Listener mode: 'detach' for fixed-response, 'forward' for normal operation"
+#   type        = string
+#   default     = "forward"
+# }

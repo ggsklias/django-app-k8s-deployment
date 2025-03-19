@@ -2,9 +2,9 @@ stages:
   - build
   - deploy
   - get_node_port
-  - terraform_detach
+  # - terraform_detach
   - terraform_update
-  - terraform_reattach
+  # - terraform_reattach
   - get_app_url
 
 .default_terraform: &default_terraform
@@ -92,17 +92,17 @@ get_node_port:
     reports:
       dotenv: .env
 
-detach_listener:
-  stage: terraform_detach
-  image:
-    name: hashicorp/terraform:1.10.5
-    entrypoint: [""]
-  script:
-    - echo $NODE_PORT
-    - *default_terraform
-    - echo $NODE_PORT
-    - terraform apply -var "listener_mode=detach" -auto-approve
-    - *default_save_terraform_state
+# detach_listener:
+#   stage: terraform_detach
+#   image:
+#     name: hashicorp/terraform:1.10.5
+#     entrypoint: [""]
+#   script:
+#     - echo $NODE_PORT
+#     - *default_terraform
+#     - echo $NODE_PORT
+#     - terraform apply -var "listener_mode=detach" -auto-approve
+#     - *default_save_terraform_state
 
 update_target_group:
   stage: terraform_update
@@ -117,19 +117,19 @@ update_target_group:
     - *default_save_terraform_state
     
 
-reattach_listener:
-  stage: terraform_reattach
-  image:
-    name: hashicorp/terraform:1.10.5
-    entrypoint: [""]
-  script:
-    - *default_terraform
-    - terraform state show aws_lb_target_group.app_tg
-    - terraform state show aws_lb_listener.app_listener
-    - terraform apply -var "listener_mode=forward" -auto-approve
-    - terraform state show aws_lb_target_group.app_tg
-    - terraform state show aws_lb_listener.app_listener
-    - *default_save_terraform_state
+# reattach_listener:
+#   stage: terraform_reattach
+#   image:
+#     name: hashicorp/terraform:1.10.5
+#     entrypoint: [""]
+#   script:
+#     - *default_terraform
+#     - terraform state show aws_lb_target_group.app_tg
+#     - terraform state show aws_lb_listener.app_listener
+#     - terraform apply -var "listener_mode=forward" -auto-approve
+#     - terraform state show aws_lb_target_group.app_tg
+#     - terraform state show aws_lb_listener.app_listener
+#     - *default_save_terraform_state
 
 get_app_url:
   stage: get_app_url

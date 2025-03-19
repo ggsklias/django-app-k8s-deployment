@@ -1,3 +1,5 @@
+# ALB, Listener, Target group, K8S nodes
+```mermaid
 flowchart TD
   A[ALB: Application Load Balancer]
   B[Listener: Port 80]
@@ -19,4 +21,4 @@ flowchart TD
   F --> G
   G --> H
   H --> B
-
+```

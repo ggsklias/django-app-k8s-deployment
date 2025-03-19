@@ -136,28 +136,16 @@ resource "aws_lb_listener" "app_listener" {
   load_balancer_arn = aws_lb.app_alb.arn
   port              = 80
   protocol          = "HTTP"
+  depends_on        = [aws_lb_target_group.app_tg]
 
   default_action {
-    type = var.listener_mode == "detach" ? "fixed-response" : "forward" # If listener_mode is detach, use fixed-response, otherwise forward
-
-    dynamic "fixed_response" {
-      for_each = var.listener_mode == "detach" ? [1] : []
-      content {
-        content_type = "text/plain"
-        message_body = "Service temporarily unavailable"
-        status_code  = "503"
+    type = "forward"
+    forward {
+      target_group {
+        arn    = aws_lb_target_group.app_tg.arn
+        weight = 100
       }
     }
-
-    dynamic "forward" {
-      for_each = var.listener_mode != "detach" ? [1] : []
-      content {
-        target_group {
-          arn = aws_lb_target_group.app_tg.arn
-        }
-      }
-    }
-
   }
 }
 
@@ -182,6 +170,11 @@ resource "aws_lb_target_group" "app_tg" {
     healthy_threshold   = 3
     unhealthy_threshold = 3
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
 }
 
 
