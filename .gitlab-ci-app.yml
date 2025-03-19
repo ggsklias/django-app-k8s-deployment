@@ -117,7 +117,11 @@ reattach_listener:
     entrypoint: [""]
   script:
     - *default_terraform
+    - terraform state show aws_lb_target_group.app_tg
+    - terraform state show aws_lb_listener.app_listener
     - terraform apply -var "listener_mode=forward" -auto-approve
+    - terraform state show aws_lb_target_group.app_tg
+    - terraform state show aws_lb_listener.app_listener
 
 get_app_url:
   stage: get_app_url
