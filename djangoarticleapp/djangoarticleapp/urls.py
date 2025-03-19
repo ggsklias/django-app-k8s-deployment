@@ -26,5 +26,5 @@ urlpatterns = [
     path('accounts/', include("allauth.urls")),
     path("", RedirectView.as_view(pattern_name="home")),
     path('__debug__/', include("debug_toolbar.urls")),
-    path('healthz/', healthz, name='healthz'),
+    path('healthz', healthz, name='healthz'),
 ]

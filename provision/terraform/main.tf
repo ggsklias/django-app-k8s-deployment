@@ -163,7 +163,7 @@ resource "aws_lb_target_group" "app_tg" {
 
   health_check {
     protocol            = "HTTP"
-    path                = "/healthz/"
+    path                = "/healthz"
     matcher             = "200"
     interval            = 30
     timeout             = 10
