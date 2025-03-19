@@ -10,6 +10,7 @@
   debug: 
     var: django_nodeport.stdout
 
+# This needs CI_PROJECT_DIR to be set because gitlab reads files from that
 - name: Write NodePort value to .env file
   copy:
     content: "NODE_PORT={{ django_nodeport.stdout }}"
