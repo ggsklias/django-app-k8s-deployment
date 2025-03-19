@@ -7,7 +7,7 @@ stages:
   - terraform_update
   - terraform_reattach
   - get_app_url
-  - cleanup 
+  - cleanup
 
 include:
   - local: '.gitlab-ci-infra.yml'
