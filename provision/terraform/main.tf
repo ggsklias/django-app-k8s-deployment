@@ -114,7 +114,7 @@ module "nginx" {
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
-  instance_name        = "worker"
+  instance_name        = "nginx"
   instance_count       = 1
 
 }
@@ -158,7 +158,7 @@ resource "aws_lb_target_group" "app_tg" {
   name_prefix = "k8tg-"
   port        = tonumber(var.node_port)
   protocol    = "HTTP"
-  target_type = "instance"
+  target_type = "ip"
   vpc_id      = aws_vpc.main.id
 
   health_check {
