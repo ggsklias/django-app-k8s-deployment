@@ -167,7 +167,7 @@ output "alb_dns_name" {
 }
 
 resource "aws_lb_target_group" "app_tg" {
-  name        = "k8s-app-tg"
+  name_prefix = "k8s-app-tg-"
   port        = tonumber(var.node_port)
   protocol    = "HTTP"
   target_type = "instance"
