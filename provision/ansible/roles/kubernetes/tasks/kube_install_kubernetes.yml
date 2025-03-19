@@ -1,6 +1,6 @@
 ---
 - name: Add Kubernetes repository
-  copy:
+  ansible.builtin.copy:
     dest: /etc/yum.repos.d/kubernetes.repo
     content: |
       [kubernetes]
@@ -9,18 +9,24 @@
       enabled=1
       gpgcheck=1
       gpgkey=https://pkgs.k8s.io/core:/stable:/v1.26/rpm/repodata/repomd.xml.key
+    owner: root
+    group: root
+    mode: '0644'
 
 # Amazon Linux 2
 - name: Install required dependencies
-  shell: |
+  ansible.builtin.shell: |
     sudo yum install -y kubelet kubeadm kubectl
+  register: my_output # <- Registers the command output.
+  changed_when: my_output.rc != 0 # <- Uses the return code to define when the task has changed.
 
 - name: Copy Kubernetes provisioning files
-  copy:
+  ansible.builtin.copy:
     src: "{{ playbook_dir | dirname }}/k8s-manifests"
     dest: /home/ec2-user
     owner: ec2-user
     group: ec2-user
+    mode: '0755'
 
 # Amazon Linux 2023
 # - name: Install kubeadm, kubelet, and kubectl
