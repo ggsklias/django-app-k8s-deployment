@@ -3,9 +3,7 @@ stages:
   - build
   - deploy
   - get_node_port
-  # - terraform_detach
-  - terraform_update
-  # - terraform_reattach
+  - terraform_update_target_group
   - get_app_url
   - cleanup
 

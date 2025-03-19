@@ -1,7 +1,7 @@
 variable "node_port" {
   description = "The Kubernetes NodePort on which the application is exposed"
   type        = string
-  default     = "30001"
+  default     = "31131"
 }
 
 variable "environment" {

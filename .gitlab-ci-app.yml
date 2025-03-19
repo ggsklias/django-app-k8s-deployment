@@ -2,9 +2,7 @@ stages:
   - build
   - deploy
   - get_node_port
-  # - terraform_detach
-  - terraform_update
-  # - terraform_reattach
+  # - terraform_update_target_group
   - get_app_url
 
 .default_terraform: &default_terraform
@@ -92,43 +90,16 @@ get_node_port:
     reports:
       dotenv: .env
 
-# detach_listener:
-#   stage: terraform_detach
-#   image:
-#     name: hashicorp/terraform:1.10.5
-#     entrypoint: [""]
-#   script:
-#     - echo $NODE_PORT
-#     - *default_terraform
-#     - echo $NODE_PORT
-#     - terraform apply -var "listener_mode=detach" -auto-approve
-#     - *default_save_terraform_state
-
-update_target_group:
-  stage: terraform_update
-  image:
-    name: hashicorp/terraform:1.10.5
-    entrypoint: [""]
-  script:
-    - *default_terraform
-    - echo $NODE_PORT
-    # Use double quotes around node_port so that it is interpreted as a number
-    - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
-    - *default_save_terraform_state
-    
-
-# reattach_listener:
-#   stage: terraform_reattach
+# update_target_group:
+#   stage: terraform_update_target_group
 #   image:
 #     name: hashicorp/terraform:1.10.5
 #     entrypoint: [""]
 #   script:
 #     - *default_terraform
-#     - terraform state show aws_lb_target_group.app_tg
-#     - terraform state show aws_lb_listener.app_listener
-#     - terraform apply -var "listener_mode=forward" -auto-approve
-#     - terraform state show aws_lb_target_group.app_tg
-#     - terraform state show aws_lb_listener.app_listener
+#     - echo $NODE_PORT
+#     # Use double quotes around node_port so that it is interpreted as a number
+#     - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
 #     - *default_save_terraform_state
 
 get_app_url:
