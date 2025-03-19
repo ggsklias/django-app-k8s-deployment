@@ -158,7 +158,7 @@ resource "aws_lb_target_group" "app_tg" {
   name_prefix = "k8tg-"
   port        = tonumber(var.node_port)
   protocol    = "HTTP"
-  target_type = "ip"
+  target_type = "instance"
   vpc_id      = aws_vpc.main.id
 
   health_check {
@@ -166,7 +166,7 @@ resource "aws_lb_target_group" "app_tg" {
     path                = "/healthz/"
     matcher             = "200"
     interval            = 30
-    timeout             = 5
+    timeout             = 10
     healthy_threshold   = 3
     unhealthy_threshold = 3
   }

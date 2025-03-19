@@ -104,13 +104,9 @@ get_node_port:
 
 get_app_url:
   stage: get_app_url
-  before_script:
-  - ansible-galaxy collection install kubernetes.core
-  - ansible-galaxy collection install community.kubernetes
-  - ansible-galaxy collection install community.aws
-  image: 
-    name: willhallonline/ansible:2.18.2-ubuntu-24.04
+  image:
+    name: hashicorp/terraform:1.10.5
     entrypoint: [""]
   script:
-    - *default_ansible
-    - ansible-playbook -i inventory.ini get_app_url.yml -vv
+    - *default_terraform
+    - terraform output alb_dns_name
