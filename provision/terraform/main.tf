@@ -177,6 +177,17 @@ resource "aws_lb_target_group" "app_tg" {
 
 }
 
+locals {
+  # Convert the tuple to a map with indices as keys.
+  worker_instance_map = { for idx, instance_id in module.workers.instance_ids : idx => instance_id }
+}
+
+resource "aws_lb_target_group_attachment" "worker_attachments" {
+  for_each         = local.worker_instance_map
+  target_group_arn = aws_lb_target_group.app_tg.arn
+  target_id        = each.value
+  port             = var.node_port
+}
 
 output "public_ip_master" {
   value = flatten(module.masters.public_ip)
