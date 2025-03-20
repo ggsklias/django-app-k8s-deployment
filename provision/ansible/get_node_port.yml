@@ -1,9 +1,10 @@
 ---
-- hosts: master
-  gather_facts: yes  
+- name: Get Node Port
+  hosts: master
+  gather_facts: true
   tasks:
-    - name: kube_get_node_port yml
-      include_role:
+    - name: Kube get node port yml
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_get_node_port.yml
       when: hostvars[inventory_hostname].role == "primary"

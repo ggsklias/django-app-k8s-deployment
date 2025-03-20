@@ -1,4 +1,22 @@
 ---
+- name: Get ALB information
+  community.aws.elbv2_info:
+    names:
+      - "k8s-app-alb"
+    region: "eu-central-1"
+  register: alb_info
+
+- name: Set ALB DNS fact from AWS
+  ansible.builtin.set_fact:
+    alb_dns_name: "{{ alb_info.load_balancers[0].DNSName }}"
+
+- name: Print ALB DNS name
+  ansible.builtin.debug:
+    msg: "ALB DNS name is {{ alb_dns_name }}"
+
+# - name: Print application URL - worker IP
+#   debug:
+#     msg: "http://{{ groups['workers'][0].ansible_host }}:{{ django_nodeport.stdout }}"
 # - name: Get Django service NodePort
 #   become: true
 #   become_user: "{{ ansible_user }}"
@@ -17,22 +35,3 @@
 # - name: Print application URL - Django service External IP
 #   ansible.builtin.debug:
 #     msg: "http://{{ django_external_ip.stdout }}:{{ django_nodeport.stdout }}"
-
-- name: Get ALB information
-  community.aws.elbv2_info:
-    names:
-      - "k8s-app-alb"
-    region: "eu-central-1"
-  register: alb_info
-
-- name: Set ALB DNS fact from AWS
-  set_fact:
-    alb_dns_name: "{{ alb_info.load_balancers[0].DNSName }}"
-
-- debug:
-    msg: "ALB DNS name is {{ alb_dns_name }}"
-
-
-# - name: Print application URL - worker IP
-#   debug:
-#     msg: "http://{{ groups['workers'][0].ansible_host }}:{{ django_nodeport.stdout }}"

@@ -170,7 +170,7 @@ resource "aws_lb_target_group" "app_tg" {
     healthy_threshold   = 3
     unhealthy_threshold = 3
   }
-
+  
   lifecycle {
     create_before_destroy = true
   }

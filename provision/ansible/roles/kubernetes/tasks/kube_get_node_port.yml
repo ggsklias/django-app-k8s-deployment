@@ -2,17 +2,19 @@
 - name: Get Django service NodePort
   become: true
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
   register: django_nodeport
+  changed_when: django_nodeport.rc != 0
 
 - name: Print Node port
-  debug: 
+  ansible.builtin.debug:
     var: django_nodeport.stdout
 
 # This needs CI_PROJECT_DIR to be set because gitlab reads files from that
 - name: Write NodePort value to .env file
-  copy:
+  ansible.builtin.copy:
     content: "NODE_PORT={{ django_nodeport.stdout }}"
     dest: "{{ lookup('env', 'CI_PROJECT_DIR') }}/.env"
   delegate_to: localhost
+  mode: '0644'

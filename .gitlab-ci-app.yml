@@ -21,7 +21,7 @@ stages:
   - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
   - unzip awscliv2.zip
   - ./aws/install
-  - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini 
+  - aws s3 cp s3://$AWS_BUCKET_NAME/ansible/inventory.ini provision/ansible/inventory.ini
   - chmod 755 provision/ansible
   - cd provision/ansible
   - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
@@ -68,39 +68,14 @@ build:
 deploy:
   stage: deploy
   before_script:
-  - ansible-galaxy collection install kubernetes.core
-  - ansible-galaxy collection install community.kubernetes
-  image: 
+    - ansible-galaxy collection install kubernetes.core
+    - ansible-galaxy collection install community.kubernetes
+  image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
     - *default_ansible
     - ansible-playbook -i inventory.ini deploy_app.yml -vv
-  
-get_node_port:
-  stage: get_node_port
-  image:
-    name: willhallonline/ansible:2.18.2-ubuntu-24.04
-    entrypoint: [""]
-  script:
-    - echo "Provisioning EC2 instances using Terraform"
-    - *default_ansible
-    - ansible-playbook -i inventory.ini get_node_port.yml -vv
-  artifacts:
-    reports:
-      dotenv: .env
-
-# update_target_group:
-#   stage: terraform_update_target_group
-#   image:
-#     name: hashicorp/terraform:1.10.5
-#     entrypoint: [""]
-#   script:
-#     - *default_terraform
-#     - echo $NODE_PORT
-#     # Use double quotes around node_port so that it is interpreted as a number
-#     - terraform apply -var "node_port=${NODE_PORT}" -auto-approve
-#     - *default_save_terraform_state
 
 get_app_url:
   stage: get_app_url

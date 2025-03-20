@@ -3,8 +3,8 @@
   hosts: master
   gather_facts: true
   tasks:
-    - name: kube_get_app_url yml
-      include_role:
+    - name: Get App Url yml
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_get_app_url.yml
       when: hostvars[inventory_hostname].role == "primary"

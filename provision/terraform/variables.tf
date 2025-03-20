@@ -15,9 +15,3 @@ variable "target_group_arn" {
   type        = string
   default     = ""
 }
-
-# variable "listener_mode" {
-#   description = "Listener mode: 'detach' for fixed-response, 'forward' for normal operation"
-#   type        = string
-#   default     = "forward"
-# }
