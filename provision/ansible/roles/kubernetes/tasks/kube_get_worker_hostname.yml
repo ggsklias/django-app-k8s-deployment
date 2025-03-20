@@ -1,9 +1,10 @@
---- 
+---
 - name: Save hostname result
-  shell: hostname
+  ansible.builtin.command: hostname
   register: hostname_command
+  changed_when: false
 
 - name: Save hostname result
-  set_fact:
+  ansible.builtin.set_fact:
     worker_hostname: >-
       "{{ hostname_command.stdout }}"
