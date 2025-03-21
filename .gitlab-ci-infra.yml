@@ -25,7 +25,8 @@ provision_servers_and_install_k8s_cluster:
     - terraform output -json > output.json
     - python3 create_inv.py
     - cd ../../
-    - printf "ALB_DNS=%s" "$(terraform output -raw alb_dns_name)" > .env
+    - terraform output alb_dns_name
+    - printf "ALB_DNS=%s" "$(terraform output alb_dns_name)" > .env
     - cat .env
     - cd provision
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
