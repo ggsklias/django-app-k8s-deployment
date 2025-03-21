@@ -2,9 +2,6 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-provider "tls" {}
-
-
 # 1. VPC
 resource "aws_vpc" "main" {
   cidr_block           = "10.0.0.0/16"
@@ -182,24 +179,6 @@ resource "aws_lb_listener" "app_listener" {
   depends_on        = [aws_lb_target_group.app_tg]
 
   default_action {
-    type = "redirect"
-    redirect {
-      port        = "443"
-      protocol    = "HTTPS"
-      status_code = "HTTP_301" # Use 301 for permanent redirection; 302 for temporary
-    }
-  }
-}
-
-resource "aws_lb_listener" "https_listener" {
-  load_balancer_arn = aws_lb.app_alb.arn
-  port              = 443
-  protocol          = "HTTPS"
-  ssl_policy        = "ELBSecurityPolicy-2016-08"
-  certificate_arn   = aws_acm_certificate.imported_cert.arn
-  depends_on        = [aws_lb_target_group.app_tg]
-
-  default_action {
     type = "forward"
     forward {
       target_group {
@@ -208,42 +187,6 @@ resource "aws_lb_listener" "https_listener" {
       }
     }
   }
-}
-
-
-resource "aws_acm_certificate" "imported_cert" {
-  certificate_body  = tls_self_signed_cert.self_signed_cert.cert_pem
-  private_key       = tls_private_key.self_signed.private_key_pem
-  certificate_chain = "" # Self-signed, so no chain
-
-  tags = {
-    Environment = var.environment
-  }
-}
-
-
-resource "tls_self_signed_cert" "self_signed_cert" {
-  private_key_pem = tls_private_key.self_signed.private_key_pem
-
-  subject {
-    # Using the ALB's DNS name as the common name.
-    common_name = aws_lb.app_alb.dns_name
-  }
-
-  validity_period_hours = 8760 # 1 year
-  early_renewal_hours   = 168  # 1 week before expiry
-
-  allowed_uses = [
-    "key_encipherment",
-    "digital_signature",
-    "server_auth",
-  ]
-}
-
-
-resource "tls_private_key" "self_signed" {
-  algorithm = "RSA"
-  rsa_bits  = 2048
 }
 
 output "public_ip_master" {
@@ -365,6 +308,79 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+# provider "tls" {}
+
+# resource "aws_lb_listener" "app_listener" {
+#   load_balancer_arn = aws_lb.app_alb.arn
+#   port              = 80
+#   protocol          = "HTTP"
+#   depends_on        = [aws_lb_target_group.app_tg]
+
+#   default_action {
+#     type = "redirect"
+#     redirect {
+#       port        = "443"
+#       protocol    = "HTTPS"
+#       status_code = "HTTP_301" # Use 301 for permanent redirection; 302 for temporary
+#     }
+#   }
+# }
+
+# resource "aws_lb_listener" "https_listener" {
+#   load_balancer_arn = aws_lb.app_alb.arn
+#   port              = 443
+#   protocol          = "HTTPS"
+#   ssl_policy        = "ELBSecurityPolicy-2016-08"
+#   certificate_arn   = aws_acm_certificate.imported_cert.arn
+#   depends_on        = [aws_lb_target_group.app_tg]
+
+#   default_action {
+#     type = "forward"
+#     forward {
+#       target_group {
+#         arn    = aws_lb_target_group.app_tg.arn
+#         weight = 100
+#       }
+#     }
+#   }
+# }
+
+
+# resource "aws_acm_certificate" "imported_cert" {
+#   certificate_body  = tls_self_signed_cert.self_signed_cert.cert_pem
+#   private_key       = tls_private_key.self_signed.private_key_pem
+#   certificate_chain = "" # Self-signed, so no chain
+
+#   tags = {
+#     Environment = var.environment
+#   }
+# }
+
+
+# resource "tls_self_signed_cert" "self_signed_cert" {
+#   private_key_pem = tls_private_key.self_signed.private_key_pem
+
+#   subject {
+#     # Using the ALB's DNS name as the common name.
+#     common_name = aws_lb.app_alb.dns_name
+#   }
+
+#   validity_period_hours = 8760 # 1 year
+#   early_renewal_hours   = 168  # 1 week before expiry
+
+#   allowed_uses = [
+#     "key_encipherment",
+#     "digital_signature",
+#     "server_auth",
+#   ]
+# }
+
+
+# resource "tls_private_key" "self_signed" {
+#   algorithm = "RSA"
+#   rsa_bits  = 2048
+# }
 
 # resource "tls_private_key" "generated" {
 #   algorithm = "RSA"
