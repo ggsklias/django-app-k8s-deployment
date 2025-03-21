@@ -11,10 +11,10 @@
 - name: Apply manifests to Kubernetes cluster
   ansible.builtin.shell: |
     ls -la /home/{{ ansible_user }}/k8s-manifests
-    kubectl apply --prune -f /home/{{ ansible_user }}/k8s-manifests/django-config.yml
-    kubectl apply --prune -f /home/{{ ansible_user }}/k8s-manifests/django-service.yml
-    kubectl apply --prune -f /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
-    kubectl apply --prune -f /home/{{ ansible_user }}/k8s-manifests/postgresql-deployment.yml
-    kubectl apply --prune -f /home/{{ ansible_user }}/k8s-manifests/postgres-service.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-config.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-service.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgresql-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgres-service.yml
   register: kube_output
   changed_when: kube_output.rc != 0
