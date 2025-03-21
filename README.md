@@ -9,22 +9,20 @@
 - [GitLab Deployment Process](#gitlab-deployment-process)
   - [Prerequisites](#prerequisites-1)
   - [Actions](#actions-1)
+- [High Availability & Load Balancing Setup](#high-availability--load-balancing-setup)
+
+---
 
 ## Summary
 
-**AWS Infrastructure Deployment with Terraform, Ansible & Kubernetes**
+**AWS Infrastructure Deployment with Terraform, Ansible, Kubernetes & ALB**
 
-- Developed infrastructure automation to deploy AWS resources using Terraform.
-- Automated provisioning with Ansible to:
-  - Install prerequisites on EC2 instances and configure Amazon Linux 2 for Kubernetes.
-  - Deploy a Django application with PostgreSQL on a Kubernetes worker node.
-  - Overcome the lack of native Docker support in Kubernetes by using buildkit and containerd.
-  - Expose the application to the web through “one-button” execution of the infrastructure.
-- Utilizes two deployment approaches:
-  - **Local Execution:** For testing and development with a single Ansible playbook.
-  - **GitLab Deployment:** For automated, production-ready deployments triggered via GitLab CI.
-  
-**Technologies:** Terraform, Ansible, Kubernetes, buildkit, Docker, Django, Python, PostgreSQL  
+- **High Availability:** Provisioned a redundant Kubernetes cluster consisting of 3 master nodes and 2 worker nodes to ensure resilience and fault tolerance.
+- **ALB Integration:** Implemented an Application Load Balancer (ALB) with a properly configured listener and target groups. This design distributes incoming traffic across the worker nodes, enabling efficient load distribution and seamless failover.
+- **Automation:** Utilized Terraform for AWS resource provisioning, Ansible for OS and Kubernetes configuration, and GitLab CI/CD for streamlined production deployments.
+- **Deployment Strategies:** Supports both local testing (single-playbook execution) and automated, production-ready deployments via GitLab pipelines.
+
+**Technologies:** Terraform, Ansible, Kubernetes, containerd, buildkit, Docker, Django, Python, PostgreSQL, AWS ALB
 
 ---
 
@@ -33,28 +31,30 @@
 ### Prerequisites
 
 1. **AWS Environment Variables:**  
-   Export AWS environment variables locally to ensure proper communication with AWS.
+   Ensure AWS environment variables are exported locally for proper communication with AWS.
 
 2. **SSH Key:**  
-   Ensure that the `ssh_key.pem` is present in the local folder so that Ansible can connect to the EC2 instances.
+   The `ssh_key.pem` file must be present in the local folder to allow Ansible to connect to the EC2 instances.
 
 ### Actions
 
 1. **Infrastructure Provisioning:**  
-   Run `python3 provision.py` to spin up the EC2 instances with the correct networking configuration.
+   Run the following command to provision the EC2 instances with the correct networking configuration:
+   ```bash
+   python3 provision.py
+   ```
 
 2. **Ansible Playbook Execution:**  
-   Execute the playbook with the following command:
+   Execute the playbook with:
    ```bash
    ansible-playbook -i inventory.ini manual_provisioning_cluster.yml
    ```
-   This playbook performs the following tasks:
-   - Installs OS prerequisites (Python version, configures OS for Kubernetes), containerd, and buildkit.
-   - Builds the Docker image of the `djangoarticleapp` using buildkit and adds it to the containerd local registry.
-   - Installs Kubernetes.
-   - Initiates Kubernetes and ensures that the worker node joins the master.
-   - Applies all Kubernetes manifests, starting the Django application and PostgreSQL database on the worker node.
-   - Communicates the public IP address for accessing the application to the user.
+   This playbook performs:
+   - Installation of OS prerequisites (Python, containerd, buildkit) and Kubernetes setup.
+   - Building and loading the Docker image for the `djangoarticleapp` using buildkit.
+   - Initiating the Kubernetes cluster and ensuring that the worker node joins the master.
+   - Applying Kubernetes manifests to start the Django application and PostgreSQL database.
+   - Displaying the public IP address for accessing the application.
 
 ---
 
@@ -63,37 +63,59 @@
 ### Prerequisites
 
 1. **AWS Environment Variables:**  
-   Add the AWS environment variables in GitLab CI/CD variables so that they are accessible during pipeline execution.
+   Add the necessary AWS environment variables in GitLab CI/CD settings.
 
 2. **SSH Private Key:**  
-   Add the SSH private key to a GitLab variable called `SSH_PRIVATE_KEY`.
+   Store the SSH private key in a GitLab variable named `SSH_PRIVATE_KEY`.
 
 3. **GitLab Registry Credentials:**  
-   Create GitLab variables for `GITLAB_EMAIL`, `GITLAB_USERNAME`, and `GITLAB_REGISTRY_TOKEN` to enable the creation of a Kubernetes secret for registry access.
+   Define variables for `GITLAB_EMAIL`, `GITLAB_USERNAME`, and `GITLAB_REGISTRY_TOKEN` to facilitate the creation of a Kubernetes secret for registry access.
 
 ### Actions
 
 1. **Pipeline Trigger:**  
-   A code change triggers the GitLab pipeline which performs the following tasks:
+   A commit or merge request automatically triggers the GitLab pipeline which performs the following tasks:
 
    - **Docker Image Build:**  
-     Builds the Docker image of the Django application and uploads it to the GitLab CI registry.
+     Builds the Docker image of the Django application and uploads it to the GitLab registry.
 
    - **Infrastructure Provisioning:**  
-     Uses Terraform to provision EC2 instances with the proper networking.
+     Uses Terraform to:
+     - Provision EC2 instances.
+     - Spin up a **high-availability Kubernetes cluster** with 3 masters and 2 workers.
+     - Set up the necessary networking and security groups.
+
+   - **ALB Setup:**  
+     Provisions an Application Load Balancer (ALB) along with:
+     - A listener for incoming HTTP/HTTPS traffic.
+     - Target groups configured to automatically register the worker nodes.
+     - Routing rules that ensure proper distribution of requests to the application containers.
 
    - **OS and Kubernetes Configuration:**  
-     Uses Ansible to install OS prerequisites and configure Kubernetes and containerd on all hosts (without building the Django image) by running:  
+     Runs the following Ansible playbook to configure OS prerequisites, containerd, buildkit, and Kubernetes on all nodes:
      ```bash
      ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml
      ```
 
    - **Application Deployment:**  
-     Uses Ansible to deploy the application on the worker node by running:
+     Deploys the Django application and PostgreSQL database on the worker nodes by applying Kubernetes manifests:
      ```bash
      ansible-playbook -i inventory.ini deploy_app.yml
      ```
-     This step applies manifests, starts the Django application and PostgreSQL database, and communicates the application IP to the user.
+     This step also ensures that the ALB target groups are correctly updated with healthy endpoints.
 
-   - **Post-Deployment:**  
-     Waits for 10 minutes before tearing down the Terraform-provisioned infrastructure.
+---
+
+## High Availability & Load Balancing Setup
+
+- **Cluster Redundancy:**  
+  The deployment now leverages a three-master, two-worker node setup. This redundancy minimizes downtime and enhances fault tolerance during node failures or maintenance events.
+
+- **ALB Configuration:**  
+  The Application Load Balancer is set up with:
+  - **Listeners:** Configured to handle incoming traffic on specified ports (e.g., 80 for HTTP, 443 for HTTPS).
+  - **Target Groups:** Dynamically register healthy worker nodes, ensuring efficient traffic routing.
+  - **Health Checks:** Continuously monitor the worker nodes to automatically remove any unresponsive endpoints from the target group.
+  
+- **Integration with CI/CD:**  
+  Both Terraform and Ansible scripts have been updated to include ALB and high-availability settings. This integration is fully automated within the GitLab pipeline, providing a production-ready, resilient deployment environment.
