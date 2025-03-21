@@ -1,10 +1,7 @@
 stages:
   - provision   # Required for infra jobs
   - build
-  - deploy
-  - get_node_port
-  - terraform_update_target_group
-  - get_app_url
+  - deploy_and_get_app_url
   - cleanup
 
 include:

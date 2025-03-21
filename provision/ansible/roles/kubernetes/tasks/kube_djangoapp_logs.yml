@@ -1,23 +1,27 @@
 ---
 - name: Checks
-  shell: |
+  ansible.builtin.shell: |
     kubectl get svc db
     kubectl get pods
+  register: checks
+  changed_when: checks.rc != 0
 
 - name: Get the first pod name
-  shell: |
+  ansible.builtin.shell: |
     kubectl get pods -o jsonpath='{.items[0].metadata.name}'
   register: pod_name
+  changed_when: pod_name.rc != 0
 
 - name: Debug the first pod name
-  debug:
+  ansible.builtin.debug:
     var: pod_name.stdout
 
 - name: Fetch logs of the first pod
-  shell: |
+  ansible.builtin.shell: |
     kubectl logs {{ pod_name.stdout }}
   register: pod_logs
+  changed_when: pod_logs.rc != 0
 
 - name: Display the logs
-  debug:
+  ansible.builtin.debug:
     var: pod_logs.stdout

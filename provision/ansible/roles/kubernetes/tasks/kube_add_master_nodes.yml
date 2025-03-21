@@ -1,29 +1,28 @@
 ---
 - name: Fetch the kubeadm join command
-  set_fact:
+  ansible.builtin.set_fact:
     kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
 
 - name: Fetch the kubeadm certificate
-  set_fact:
+  ansible.builtin.set_fact:
     kubeadm_certificate_key_clean: "{{ hostvars[groups['master'][0]].kubeadm_certificate_key_clean }}"
 
 - name: Debug output
-  debug:
+  ansible.builtin.debug:
     var: "{{ hostvars[groups['master'][0]].kubeadm_certificate_key_clean }}"
 
 - name: Debug output
-  debug:
+  ansible.builtin.debug:
     var: kubeadm_certificate_key_clean
 
 - name: Join the other master nodes to the main master node
-  ansible.builtin.shell:
+  ansible.builtin.command:
     cmd: "{{ kubeadm_join_command }} --control-plane --certificate-key {{ kubeadm_certificate_key_clean }} --ignore-preflight-errors=all --v=7"
     creates: /etc/kubernetes/kubelet.conf
   register: join_status
+  changed_when: join_status.rc != 0
 
 - name: Check if node joined successfully
   ansible.builtin.debug:
     msg: "Node successfully joined the Kubernetes cluster"
   when: join_status.rc == 0
-
-  # kubeadm join 18.184.59.55:6443 --token e0zlc4.nfsxzk4ybnuzpysm --discovery-token-ca-cert-hash sha256:41a5dfbc07f5fb221435f46974dbf2a76b7751b70ccebf51ff11b8bf976b1e78  --control-plane --certificate-key 04d5c8abcdf7fe46ad6401a7b66076e2f414f02fde333dc3c346f7e4d420b193 --ignore-preflight-errors=all
