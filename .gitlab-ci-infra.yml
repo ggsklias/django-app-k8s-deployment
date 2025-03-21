@@ -37,6 +37,7 @@ provision_servers_and_install_k8s_cluster:
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -v
+    - cd ../../
   artifacts:
     reports:
       dotenv: .env
