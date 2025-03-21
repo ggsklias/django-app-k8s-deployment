@@ -25,8 +25,7 @@ if ALB_DNS:
 else:
     CSRF_TRUSTED_ORIGINS = []
 
-SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-
+# SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # Use this code snippet in your app.
 # If you need more information about configurations
