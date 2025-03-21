@@ -37,6 +37,7 @@ build:
   # All branches are tagged with $DOCKER_IMAGE_NAME (defaults to commit ref slug)
   # Default branch is also tagged with `latest`
   script:
+    - echo $ALB_DNS
     - echo $CI_REGISTRY_IMAGE
     - echo $CI_COMMIT_REF_SLUG
     - echo $CI_REGISTRY_USER

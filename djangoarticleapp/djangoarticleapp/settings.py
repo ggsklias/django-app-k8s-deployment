@@ -12,9 +12,20 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 
 from pathlib import Path
 import dj_database_url
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Expect the ALB DNS to be passed in as an environment variable, e.g. "https://k8s-app-alb-1793512466.eu-central-1.elb.amazonaws.com"
+ALB_DNS = os.environ.get("ALB_DNS", "")
+if ALB_DNS:
+    print(f"ALB_DNS: {ALB_DNS}")
+    CSRF_TRUSTED_ORIGINS = [ALB_DNS]
+else:
+    CSRF_TRUSTED_ORIGINS = []
+
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 
 # Use this code snippet in your app.
@@ -137,7 +148,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djangoarticleapp.wsgi.application'
 
-
+CSRF_TRUSTED_ORIGINS = [
+    "https://k8s-app-alb*eu-central-1.elb.amazonaws.com",
+]
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

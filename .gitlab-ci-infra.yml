@@ -24,6 +24,7 @@ provision_servers_and_install_k8s_cluster:
     - terraform apply -auto-approve
     - terraform output -json > output.json
     - python3 create_inv.py
+    - echo "ALB_DNS=$(terraform output -raw alb_dns_name)" > .env
     - cd ../
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
@@ -33,6 +34,9 @@ provision_servers_and_install_k8s_cluster:
     - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
     - chmod 600 ssh_key.pem
     - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml -v
+  artifacts:
+    reports:
+      dotenv: .env
 
 terraform_destroy:
   stage: cleanup
