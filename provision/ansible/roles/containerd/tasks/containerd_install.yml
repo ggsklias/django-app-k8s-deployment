@@ -1,9 +1,8 @@
 ---
 - name: Install required dependencies
-  shell: sudo yum -y install git curl unzip bash-completion
-
-- name: Install required dependencies
-  shell: sudo yum -y install runc containerd
+  ansible.builtin.command: sudo yum -y install git curl unzip bash-completion runc containerd
+  register: dependencies
+  changed_when: dependencies.rc != 0
 
 - name: Start containerd service
   ansible.builtin.systemd:
@@ -13,4 +12,4 @@
 - name: Enable containerd to start on boot
   ansible.builtin.systemd:
     name: containerd
-    enabled: yes
+    enabled: true
