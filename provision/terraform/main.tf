@@ -309,6 +309,35 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
   }
 }
 
+# module "locust" {
+#   source = "./modules/locust"
+
+#   ami                  = "ami-0764af88874b6b852"
+#   size                 = "t2.micro"
+#   iam_instance_profile = "secretsRole"
+#   ec2_ssh_key          = "ssh_key"
+#   subnet_id            = aws_subnet.public1.id
+#   security_groups      = [aws_security_group.allow_connections_for_locust.id]
+#   instance_name        = "locust"
+#   instance_count       = 1
+
+# }
+
+# resource "aws_security_group" "allow_connections_for_locust" {
+#   name        = "allow-connections-for-locust"
+#   description = "Allow SSH traffic"
+#   vpc_id      = aws_vpc.main.id
+
+#   ingress {
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+# }
+
+
+
 # provider "tls" {}
 
 # resource "aws_lb_listener" "app_listener" {
