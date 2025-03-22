@@ -9,4 +9,4 @@
     kubectl label node {{ hostvars[item].locust_hostname }} node-type=locust --overwrite
   loop: "{{ groups['locust'] }}"
   register: label_output
-  changed_when: label_output.rc != 0
+  changed_when: false

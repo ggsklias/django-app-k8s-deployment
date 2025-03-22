@@ -20,7 +20,7 @@
     cmd: "{{ kubeadm_join_command }} --control-plane --certificate-key {{ kubeadm_certificate_key_clean }} --ignore-preflight-errors=all --v=7"
     creates: /etc/kubernetes/kubelet.conf
   register: join_status
-  changed_when: join_status.rc != 0
+  changed_when: false
 
 - name: Check if node joined successfully
   ansible.builtin.debug:

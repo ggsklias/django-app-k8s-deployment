@@ -9,12 +9,12 @@
     --control-plane-endpoint {{ hostvars[groups['nginx'][0]].ansible_host }}:6443
     --ignore-preflight-errors=all
   register: kubeadm_init_output
-  changed_when: kubeadm_init_output.rc != 0
+  changed_when: false
 
 - name: Create kubeadm token and capture join command
   ansible.builtin.command: kubeadm token create --print-join-command
   register: join_command
-  changed_when: join_command.rc != 0
+  changed_when: false
 
 - name: Set the join command as a fact
   ansible.builtin.set_fact:
@@ -27,7 +27,7 @@
 - name: Create kubeadm token and capture join command
   ansible.builtin.command: kubeadm init phase upload-certs --upload-certs
   register: certificates
-  changed_when: certificates.rc != 0
+  changed_when: false
 
 - name: Set the certificates command as a fact
   ansible.builtin.set_fact:
@@ -51,7 +51,7 @@
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
   when: not folder_check.stat.exists
   register: kubeconfig
-  changed_when: kubeconfig.rc != 0
+  changed_when: false
 
 - name: Restart Kubelet to apply Docker as container runtime
   ansible.builtin.systemd:
@@ -66,14 +66,14 @@
   ansible.builtin.command: kubectl get nodes
   register: kubectl_output
   until: kubectl_output.rc == 0
-  changed_when: kubectl_output.rc != 0
+  changed_when: false
 
 - name: Install Flannel networking on master node
   become: true
   become_user: "{{ ansible_user }}"
   ansible.builtin.command: kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
   register: flannel_install
-  changed_when: flannel_install.rc != 0
+  changed_when: false
 
 - name: Patch Flannel ConfigMap to set VXLAN port to UDP 8472
   k8s:

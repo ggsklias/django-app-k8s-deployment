@@ -9,4 +9,4 @@
     kubectl label node {{ hostvars[item].worker_hostname }} node-type=worker --overwrite
   loop: "{{ groups['workers'] }}"
   register: label_output
-  changed_when: label_output.rc != 0
+  changed_when: false

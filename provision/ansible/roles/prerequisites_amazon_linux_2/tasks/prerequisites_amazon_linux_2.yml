@@ -4,7 +4,7 @@
     sudo yum -y groupinstall "Development Tools"
     sudo yum -y install gcc openssl-devel bzip2-devel libffi-devel zlib-devel wget python3-pip
   register: install_dependencies
-  changed_when: install_dependencies.rc != 0
+  changed_when: false
 
 - name: Install Python dependencies
   ansible.builtin.pip:

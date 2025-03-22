@@ -13,4 +13,4 @@
     sudo chown $(id -u):$(id -g) $HOME/.kube/config
   when: not folder_check.stat.exists
   register: kubeconfig
-  changed_when: kubeconfig.rc != 0
+  changed_when: false

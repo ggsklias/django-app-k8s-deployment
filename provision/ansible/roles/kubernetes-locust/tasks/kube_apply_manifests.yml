@@ -14,4 +14,4 @@
     kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-locust/locust-service.yml
     kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-locust/locust-deployment.yml
   register: kube_output
-  changed_when: kube_output.rc != 0
+  changed_when: false

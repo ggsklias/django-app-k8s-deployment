@@ -17,4 +17,4 @@
     kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/postgresql-deployment.yml
     kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/postgres-service.yml
   register: kube_output
-  changed_when: kube_output.rc != 0
+  changed_when: false

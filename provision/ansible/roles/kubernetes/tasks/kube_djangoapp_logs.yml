@@ -4,13 +4,13 @@
     kubectl get svc db
     kubectl get pods
   register: checks
-  changed_when: checks.rc != 0
+  changed_when: false
 
 - name: Get the first pod name
   ansible.builtin.shell: |
     kubectl get pods -o jsonpath='{.items[0].metadata.name}'
   register: pod_name
-  changed_when: pod_name.rc != 0
+  changed_when: false
 
 - name: Debug the first pod name
   ansible.builtin.debug:
@@ -20,7 +20,7 @@
   ansible.builtin.shell: |
     kubectl logs {{ pod_name.stdout }}
   register: pod_logs
-  changed_when: pod_logs.rc != 0
+  changed_when: false
 
 - name: Display the logs
   ansible.builtin.debug:

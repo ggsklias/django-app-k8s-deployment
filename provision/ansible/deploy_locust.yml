@@ -3,22 +3,10 @@
   hosts: master
   gather_facts: true
   tasks:
-    - name: Join master node
-      ansible.builtin.include_role:
-        name: kubernetes-locust
-        tasks_from: kube_join_node.yml
-      when: hostvars[inventory_hostname].role == "primary"
-
     - name: Copy manifests to master node
       ansible.builtin.include_role:
         name: kubernetes-locust
         tasks_from: kube_copy_manifests.yml
-      when: hostvars[inventory_hostname].role == "primary"
-
-    - name: Apply locust manifests
-      ansible.builtin.include_role:
-        name: kubernetes-locust
-        tasks_from: kube_apply_manifests.yml
       when: hostvars[inventory_hostname].role == "primary"
 
 - name: Get locust hostname and set it to locust_hostname
@@ -33,14 +21,35 @@
         name: kubernetes-locust
         tasks_from: kube_get_locust_hostname.yml
 
+    - name: Join master node
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_join_node.yml
+
 - name: Set locust node label
   hosts: master
   gather_facts: true
   tasks:
+    - name: Wait for locust node to join the cluster
+      ansible.builtin.shell:
+        cmd: set -o pipefail && kubectl get nodes --no-headers | awk '{print $1}' | grep -w {{ hostvars[item].locust_hostname | trim('"') }}
+      register: node_check
+      retries: 10
+      delay: 5
+      until: node_check.rc == 0
+      when: hostvars[inventory_hostname].role == "primary"
+      changed_when: false
+
     - name: Set locust node label
       ansible.builtin.include_role:
         name: kubernetes-locust
         tasks_from: kube_set_node_label.yml
+      when: hostvars[inventory_hostname].role == "primary"
+
+    - name: Apply locust manifests
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_apply_manifests.yml
       when: hostvars[inventory_hostname].role == "primary"
 
 - name: Get Locust URL

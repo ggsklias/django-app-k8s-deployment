@@ -18,7 +18,7 @@
   ansible.builtin.shell: |
     sudo yum install -y kubelet kubeadm kubectl
   register: my_output
-  changed_when: my_output.rc != 0
+  changed_when: false
 
 - name: Copy Kubernetes provisioning files
   ansible.builtin.copy:
