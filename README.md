@@ -98,7 +98,7 @@
      ```
 
    - **Application Deployment:**  
-     Deploys the Django application and PostgreSQL database on the worker nodes by applying Kubernetes manifests:
+     Deploys the Django application and PostgreSQL database on the worker nodes by applying Kubernetes manifests, with 4 replicas and rolling update strategy to ensure no downtime during the upgrade of the application. 
      ```bash
      ansible-playbook -i inventory.ini deploy_app.yml
      ```
@@ -117,5 +117,9 @@
   - **Target Groups:** Dynamically register healthy worker nodes, ensuring efficient traffic routing.
   - **Health Checks:** Continuously monitor the worker nodes to automatically remove any unresponsive endpoints from the target group.
   
+- **Rolling Updates:** The application is deployed using a rolling update strategy with 4 replicas, ensuring that during upgrades, healthy pods continue to serve traffic and no downtime occurs.
+
 - **Integration with CI/CD:**  
   Both Terraform and Ansible scripts have been updated to include ALB and high-availability settings. This integration is fully automated within the GitLab pipeline, providing a production-ready, resilient deployment environment.
+
+
