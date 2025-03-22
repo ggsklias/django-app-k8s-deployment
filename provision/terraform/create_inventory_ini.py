@@ -25,7 +25,7 @@ def generate_inventory(outputs, inventory_file="../ansible/inventory.ini"):
         for idx, ip in enumerate(nginx, start=1):
             f.write(f"nginx{idx} ansible_host={ip} ansible_user=ec2-user\n")
         f.write("\n[locust]\n")
-        for idx, ip in enumerate(nginx, start=1):
+        for idx, ip in enumerate(locust, start=1):
             f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user\n")
         # Optionally, add group variables:
         f.write("\n[all:vars]\n")
