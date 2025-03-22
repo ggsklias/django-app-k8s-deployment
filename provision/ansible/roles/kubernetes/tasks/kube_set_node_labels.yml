@@ -10,15 +10,3 @@
   loop: "{{ groups['workers'] }}"
   register: label_output
   changed_when: label_output.rc != 0
-
-- name: Dump all variables for the host separately
-  ansible.builtin.debug:
-    msg: "{{ hostvars[item].locust_hostname | default(hostvars[item].inventory_hostname) }}"
-  loop: "{{ groups['locust'] }}"
-
-- name: Label all locust nodes
-  ansible.builtin.command:
-    kubectl label node {{ hostvars[item].locust_hostname | default(hostvars[item].inventory_hostname) }} node-type=locust --overwrite
-  loop: "{{ groups['locust'] }}"
-  register: label_output
-  changed_when: label_output.rc != 0
