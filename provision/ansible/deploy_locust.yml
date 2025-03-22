@@ -9,6 +9,12 @@
         tasks_from: kube_copy_manifests.yml
       when: hostvars[inventory_hostname].role == "primary"
 
+    - name: Generate join command on master node
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_generate_join_command.yml
+      when: hostvars[inventory_hostname].role == "primary"
+
 - name: Get locust hostname and set it to locust_hostname
   hosts: locust
   gather_facts: true
