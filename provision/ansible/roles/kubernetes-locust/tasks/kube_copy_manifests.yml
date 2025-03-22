@@ -1,0 +1,8 @@
+---
+- name: Copy Kubernetes manifests files
+  ansible.builtin.copy:
+    src: "{{ playbook_dir | dirname }}/k8s-manifests-locust"
+    dest: /home/ec2-user
+    owner: ec2-user
+    group: ec2-user
+    mode: '0755'

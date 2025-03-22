@@ -17,8 +17,8 @@
 - name: Install required dependencies
   ansible.builtin.shell: |
     sudo yum install -y kubelet kubeadm kubectl
-  register: my_output # <- Registers the command output.
-  changed_when: my_output.rc != 0 # <- Uses the return code to define when the task has changed.
+  register: my_output
+  changed_when: my_output.rc != 0
 
 - name: Copy Kubernetes provisioning files
   ansible.builtin.copy:
