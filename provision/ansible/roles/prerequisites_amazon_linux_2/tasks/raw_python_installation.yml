@@ -2,7 +2,7 @@
 - name: Enable python in amazon-linux-extras
   ansible.builtin.raw: "sudo amazon-linux-extras enable python3.8"
   register: enable_python_output
-  changed_when: install_python_output.rc != 0
+  changed_when: enable_python_output.rc != 0
 
 - name: Install python3.8
   ansible.builtin.raw: "sudo yum -y install python38"
