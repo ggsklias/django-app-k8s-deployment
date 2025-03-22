@@ -21,14 +21,14 @@
         tasks_from: kube_apply_manifests.yml
       when: hostvars[inventory_hostname].role == "primary"
 
-- name: Get locust hostname and set it to worker_hostname
+- name: Get locust hostname and set it to locust_hostname
   hosts: locust
   gather_facts: true
   become: true
   vars_files:
     - group_vars/all
   tasks:
-    - name: Get locust hostname and set it to worker_hostname
+    - name: Get locust hostname and set it to locust_hostname
       ansible.builtin.include_role:
         name: kubernetes-locust
         tasks_from: kube_get_locust_hostname.yml

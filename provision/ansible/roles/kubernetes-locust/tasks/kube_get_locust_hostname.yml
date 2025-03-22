@@ -6,5 +6,5 @@
 
 - name: Save hostname result
   ansible.builtin.set_fact:
-    worker_hostname: >-
+    locust_hostname: >-
       "{{ hostname_command.stdout }}"
