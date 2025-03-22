@@ -1,2 +1,3 @@
 ---
-- import_tasks: prepare_os.yml
+- name: Prepare OS
+  ansible.builtin.import_tasks: prepare_os.yml

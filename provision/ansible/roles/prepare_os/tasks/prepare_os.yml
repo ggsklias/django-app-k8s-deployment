@@ -1,70 +1,90 @@
 ---
 - name: Create the file for Forwarding IPv4 and iptables modules
   become: true
-  file:
+  ansible.builtin.file:
     path: /etc/modules-load.d/k8s.conf
     state: touch
+    mode: '0644'
 
-- name: configure Forwarding IPv4 and letting iptables see bridged traffic 
+- name: Configure Forwarding IPv4 and letting iptables see bridged traffic
   become: true
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/modules-load.d/k8s.conf
     block: |
       overlay
       br_netfilter
 
-- name: modprobe overlay
+- name: Set modprobe overlay
   become: true
   community.general.modprobe:
-      name: overlay
-      state: present
+    name: overlay
+    state: present
 
 - name: Verify that the overlay modules are loaded
-  shell: lsmod | grep overlay
+  ansible.builtin.shell: |
+    set -o pipefail
+    lsmod | grep overlay
   register: overlay
-- debug: msg={{overlay.stdout_lines}}
+  changed_when: false
 
-- name: modprobe br_netfilter
+- name: Debug overlay
+  ansible.builtin.debug:
+    msg: "{{ overlay.stdout_lines }}"
+
+- name: Modprobe br_netfilter
   become: true
   community.general.modprobe:
-      name: br_netfilter
-      state: present
+    name: br_netfilter
+    state: present
+  changed_when: false
 
 - name: Verify that the br_netfilter modules are loaded
-  shell: lsmod | grep br_netfilter
+  ansible.builtin.shell: |
+    set -o pipefail
+    lsmod | grep br_netfilter
   register: br_netfilter
-- debug: msg={{br_netfilter.stdout_lines}}
+  changed_when: false
 
+- name: Debug br_netfilter
+  ansible.builtin.debug:
+    msg: "{{ br_netfilter.stdout_lines }}"
 
 - name: Configure sysctl for Kubernetes networking
-  copy:
+  ansible.builtin.copy:
     dest: /etc/sysctl.d/k8s.conf
     content: |
       net.ipv4.ip_forward = 1
       net.bridge.bridge-nf-call-ip6tables = 1
       net.bridge.bridge-nf-call-iptables = 1
+    mode: '0644'
   notify: Reload sysctl
 
 - name: Verify that the net.bridge.bridge-nf-call-iptables, net.bridge.bridge-nf-call-ip6tables, net.ipv4.ip_forward system variables are set to 1
-  shell: |
+  ansible.builtin.shell: |
     sysctl net.bridge.bridge-nf-call-iptables net.bridge.bridge-nf-call-ip6tables net.ipv4.ip_forward
   register: bridge_net
-- debug: msg={{bridge_net.stdout_lines}}
+  changed_when: false
+
+- name: Debug bridge_net
+  ansible.builtin.debug:
+    msg: "{{ bridge_net.stdout_lines }}"
 
 - name: Reload sysctl
-  command: sysctl --system
+  ansible.builtin.command: sysctl --system
+  changed_when: false
 
 - name: Disable swap
-  shell: |
+  ansible.builtin.shell: |
     swapoff -a
     sed -i '/ swap / s/^/#/' /etc/fstab
+  changed_when: false
 
-- name: install pre-requisites for python
-  pip:
+- name: Install pre-requisites for python
+  ansible.builtin.pip:
     name:
       - openshift
       - pyyaml
-      - kubernetes 
+      - kubernetes
 
 # - name: Ensure SELinux is disabled
 #   ansible.builtin.selinux:

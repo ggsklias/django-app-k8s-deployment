@@ -1,2 +1,3 @@
 ---
-- import_tasks: containerd_install.yml
+- name: Install containerd
+  ansible.builtin.import_tasks: containerd_install.yml

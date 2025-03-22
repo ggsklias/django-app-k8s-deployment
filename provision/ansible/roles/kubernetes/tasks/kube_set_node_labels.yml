@@ -6,14 +6,14 @@
 
 - name: Label all worker nodes
   ansible.builtin.command:
-    kubectl label node {{ hostvars[item].worker_hostname }} node-type={{ node_role }} --overwrite
+    kubectl label node {{ hostvars[item].worker_hostname }} node-type={{ hostvars[item].node_role }} --overwrite
   loop: "{{ groups['workers'] }}"
   register: worker_label_output
   changed_when: false
 
 - name: Label all locust nodes
   ansible.builtin.command:
-    kubectl label node {{ hostvars[item].locust_hostname }} node-type={{ node_role }} --overwrite
+    kubectl label node {{ hostvars[item].locust_hostname }} node-type={{ hostvars[item].node_role }} --overwrite
   loop: "{{ groups['locust'] }}"
   register: locust_label_output
   changed_when: false
