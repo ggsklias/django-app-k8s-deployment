@@ -1,2 +1,3 @@
 ---
-- import_tasks: nginx.yml
+- name: Install Nginx
+  ansible.builtin.import_tasks: nginx.yml

@@ -84,7 +84,7 @@
       when: hostvars[inventory_hostname].role == "secondary"
 
 - name: Join worker nodes
-  hosts: workers
+  hosts: all:!nginx:!master
   gather_facts: true
   become: true
   vars_files:
@@ -99,6 +99,11 @@
       ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_get_worker_hostname.yml
+
+    - name: Get worker hostname and set it to worker_hostname
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: kube_get_locust_hostname.yml
 
 - name: Set node labels to worker nodes so that nodeSelector can be used
   hosts: master

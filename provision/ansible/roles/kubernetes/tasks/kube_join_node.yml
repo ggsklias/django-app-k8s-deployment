@@ -7,12 +7,12 @@
   ansible.builtin.debug:
     msg: "{{ kubeadm_join_command }}"
 
-- name: Join the worker nodes to the master
+- name: Join the nodes to the master
   ansible.builtin.command:
     cmd: "{{ kubeadm_join_command }}"
     creates: /etc/kubernetes/kubelet.conf
   environment:
-    KUBELET_EXTRA_ARGS: "--node-labels=role=worker"
+    KUBELET_EXTRA_ARGS: "--node-labels=role={{ node_role }}"
   register: join_status
 
 - name: Check if node joined successfully

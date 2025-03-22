@@ -20,13 +20,13 @@ def generate_inventory(outputs, inventory_file="../ansible/inventory.ini"):
                 f.write(f"master{idx} ansible_host={ip} ansible_user=ec2-user role=secondary\n")
         f.write("\n[workers]\n")
         for idx, ip in enumerate(workers, start=1):
-            f.write(f"worker{idx} ansible_host={ip} ansible_user=ec2-user\n")
+            f.write(f"worker{idx} ansible_host={ip} ansible_user=ec2-user node_role=worker\n")
         f.write("\n[nginx]\n")
         for idx, ip in enumerate(nginx, start=1):
-            f.write(f"nginx{idx} ansible_host={ip} ansible_user=ec2-user\n")
+            f.write(f"nginx{idx} ansible_host={ip} ansible_user=ec2-user node_role=nginx\n")
         f.write("\n[locust]\n")
         for idx, ip in enumerate(locust, start=1):
-            f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user\n")
+            f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user node_role=locust\n")
         # Optionally, add group variables:
         f.write("\n[all:vars]\n")
         f.write("ansible_ssh_private_key_file=./ssh_key.pem\n")

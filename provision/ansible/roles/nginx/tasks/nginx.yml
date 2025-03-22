@@ -1,31 +1,35 @@
 ---
 - name: Install Nginx using amazon-linux-extras
-  shell: | 
+  ansible.builtin.shell: |
       yum -y clean metadata
       amazon-linux-extras enable nginx1
       yum -y clean metadata
       yum -y install nginx
       yum -y install nginx-mod-stream
+  register: nginx_install
+  changed_when: false
 
 - name: Create directory for stream configurations
-  file:
+  ansible.builtin.file:
     path: /etc/nginx/stream-conf.d
     state: directory
+    mode: '0755'
 
 - name: Wait for stream configuration directory to exist
-  wait_for:
+  ansible.builtin.wait_for:
     path: /etc/nginx/stream-conf.d
     state: present
     timeout: 30
 
 - name: Deploy Nginx stream configuration for kube-apiserver load balancing
-  template:
+  ansible.builtin.template:
     src: templates/kube-apiserver.conf.j2
     dest: /etc/nginx/stream-conf.d/kube-apiserver.conf
+    mode: '0644'
   notify: Reload Nginx
 
 - name: Ensure top-level stream block exists in nginx.conf
-  blockinfile:
+  ansible.builtin.blockinfile:
     path: /etc/nginx/nginx.conf
     marker: "# {mark} ANSIBLE STREAM BLOCK"
     block: |
