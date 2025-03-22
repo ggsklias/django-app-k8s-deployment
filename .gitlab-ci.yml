@@ -2,12 +2,16 @@ stages:
   - provision   # Required for infra jobs
   - build
   - deploy_and_get_app_url
+  - locust_deploy
   - cleanup
 
 include:
   - local: '.gitlab-ci-infra.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /(infra|both)/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(infra|all)/'
   - local: '.gitlab-ci-app.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /(django|both)/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(django|all)/'
+  - local: '.gitlab-ci-locust.yml'
+    rules:
+      - if: '$CI_COMMIT_MESSAGE =~ /(all)/'

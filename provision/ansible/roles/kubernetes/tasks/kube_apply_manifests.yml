@@ -1,8 +1,8 @@
 ---
 - name: Render django-deployment manifest with GitLab image
   ansible.builtin.template:
-    src: "{{ lookup('env', 'CI_PROJECT_DIR') }}/provision/k8s-manifests/django-deployment.yml.j2"
-    dest: /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
+    src: "{{ lookup('env', 'CI_PROJECT_DIR') }}/provision/k8s-manifests-app/django-deployment.yml.j2"
+    dest: /home/{{ ansible_user }}/k8s-manifests-app/django-deployment.yml
     mode: '0644'
   vars:
     gitlab_image: "{{ lookup('env', 'CI_REGISTRY_IMAGE') }}"
@@ -10,11 +10,11 @@
 
 - name: Apply manifests to Kubernetes cluster
   ansible.builtin.shell: |
-    ls -la /home/{{ ansible_user }}/k8s-manifests
-    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-config.yml
-    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-service.yml
-    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/django-deployment.yml
-    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgresql-deployment.yml
-    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests/postgres-service.yml
+    ls -la /home/{{ ansible_user }}/k8s-manifests-app
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/django-config.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/django-service.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/django-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/postgresql-deployment.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-app/postgres-service.yml
   register: kube_output
   changed_when: kube_output.rc != 0

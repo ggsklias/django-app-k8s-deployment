@@ -1,0 +1,23 @@
+---
+- name: Print application URL - worker IP
+  ansible.builtin.debug:
+    msg: "http://{{ groups['locust'][0].ansible_host }}:30089"
+
+# - name: Get Django service NodePort
+#   become: true
+#   become_user: "{{ ansible_user }}"
+#   ansible.builtin.command: |
+#     kubectl get svc djangoarticleapp-service -o jsonpath='{.spec.ports[0].nodePort}'
+#   register: django_nodeport
+#   changed_when: django_nodeport.rc != 0
+
+# - name: Get Django service External IP
+#   become: true
+#   become_user: "{{ ansible_user }}"
+#   ansible.builtin.command: kubectl get svc djangoarticleapp-service -o jsonpath='{.status.loadBalancer.ingress[0].ip}'
+#   register: django_external_ip
+#   changed_when: django_external_ip.rc != 0
+
+# - name: Print application URL - Django service External IP
+#   ansible.builtin.debug:
+#     msg: "http://{{ django_external_ip.stdout }}:{{ django_nodeport.stdout }}"

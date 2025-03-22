@@ -1,0 +1,17 @@
+---
+- name: Render django-deployment manifest with GitLab image
+  ansible.builtin.template:
+    src: "{{ lookup('env', 'CI_PROJECT_DIR') }}/provision/k8s-manifests-locust/locust-deployment.yml.j2"
+    dest: /home/{{ ansible_user }}/k8s-manifests-locust/locust-deployment.yml
+    mode: '0644'
+  vars:
+    alb_dns: "{{ lookup('env', 'ALB_DNS') }}"
+
+- name: Apply manifests to Kubernetes cluster
+  ansible.builtin.shell: |
+    ls -la /home/{{ ansible_user }}/k8s-manifests-locust
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-locust/locust-configmap.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-locust/locust-service.yml
+    kubectl apply -f /home/{{ ansible_user }}/k8s-manifests-locust/locust-deployment.yml
+  register: kube_output
+  changed_when: kube_output.rc != 0

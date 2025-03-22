@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  # this is related to the type of yaml file. i.e.: djangoarticleapp-deployment, djangoarticleapp-pod etc.
+  name: djangoarticleapp
+  # labels is a dictionary
+  labels:
+    app: djangoarticleapp
+    type: fullstack
+# applies to the Deployment object as a whole (defining things like the number of replicas and the selector for matching pods)
+spec:
+  replicas: 4
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
+      maxSurge: 1
+  selector:
+    matchLabels:
+      app: djangoarticleapp
+  template:
+    metadata:
+      labels:
+        app: djangoarticleapp
+    # Defines the Pod specification, detailing how each pod should be configured (including containers, node selectors, resource requests, etc.)
+    spec:
+      # After further debugging, the low resources were not an issue but a closed port related to the flannel plugin was.
+      # Due to the low resources of the nodes, confirm that DNS resolution is working for the db
+      # initContainers:
+      # - name: check-dns
+      #   image: busybox
+      #   command: ['sh', '-c', 'until nslookup db.default.svc.cluster.local; do echo "Waiting for DNS..."; sleep 10; done']
+      nodeSelector:
+        node-type: worker
+      imagePullSecrets:
+      - name: gitlab-registry
+      containers:
+      - name: web
+        image: {{ gitlab_image }}:{{ commit_sha }}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: django-config
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 5
+          failureThreshold: 3
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8000
+        #   initialDelaySeconds: 40
+        #   periodSeconds: 10
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8000
+        #   initialDelaySeconds: 40
+        #   periodSeconds: 20

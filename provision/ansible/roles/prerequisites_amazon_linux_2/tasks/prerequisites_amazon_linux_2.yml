@@ -1,11 +1,13 @@
 ---
 - name: Install required dependencies
-  shell: |
+  ansible.builtin.shell: |
     sudo yum -y groupinstall "Development Tools"
     sudo yum -y install gcc openssl-devel bzip2-devel libffi-devel zlib-devel wget python3-pip
+  register: install_dependencies
+  changed_when: install_dependencies.rc != 0
 
 - name: Install Python dependencies
-  pip:
+  ansible.builtin.pip:
     name:
       - boto3
       - botocore

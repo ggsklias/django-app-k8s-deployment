@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: locust-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: locust
+      role: master
+  template:
+    metadata:
+      labels:
+        app: locust
+        role: master
+    spec:
+      containers:
+      - name: locust
+        image: locustio/locust
+        env:
+        - name: LOCUST_TARGET_HOST
+          value: {{ alb_dns }}  # This will be templated via Ansible.
+        ports:
+        - containerPort: 8089
+        volumeMounts:
+        - name: locustfile
+          mountPath: /mnt/locust
+        command: ["locust", "-f", "/mnt/locust/locustfile.py", "--host", "$(LOCUST_TARGET_HOST)"]
+      volumes:
+      - name: locustfile
+        configMap:
+          name: locustfile-config

@@ -10,6 +10,7 @@ def generate_inventory(outputs, inventory_file="../ansible/inventory.ini"):
     masters = outputs["public_ip_master"]["value"]
     workers = outputs["public_ip_worker"]["value"]
     nginx = outputs["public_ip_nginx"]["value"]
+    locust = outputs["public_ip_locust"]["value"]
 
     with open(inventory_file, "w") as f:
         f.write("[master]\n")

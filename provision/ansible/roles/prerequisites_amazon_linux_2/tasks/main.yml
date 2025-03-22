@@ -1,3 +1,6 @@
 ---
-- import_tasks: raw_python_installation.yml
-- import_tasks: prerequisites_amazon_linux_2.yml
+- name: Install python
+  ansible.builtin.import_tasks: raw_python_installation.yml
+
+- name: Install Amazon Linux 2 prerequisites
+  ansible.builtin.import_tasks: prerequisites_amazon_linux_2.yml

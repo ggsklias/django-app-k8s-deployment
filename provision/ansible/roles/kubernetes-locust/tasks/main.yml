@@ -1,0 +1,6 @@
+---
+- name: Include task to install on all hosts
+  ansible.builtin.include_tasks: kube_apply_manifests.yml
+
+- name: Get locust app url from the locust node
+  ansible.builtin.include_tasks: kube_get_app_url.yml
