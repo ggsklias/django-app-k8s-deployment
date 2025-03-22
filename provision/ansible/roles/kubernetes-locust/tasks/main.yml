@@ -1,4 +1,10 @@
 ---
+- name: Add locust node to the master node
+  ansible.builtin.include_tasks: kube_join_node.yml
+
+- name: Copy manifests files
+  ansible.builtin.include_tasks: kube_copy_manifests.yml
+
 - name: Include task to install on all hosts
   ansible.builtin.include_tasks: kube_apply_manifests.yml
 

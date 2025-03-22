@@ -18,6 +18,7 @@ provision/terraform/terraform.tfstate.backup
 provision/terraform/terraform.tfstate
 provision/terraform/delete_s3_files.sh
 provision/terraform/get_tf_files_and_destroy_remote_resources.sh
+provision/terraform/get_tf_files.sh
 provision/terraform/inventory.ini
 provision/ansible_logs/ansible.log
 provision/ansible/ssh_key.pem

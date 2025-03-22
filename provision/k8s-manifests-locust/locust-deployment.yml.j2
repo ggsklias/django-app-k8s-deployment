@@ -14,6 +14,8 @@ spec:
         app: locust
         role: master
     spec:
+      nodeSelector:
+        node-type: locust
       containers:
       - name: locust
         image: locustio/locust

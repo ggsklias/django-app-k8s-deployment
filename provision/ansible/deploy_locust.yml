@@ -1,10 +1,35 @@
 ---
-- name: Deploy Locust
+- name: Join master node
+  hosts: master
+  gather_facts: true
+  tasks:
+    - name: Join master node
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_join_node.yml
+      when: hostvars[inventory_hostname].role == "primary"
+
+    - name: Copy manifests to master node
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_copy_manifests.yml
+      when: hostvars[inventory_hostname].role == "primary"
+
+    - name: Apply locust manifests
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_apply_manifests.yml
+      when: hostvars[inventory_hostname].role == "primary"
+
+- name: Get Locust URL
   hosts: locust
   gather_facts: true
   become: true
   become_user: "{{ ansible_user }}"
   vars_files:
     - group_vars/all
-  roles:
-    - role: kubernetes-locust
+  tasks:
+    - name: Get locust URL
+      ansible.builtin.include_role:
+        name: kubernetes-locust
+        tasks_from: kube_get_locust_url.yml

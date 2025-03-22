@@ -100,7 +100,7 @@
         name: kubernetes
         tasks_from: kube_get_worker_hostname.yml
 
-- name: Set node labels to worker nodes so that nodeSelectro can be used
+- name: Set node labels to worker nodes so that nodeSelector can be used
   hosts: master
   gather_facts: true
   become: true

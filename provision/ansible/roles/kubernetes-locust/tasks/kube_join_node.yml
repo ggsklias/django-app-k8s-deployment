@@ -1,0 +1,21 @@
+---
+- name: Fetch the kubeadm join command from the master node
+  ansible.builtin.set_fact:
+    kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+- name: Show the join command
+  ansible.builtin.debug:
+    msg: "{{ kubeadm_join_command }}"
+
+- name: Join the worker nodes to the master
+  ansible.builtin.command:
+    cmd: "{{ kubeadm_join_command }}"
+    creates: /etc/kubernetes/kubelet.conf
+  environment:
+    KUBELET_EXTRA_ARGS: "--node-labels=role=locust"
+  register: join_status
+
+- name: Check if node joined successfully
+  ansible.builtin.debug:
+    msg: "Node successfully joined the Kubernetes cluster"
+  when: join_status.rc == 0
