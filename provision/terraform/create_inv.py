@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import json
-import subprocess
 
 def get_terraform_output():
     with open("output.json", "r") as f:
@@ -25,6 +24,9 @@ def generate_inventory(outputs, inventory_file="../ansible/inventory.ini"):
         f.write("\n[nginx]\n")
         for idx, ip in enumerate(nginx, start=1):
             f.write(f"nginx{idx} ansible_host={ip} ansible_user=ec2-user\n")
+        f.write("\n[locust]\n")
+        for idx, ip in enumerate(nginx, start=1):
+            f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user\n")
         # Optionally, add group variables:
         f.write("\n[all:vars]\n")
         f.write("ansible_ssh_private_key_file=./ssh_key.pem\n")
