@@ -1,4 +1,12 @@
 ---
+- name: Fetch the kubeadm join command from the master node
+  ansible.builtin.set_fact:
+    kubeadm_join_command: "{{ hostvars[groups['master'][0]].kubeadm_join_command }}"
+
+- name: Show the join command
+  ansible.builtin.debug:
+    msg: "{{ kubeadm_join_command }}"
+
 - name: Join the worker nodes to the master
   ansible.builtin.command:
     cmd: "{{ kubeadm_join_command }}"

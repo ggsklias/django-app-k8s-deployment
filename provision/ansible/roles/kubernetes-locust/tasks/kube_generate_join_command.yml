@@ -6,7 +6,7 @@
 
 - name: Fetch the kubeadm join command from the master node
   ansible.builtin.set_fact:
-    kubeadm_join_command: "{{ join_command_output.stdout_lines }}"
+    kubeadm_join_command: "{{ join_command_output.stdout }}"
 
 - name: Show the join command
   ansible.builtin.debug:
