@@ -1,16 +1,3 @@
-# Provisioning through Gitlab CI/CD pipeline
-# - name: Wait for SSH on all hosts using inventory_hostname
-#   hosts: all
-#   gather_facts: no
-#   tasks:
-#     - name: Wait for SSH to become available
-#       wait_for:
-#         host: "{{ inventory_hostname }}"
-#         port: 22
-#         timeout: 300
-#         state: started
-#       delegate_to: localhost
-
 - name: Install prequisites
   hosts: all
   gather_facts: false # Avoid failures due to incompatible Python version

@@ -3,3 +3,4 @@
 *.yml linguist-language=YAML
 djangoarticleapp/static/output.css linguist-vendored
 djangoarticleapp/static/input.css linguist-vendored
+provision/ansible/*.yml linguist-language=Ansible
