@@ -21,13 +21,13 @@ spec:
         image: locustio/locust
         env:
         - name: LOCUST_TARGET_HOST
-          value: {{ alb_dns }}  # This will be templated via Ansible.
+          value: http://{{ alb_dns }}
         ports:
         - containerPort: 8089
         volumeMounts:
         - name: locustfile
           mountPath: /mnt/locust
-        command: ["locust", "-f", "/mnt/locust/locustfile.py", "--host", "$(LOCUST_TARGET_HOST)"]
+        command: ["sh", "-c", "locust -f /mnt/locust/locustfile.py --host $LOCUST_TARGET_HOST"]
       volumes:
       - name: locustfile
         configMap:
