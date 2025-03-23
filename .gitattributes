@@ -1,3 +1,5 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 *.yml linguist-language=YAML
+djangoarticleapp/static/output.css linguist-vendored
+djangoarticleapp/static/input.css linguist-vendored

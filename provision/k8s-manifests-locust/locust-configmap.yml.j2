@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: locustfile-config
+data:
+  locustfile.py: |
+    {{ lookup('file', playbook_dir + '/../locust/locustfile.py') | indent(4) }}
