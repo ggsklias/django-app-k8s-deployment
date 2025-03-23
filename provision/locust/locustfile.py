@@ -6,7 +6,7 @@ class WebsiteUser(HttpUser):
 
     def on_start(self):
         # Perform login and store cookies if needed
-        response = self.client.post("/login", {"username": "your_username", "password": "your_password"})
+        response = self.client.post("/login", {"username": "megivh@example.com", "password": "lagsl137"})
         if response.status_code != 200:
             print("Login failed!")
 
