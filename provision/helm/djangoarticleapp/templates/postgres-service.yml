@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: db  # This is the hostname Django will use to connect
+  labels:
+    app: postgres
+spec:
+  ports:
+    - port: {{ .Values.postgres.port }}
+      targetPort: {{ .Values.postgres.targetPort }}
+  selector:
+    app: postgres  # Matches the labels of your PostgreSQL pod
+  type: ClusterIP  # Default service type, only accessible within the cluster

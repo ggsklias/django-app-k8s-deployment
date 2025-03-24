@@ -1,0 +1,19 @@
+---
+- name: Deploy Django application via Helm (unified release)
+  kubernetes.core.helm:
+    name: django-release
+    chart_ref: /home/{{ ansible_user }}/helm/djangoarticleapp
+    release_namespace: production
+    values:
+      createGitlabRegistrySecret: true
+      docker_config:
+        auths:
+          registry.gitlab.com:
+            username: "{{ lookup('env', 'GITLAB_USERNAME') }}"
+            password: "{{ lookup('env', 'GITLAB_REGISTRY_TOKEN') }}"
+            email: "{{ lookup('env', 'GITLAB_EMAIL') }}"
+            auth: "{{ (lookup('env', 'GITLAB_USERNAME') + ':' + lookup('env', 'GITLAB_REGISTRY_TOKEN')) | b64encode }}"
+      django:
+        image:
+          repository: "{{ lookup('env', 'CI_REGISTRY_IMAGE') }}"
+          tag: "{{ lookup('env', 'CI_COMMIT_SHA') | default('latest') }}"

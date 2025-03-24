@@ -7,16 +7,16 @@ class WebsiteUser(HttpUser):
 
     def on_start(self):
         # Perform login and store cookies if needed
-        response = self.client.post("/login", {"username": "megivh@example.com", "password": "lagsl137"})
+        response = self.client.post("/", {"username": "megivh@example.com", "password": "lagsl137"})
         if response.status_code != 200:
             print("Login failed!")
 
-    @task
+    @task(3)
     def view_articles(self):
         self.client.get("/articles/")
         self.client.get("/")
     
-    @task
+    @task(1)
     def create_articles(self):
         self.client.get("/create_article/")
 

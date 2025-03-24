@@ -1,108 +1,105 @@
 # Manual provisioning playbook for deploying a Django app on a Kubernetes cluster through local environment
-- hosts: all
-  gather_facts: no # Avoid failures due to incompatible Python version
-  become: yes
+- name: Install prerequisites_amazon_linux_2 on all hosts
+  hosts: all
+  gather_facts: false # Avoid failures due to incompatible Python version
+  become: true
   vars_files:
     - group_vars/all
   roles:
     - prerequisites_amazon_linux_2
     - prepare_os
 
-- hosts: workers
-  gather_facts: yes  
-  become: yes
+- name: Install project on workers
+  hosts: workers
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   roles:
     - project_install
   tasks:
 
-- hosts: all
-  gather_facts: yes  
-  become: yes
+- name: Install kubernetes
+  hosts: all
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   tasks:
     - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
+      ansible.builtin.include_role:
         name: buildkit
         tasks_from: buildkit_dependencies.yml
 
-- hosts: workers
-  gather_facts: yes  
-  become: yes
+- name: Install buildkit and create app image
+  hosts: workers
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   tasks:
     - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
+      ansible.builtin.include_role:
         name: buildkit
         tasks_from: buildkit_build_image.yml
 
-- hosts: all
-  gather_facts: yes  
-  become: yes
+- name: Install kubernetes and place manifests
+  hosts: all
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   tasks:
     - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_install_kubernetes.yml
 
-- hosts: all
-  gather_facts: yes  
-  become: yes
-  vars_files:
-    - group_vars/all
-  tasks:
-    - name: Include install_on_all tasks from install_kubernetes role
-      include_role:
-        name: kubernetes
-        tasks_from: kube_install_kubernetes.yml
-
-- hosts: master
-  gather_facts: yes  
-  become: yes
+- name: Initialize kubernetes on master node
+  hosts: master
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   tasks:
     - name: Initialize master
-      include_role:
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_initialize_master.yml
 
-- hosts: workers
-  gather_facts: yes  
-  become: yes
+- name: Add worker nodes to cluster
+  hosts: workers
+  gather_facts: true
+  become: true
   vars_files:
     - group_vars/all
   tasks:
-    - name: join_node
-      include_role:
+    - name: Workers join node
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_join_node.yml
 
     - name: Get worker hostname and set it to worker_hostname
-      include_role:
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_get_worker_hostname.yml
 
-- hosts: master
-  gather_facts: yes  
+- name: Set node labels to worker nodes for Node Selector
+  hosts: master
+  gather_facts: true
   become: true
   become_user: "{{ ansible_user }}"
   vars_files:
     - group_vars/all
   tasks:
     - name: Get worker hostname and set it to worker_hostname
-      include_role:
+      ansible.builtin.include_role:
         name: kubernetes
         tasks_from: kube_set_node_labels.yml
 
 # ############################################
 # - hosts: all
-#   gather_facts: yes  
+#   gather_facts: yes
 #   become: yes
 #   vars_files:
 #     - group_vars/all
@@ -113,7 +110,7 @@
 #         tasks_from: buildkit_dependencies.yml
 
 # - hosts: workers
-#   gather_facts: yes  
+#   gather_facts: yes
 #   become: yes
 #   vars_files:
 #     - group_vars/all
@@ -124,11 +121,9 @@
 #         tasks_from: buildkit_build_image.yml
 
 # - hosts: master
-#   gather_facts: yes  
+#   gather_facts: yes
 #   become: yes
 #   vars_files:
 #     - group_vars/all
 #   roles:
 #     - start_app
-
-

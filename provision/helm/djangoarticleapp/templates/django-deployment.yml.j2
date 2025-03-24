@@ -2,14 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   # this is related to the type of yaml file. i.e.: djangoarticleapp-deployment, djangoarticleapp-pod etc.
-  name: djangoarticleapp
+  name: {{ include "djangoarticleapp.fullname" . }}
   # labels is a dictionary
   labels:
-    app: djangoarticleapp
+    app: {{ include "djangoarticleapp.name" . }}
     type: fullstack
 # applies to the Deployment object as a whole (defining things like the number of replicas and the selector for matching pods)
 spec:
-  replicas: 4
+  replicas: {{ .Values.django.replicaCount }}
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -17,11 +17,11 @@ spec:
       maxSurge: 1
   selector:
     matchLabels:
-      app: djangoarticleapp
+      app: {{ include "djangoarticleapp.name" . }}
   template:
     metadata:
       labels:
-        app: djangoarticleapp
+        app: {{ include "djangoarticleapp.name" . }}
     # Defines the Pod specification, detailing how each pod should be configured (including containers, node selectors, resource requests, etc.)
     spec:
       nodeSelector:
@@ -30,17 +30,17 @@ spec:
       - name: gitlab-registry
       containers:
       - name: web
-        image: {{ gitlab_image }}:{{ commit_sha }}
+        image: "{{ .Values.django.image.repository }}:{{ .Values.django.image.tag }}"
         imagePullPolicy: Always
         ports:
-        - containerPort: 8000
+        - containerPort: {{ .Values.django.containerPort }}
         envFrom:
         - configMapRef:
             name: django-config
         readinessProbe:
           httpGet:
-            path: /healthz
-            port: 8000
+            path: {{ .Values.django.readinessProbe.path }}
+            port: {{ .Values.django.readinessProbe.port }}
           initialDelaySeconds: 60
           periodSeconds: 5
           failureThreshold: 3

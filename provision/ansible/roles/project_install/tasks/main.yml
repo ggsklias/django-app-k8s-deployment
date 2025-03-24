@@ -1,2 +1,3 @@
 ---
-- import_tasks: project_install.yml
+- name: Install project on workers
+  ansible.builtin.import_tasks: project_install.yml

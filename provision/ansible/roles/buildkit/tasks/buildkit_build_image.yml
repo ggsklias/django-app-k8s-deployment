@@ -1,26 +1,35 @@
 ---
 - name: Build the image with buildctl
-  shell: |
+  ansible.builtin.shell: |
     cd /code
-    /usr/local/bin/buildctl build --frontend=dockerfile.v0 --local context=. --local dockerfile=. --output type=docker,name=djangoarticleapp:latest,dest=/tmp/djangoarticleapp.tar
+    /usr/local/bin/buildctl build \
+      --frontend=dockerfile.v0 \
+      --local context=. \
+      --local dockerfile=. \
+      --output type=docker,name=djangoarticleapp:latest,dest=/tmp/djangoarticleapp.tar
+  args:
+    creates: /tmp/djangoarticleapp.tar
 
 - name: Load the image into containerd
-  command: >
+  ansible.builtin.command: >
     ctr -n k8s.io images import /tmp/djangoarticleapp.tar
+  changed_when: false
 
 - name: Pull Postgres
-  command: >
+  ansible.builtin.command: >
     ctr -n k8s.io images pull docker.io/library/postgres:latest
+  changed_when: false
 
 - name: Cleanup
-  shell: |
+  ansible.builtin.shell: |
     rm -rf /tmp/bin
     rm -rf /tmp/buildkit.tar.gz
     rm -rf /tmp/djangoarticleapp.tar
+  changed_when: false
 # - name: Rename image
-#   command: > 
+#   command: >
 #     ctr -n k8 images tag docker.io/library/djangoarticleapp:latest djangoarticleapp:latest
 
 # - name: Remove image
-#   command: > 
+#   command: >
 #     ctr -n k8 images remove docker.io/library/djangoarticleapp:latest

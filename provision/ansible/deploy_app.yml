@@ -9,11 +9,17 @@
     - name: Execute kube_apply_manifests yml
       ansible.builtin.include_role:
         name: kubernetes
-        tasks_from: kube_create_gitlab_secret.yml
+        tasks_from: kube_helm_apply.yml
       when: hostvars[inventory_hostname].role == "primary"
 
-    - name: Execute kube_apply_manifests yml
-      ansible.builtin.include_role:
-        name: kubernetes
-        tasks_from: kube_apply_manifests.yml
-      when: hostvars[inventory_hostname].role == "primary"
+    # - name: Execute kube_apply_manifests yml
+    #   ansible.builtin.include_role:
+    #     name: kubernetes
+    #     tasks_from: kube_create_gitlab_secret.yml
+    #   when: hostvars[inventory_hostname].role == "primary"
+
+    # - name: Execute kube_apply_manifests yml
+    #   ansible.builtin.include_role:
+    #     name: kubernetes
+    #     tasks_from: kube_apply_manifests.yml
+    #   when: hostvars[inventory_hostname].role == "primary"
