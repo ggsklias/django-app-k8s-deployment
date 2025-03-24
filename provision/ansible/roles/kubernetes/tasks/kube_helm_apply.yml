@@ -19,7 +19,7 @@
   kubernetes.core.helm:
     name: django-release
     chart_ref: "{{ playbook_dir }}/../helm/djangoarticleapp"
-    release_namespace: production
+    release_namespace: default
     kubeconfig: /tmp/kubeconfig
     values:
       createGitlabRegistrySecret: true
