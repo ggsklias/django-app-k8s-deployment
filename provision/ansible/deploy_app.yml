@@ -1,8 +1,6 @@
 - name: Configure gitlab secret and apply manifests
   hosts: master
   gather_facts: true
-  become: true
-  become_user: "{{ ansible_user }}"
   vars_files:
     - group_vars/all
   tasks:

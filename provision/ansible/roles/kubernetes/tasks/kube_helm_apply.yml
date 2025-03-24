@@ -5,6 +5,12 @@
     dest: /tmp/kubeconfig
     flat: true
 
+- name: Confirm file is fetched
+  ansible.builtin.shell: |
+    ls -l /tmp/kubeconfig
+    cat /tmp/kubeconfig
+  changed_when: false
+
 - name: Deploy Django application via Helm (unified release)
   kubernetes.core.helm:
     name: django-release
