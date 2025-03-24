@@ -22,7 +22,7 @@
 
 - name: Copy Kubernetes app provisioning files
   ansible.builtin.copy:
-    src: "{{ playbook_dir | dirname }}/helm/djangoarticleapp"
+    src: "{{ playbook_dir | dirname }}/helm"
     dest: /home/ec2-user
     owner: ec2-user
     group: ec2-user
