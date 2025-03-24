@@ -23,6 +23,7 @@ provision/terraform/inventory.ini
 provision/ansible_logs/ansible.log
 provision/ansible/ssh_key.pem
 provision/ansible/inventory.ini
+provision/helm/djangoarticleapp/templates/def1*
 provision/terraform/.terraform.tfstate.lock.info
 provision/DevOpsApp.code-workspace
 provision/djangoarticleapp*
