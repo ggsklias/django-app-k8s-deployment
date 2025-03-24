@@ -1,9 +1,16 @@
 ---
+- name: Fetch the kubeconfig file
+  ansible.builtin.fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: /tmp/kubeconfig
+    flat: true
+
 - name: Deploy Django application via Helm (unified release)
   kubernetes.core.helm:
     name: django-release
     chart_ref: /home/{{ ansible_user }}/helm/djangoarticleapp
     release_namespace: production
+    kubeconfig: /tmp/kubeconfig
     values:
       createGitlabRegistrySecret: true
       docker_config:
@@ -17,3 +24,4 @@
         image:
           repository: "{{ lookup('env', 'CI_REGISTRY_IMAGE') }}"
           tag: "{{ lookup('env', 'CI_COMMIT_SHA') | default('latest') }}"
+  delegate_to: localhost
