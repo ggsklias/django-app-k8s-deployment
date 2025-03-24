@@ -6,18 +6,9 @@
     dest: /tmp/kubeconfig
     flat: true
 
-- name: Confirm file is fetched
-  become: true
-  ansible.builtin.shell: |
-    ls -l /tmp/kubeconfig
-    cat /tmp/kubeconfig
-    ls -l
-  changed_when: false
-  delegate_to: localhost
-
 - name: Deploy Django application via Helm (unified release)
   kubernetes.core.helm:
-    name: django-release
+    name: djangoarticleapp
     chart_ref: "{{ playbook_dir }}/../helm/djangoarticleapp"
     release_namespace: default
     kubeconfig: /tmp/kubeconfig
@@ -35,3 +26,13 @@
           repository: "{{ lookup('env', 'CI_REGISTRY_IMAGE') }}"
           tag: "{{ lookup('env', 'CI_COMMIT_SHA') | default('latest') }}"
   delegate_to: localhost
+
+- name: Check Helm status of django-release
+  ansible.builtin.command: helm status djangoarticleapp --kubeconfig=/tmp/kubeconfig
+  delegate_to: localhost
+  register: helm_status_output
+  changed_when: false
+
+- name: Show Helm status output
+  ansible.builtin.debug:
+    msg: "{{ helm_status_output.stdout }}"
