@@ -2,6 +2,13 @@ stages:
   - build
   - deploy_and_get_app_url
 
+.helm_installation: &helm_installation
+  - curl -L https://get.helm.sh/helm-v3.9.0-linux-amd64.tar.gz -o helm.tar.gz
+  - tar -zxvf helm.tar.gz
+  - mv linux-amd64/helm /usr/local/bin/helm
+  - chmod +x /usr/local/bin/helm
+  - helm version --short
+
 .default_terraform: &default_terraform
   - cd provision/terraform
   - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate .
@@ -67,6 +74,7 @@ deploy_and_get_app_url:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]
   script:
+    - *helm_installation
     - *default_ansible
     - ansible-playbook -i inventory.ini deploy_app.yml -v
     - apt-get update && apt-get install -y wget unzip rsync curl
@@ -74,4 +82,4 @@ deploy_and_get_app_url:
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - cd ../../
     - *default_terraform
-    - terraform output alb_dns_name
+    - terraform output -raw alb_dns_name

@@ -1,11 +1,11 @@
 ---
 - name: Install Nginx using amazon-linux-extras
   ansible.builtin.shell: |
-      yum -y clean metadata
-      amazon-linux-extras enable nginx1
-      yum -y clean metadata
-      yum -y install nginx
-      yum -y install nginx-mod-stream
+      sudo yum -y clean metadata
+      sudo amazon-linux-extras enable nginx1
+      sudo yum -y clean metadata
+      sudo yum -y install nginx
+      sudo yum -y install nginx-mod-stream
   register: nginx_install
   changed_when: false
 
