@@ -28,7 +28,8 @@ postgres:
     repository: "postgres"
     tag: "latest"
   containerPort: 5432
-  volumeSize: "2Gi"
+  volume:
+    sizeLimit: "2Gi"
 
 # # Default values for mychart.
 # # This is a YAML-formatted file.
