@@ -12,6 +12,7 @@
     ls -l /tmp/kubeconfig
     cat /tmp/kubeconfig
   changed_when: false
+  delegate_to: localhost
 
 - name: Deploy Django application via Helm (unified release)
   kubernetes.core.helm:
