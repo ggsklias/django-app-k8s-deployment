@@ -17,7 +17,7 @@
 - name: Deploy Django application via Helm (unified release)
   kubernetes.core.helm:
     name: django-release
-    chart_ref: /home/{{ ansible_user }}/helm/djangoarticleapp
+    chart_ref: "{{ playbook_dir }}/helm/djangoarticleapp"
     release_namespace: production
     kubeconfig: /tmp/kubeconfig
     values:
