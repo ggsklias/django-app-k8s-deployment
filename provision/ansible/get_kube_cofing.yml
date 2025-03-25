@@ -1,0 +1,11 @@
+- name: Configure gitlab secret and apply manifests
+  hosts: master
+  gather_facts: true
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Execute kube_apply_manifests yml
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: kube_get_config.yml
+      when: hostvars[inventory_hostname].role == "primary"

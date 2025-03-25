@@ -1,0 +1,7 @@
+---
+- name: Fetch the kubeconfig file
+  become: true
+  ansible.builtin.fetch:
+    src: /etc/kubernetes/admin.conf
+    dest: /tmp/kubeconfig
+    flat: true

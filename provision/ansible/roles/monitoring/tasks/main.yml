@@ -1,0 +1,3 @@
+---
+- name: Include task to install on all hosts
+  ansible.builtin.include_tasks: get_kube_monitoring_resources.yml
