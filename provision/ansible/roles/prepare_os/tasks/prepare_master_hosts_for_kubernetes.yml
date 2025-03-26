@@ -1,0 +1,37 @@
+- name: Display the ansible_fqdn
+  ansible.builtin.debug:
+    msg: "Extracted region is: {{ ansible_fqdn }}"
+
+- name: Extract region from ansible_hostname
+  ansible.builtin.set_fact:
+    extracted_region: "{{ ansible_fqdn.split('.')[1] }}"
+
+- name: Display the extracted region
+  ansible.builtin.debug:
+    msg: "Extracted region is: {{ extracted_region }}"
+
+- name: Display all IPv4 addresses
+  ansible.builtin.debug:
+    var: ansible_all_ipv4_addresses
+
+- name: Display current hostname and IP address
+  ansible.builtin.debug:
+    msg: "Current hostname: {{ ansible_hostname }}, IP: {{ node_ip }}"
+
+- name: Display current hostname and IP address
+  ansible.builtin.debug:
+    msg: "New hostname:  {{ new_hostname }}.{{ extracted_region }}"
+
+- name: Change hostname
+  ansible.builtin.hostname:
+    name: "{{ new_hostname }}.{{ extracted_region }}"
+  become: true
+
+- name: Verify the hostname has been updated
+  ansible.builtin.command: hostname
+  register: hostname_output
+  changed_when: false
+
+- name: Show the new hostname
+  ansible.builtin.debug:
+    msg: "New hostname is: {{ hostname_output.stdout }}"

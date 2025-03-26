@@ -20,11 +20,13 @@ provision/terraform/delete_s3_files.sh
 get_tf_files_and_destroy_remote_resources.sh
 get_tf_files.sh
 provision/terraform/inventory.ini
-provision/ansible_logs/ansible.log
+provision/ansible_logs/*
 provision/ansible/ssh_key.pem
 provision/ansible/inventory.ini
+provision/ansible/quick_tests.yml
 provision/helm/djangoarticleapp/templates/def1*
 provision/terraform/.terraform.tfstate.lock.info
+provision/terraform/output*
 provision/DevOpsApp.code-workspace
 provision/djangoarticleapp*
 .DS_Store

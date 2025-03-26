@@ -8,6 +8,10 @@ variables:
 
 provision_servers_and_install_k8s_cluster:
   stage: provision
+  before_script:
+    - ansible-galaxy collection install kubernetes.core
+    - ansible-galaxy collection install community.kubernetes
+    - ansible-galaxy collection install community.general
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]

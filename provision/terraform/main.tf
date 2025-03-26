@@ -346,7 +346,7 @@ module "locust" {
   iam_instance_profile = "secretsRole"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
-  security_groups      = [aws_security_group.allow_connections_for_locust.id]
+  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "locust"
   instance_count       = 1
 
