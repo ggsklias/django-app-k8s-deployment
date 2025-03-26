@@ -19,6 +19,7 @@
   community.general.modprobe:
     name: overlay
     state: present
+  changed_when: false
 
 - name: Verify that the overlay modules are loaded
   ansible.builtin.shell: |

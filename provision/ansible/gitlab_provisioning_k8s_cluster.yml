@@ -8,13 +8,12 @@
     - prerequisites_amazon_linux_2
     - prepare_os
 
-- name: Check IPv4 addresses on host
+- name: Configure hostnames on masters
   hosts: master
   gather_facts: true
   vars:
     # Use the first IPv4 address from the gathered facts.
     node_ip: "{{ ansible_all_ipv4_addresses[0] }}"
-    # Construct a short hostname, e.g. "ip-10-0-1-42" for an IP of "10.0.1.42".
     new_hostname: "ip-{{ node_ip | replace('.', '-') }}"
   tasks:
     - name: Configure hostnames on masters

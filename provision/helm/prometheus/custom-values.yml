@@ -7,3 +7,7 @@ server:
   persistentVolume:
     enabled: false
     emptyDir: {}
+alertmanager:
+  persistentVolume:
+    enabled: false
+    emptyDir: {}

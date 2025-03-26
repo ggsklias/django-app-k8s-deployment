@@ -33,3 +33,4 @@ provision/djangoarticleapp*
 terraform.tfstate
 __gitlab-ci*.yml
 temp_aws_resources*
+Idea_New.md
