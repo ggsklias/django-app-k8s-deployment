@@ -71,7 +71,7 @@ deploy_and_get_app_url:
   before_script:
     - ansible-galaxy collection install kubernetes.core
     - ansible-galaxy collection install community.kubernetes
-    - apt-get update && apt-get install -y unzip curl rsync
+    - apt-get update && apt-get install -y unzip curl rsync wget
   image:
     name: willhallonline/ansible:2.18.2-ubuntu-24.04
     entrypoint: [""]

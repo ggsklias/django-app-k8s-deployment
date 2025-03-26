@@ -2,3 +2,6 @@ server:
   service:
     type: NodePort
     nodePort: 30013
+  persistentVolume:
+    enabled: false
+    emptyDir: {}
