@@ -1,7 +1,9 @@
 server:
   service:
     type: NodePort
+    port: 80
     nodePort: 30013
+    targetPort: 9090
   persistentVolume:
     enabled: false
     emptyDir: {}
