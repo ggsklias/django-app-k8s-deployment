@@ -1,4 +1,4 @@
 #!/bin/bash
-./default_ansible.sh
+./scripts/default_ansible.sh
 ansible-playbook -i inventory.ini get_kube_config.yml
-./default_helm.sh
+./scripts/default_helm.sh
