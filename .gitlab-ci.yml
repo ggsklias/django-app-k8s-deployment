@@ -1,5 +1,4 @@
 include:
-  - local: 'ci_templates.yml'
   - local: '.gitlab-ci-infra.yml'
     rules:
       - if: '$CI_COMMIT_MESSAGE =~ /(infra|all)/'
