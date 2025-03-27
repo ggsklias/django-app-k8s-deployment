@@ -41,6 +41,7 @@ deploy_grafana:
     - source ./scripts/ansible_helm_and_kube_dependencies.sh
     - helm repo add grafana https://grafana.github.io/helm-charts
     - helm repo update
-    - helm upgrade --install grafana grafana/grafana --namespace monitoring --create-namespace -f provision/helm/grafana/custom-values.yaml
+    - ls
+    - helm upgrade --install grafana grafana/grafana --namespace monitoring -f provision/helm/grafana/custom-values.yaml
     - helm list --all-namespaces
     - ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/get_monitoring_resources.yml -vv

@@ -4,4 +4,4 @@
   ansible.builtin.fetch:
     src: /etc/kubernetes/admin.conf
     dest: /tmp/kubeconfig
-    flat: true
+    mode: '0600'
