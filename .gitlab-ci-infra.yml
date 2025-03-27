@@ -25,14 +25,14 @@ provision_servers_and_install_k8s_cluster:
     - ./aws/install
     - terraform -chdir=provision/terraform init
     - terraform -chdir=provision/terraform apply -auto-approve
-    - terraform -chdir=provision/terraform output -json > output.json
+    - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
+    - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
+    - terraform -chdir=provision/terraform output -json > provision/terraform/output.json
     - python3 provision/terraform/create_inventory_ini.py
+    - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - terraform output alb_dns_name
     - printf "ALB_DNS=%s" "$(terraform output -raw alb_dns_name)" > .env
     - echo $ALB_DNS
-    - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
-    - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
-    - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - chmod 755 provision/ansible
     - echo "$SSH_PRIVATE_KEY" > provision/ansible/ssh_key.pem
     - chmod 600 provision/ansible/ssh_key.pem
