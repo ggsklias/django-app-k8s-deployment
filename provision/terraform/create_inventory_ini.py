@@ -31,7 +31,7 @@ def generate_inventory(outputs, inventory_file=INVENTORY_FILE):
             f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user node_role=locust\n")
         # Optionally, add group variables:
         f.write("\n[all:vars]\n")
-        f.write("ansible_ssh_private_key_file=./ssh_key.pem\n")
+        f.write("ansible_ssh_private_key_file=provision/ansible/ssh_key.pem\n")
 
 if __name__ == "__main__":
     tf_outputs = get_terraform_output()
