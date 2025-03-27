@@ -1,12 +1,3 @@
-stages:
-  - provision   # Required for infra jobs
-  - build
-  - deploy_and_get_app_url
-  - deploy_prometheus
-  - deploy_grafana
-  - deploy_locust
-  - cleanup
-
 include:
   - local: 'ci_templates.yml'
   - local: '.gitlab-ci-infra.yml'
@@ -18,3 +9,12 @@ include:
   - local: '.gitlab-ci-locust.yml'
     rules:
       - if: '$CI_COMMIT_MESSAGE =~ /(all)/'
+
+stages:
+  - provision   # Required for infra jobs
+  - build
+  - deploy_and_get_app_url
+  - deploy_prometheus
+  - deploy_grafana
+  - deploy_locust
+  - cleanup

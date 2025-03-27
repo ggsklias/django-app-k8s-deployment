@@ -2,14 +2,7 @@ stages:
   - deploy_prometheus
   - deploy_grafana
 
-variables:
-  AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
-  AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
-
 deploy_prometheus:
-  extends: 
-    - .default_ansible
-    - .helm_installation
   stage: deploy_prometheus
   before_script:
     - ansible-galaxy collection install kubernetes.core
@@ -21,9 +14,9 @@ deploy_prometheus:
   variables:
     KUBECONFIG: "/tmp/kubeconfig"
   script:
-    - *default_ansible
+    - ./scripts/default_ansible.sh
     - ansible-playbook -i inventory.ini get_kube_config.yml -vv
-    - *helm_installation
+    - ./scripts/default_helm.sh
     - helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
     - helm repo update
     - helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring --create-namespace -f ../helm/prometheus/custom-values.yml
@@ -31,9 +24,6 @@ deploy_prometheus:
     - ansible-playbook -i inventory.ini get_monitoring_resources.yml -vv
 
 deploy_grafana:
-  extends: 
-    - .default_ansible
-    - .helm_installation
   stage: deploy_grafana
   before_script:
     - ansible-galaxy collection install kubernetes.core
@@ -45,9 +35,9 @@ deploy_grafana:
   variables:
     KUBECONFIG: "/tmp/kubeconfig"
   script:
-    - *default_ansible
+    - ./scripts/default_ansible.sh
     - ansible-playbook -i inventory.ini get_kube_config.yml -vv
-    - *helm_installation
+    - ./scripts/default_helm.sh
     - helm repo add grafana https://grafana.github.io/helm-charts
     - helm repo update
     - helm upgrade --install grafana grafana/grafana --namespace monitoring --create-namespace -f custom-values.yaml

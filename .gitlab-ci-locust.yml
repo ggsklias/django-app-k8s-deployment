@@ -6,8 +6,6 @@ variables:
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
 
 deploy_locust:
-  extends: 
-    - .default_ansible
   stage: deploy_locust
   before_script:
     - ansible-galaxy collection install kubernetes.core
@@ -17,7 +15,7 @@ deploy_locust:
     entrypoint: [""]
   script:
     - echo $ALB_DNS
-    - *default_ansible
+    - ./scripts/default_ansible.sh
     - ansible-playbook -i inventory.ini deploy_locust.yml -v
     - apt-get update && apt-get install -y wget unzip rsync curl
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip

@@ -2,9 +2,6 @@ stages:
   - build
   - deploy_and_get_app_url
 
-include:
-  - local: 'ci_templates.yml'
-
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
@@ -45,9 +42,6 @@ build:
         - djangoarticleapp/Dockerfile
 
 deploy_and_get_app_url:
-  extends: 
-    - .default_ansible
-    - .helm_installation
   stage: deploy_and_get_app_url
   before_script:
     - ansible-galaxy collection install kubernetes.core
@@ -59,17 +53,15 @@ deploy_and_get_app_url:
   variables:
     KUBECONFIG: "/tmp/kubeconfig"
   script:
-    - *default_ansible
-    - ls -l
+    - ./scripts/default_ansible.sh
     - ansible-playbook -i inventory.ini get_kube_config.yml -vv
-    - *helm_installation
+    - ./scripts/default_helm.sh
     - ansible-playbook -i inventory.ini deploy_app.yml -v
-    - ls -l
     - helm upgrade --install prometheus prometheus-community/prometheus --namespace monitoring --create-namespace -f ../helm/prometheus/custom-values.yml
     - helm list --all-namespaces
     - ansible-playbook -i inventory.ini get_monitoring_resources.yml -vv
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - cd ../../
-    - *default_terraform
+    - ./scripts/default_terraform.sh
     - terraform output -raw alb_dns_name
