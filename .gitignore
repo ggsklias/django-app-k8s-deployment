@@ -30,6 +30,7 @@ provision/terraform/.terraform.tfstate.lock.info
 provision/terraform/output*
 provision/DevOpsApp.code-workspace
 provision/djangoarticleapp*
+scripts/ssh_key.pem
 .DS_Store
 terraform.tfstate
 __gitlab-ci*.yml

@@ -5,3 +5,4 @@
     src: /etc/kubernetes/admin.conf
     dest: /tmp/kubeconfig
     mode: '0600'
+    flat: true
