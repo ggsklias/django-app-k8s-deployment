@@ -5,7 +5,7 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
-  ANSIBLE_PATH: "$ANSIBLE_PATH"
+  ANSIBLE_PATH: "provision/ansible"
 
 deploy_prometheus:
   stage: deploy_prometheus

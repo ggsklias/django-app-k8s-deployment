@@ -5,8 +5,8 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
-  ANSIBLE_PATH: "$ANSIBLE_PATH"
-  TERRAFORM_PATH: "$TERRAFORM_PATH"
+  ANSIBLE_PATH: "provision/ansible"
+  TERRAFORM_PATH: "provision/terraform"
 
 build:
   # Use the official docker image.
@@ -56,7 +56,7 @@ deploy_and_get_app_url:
     KUBECONFIG: "/tmp/kubeconfig"
   script:
     - source ./scripts/ansible_helm_and_kube_dependencies.sh
-    - ansible-playbook -i provision/ansible/inventory.ini provision/ansible/deploy_app.yml -v
+    - ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/deploy_app.yml -v
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - ./scripts/default_terraform.sh

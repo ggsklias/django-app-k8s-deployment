@@ -4,8 +4,8 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
-  ANSIBLE_PATH: "$ANSIBLE_PATH"
-  TERRAFORM_PATH: "$TERRAFORM_PATH"
+  ANSIBLE_PATH: "provision/ansible"
+  TERRAFORM_PATH: "provision/terraform"
 
 deploy_locust:
   stage: deploy_locust
