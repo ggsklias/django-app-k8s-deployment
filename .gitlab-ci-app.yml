@@ -45,6 +45,9 @@ build:
         - djangoarticleapp/Dockerfile
 
 deploy_and_get_app_url:
+  extends: 
+    - .default_ansible
+    - .helm_installation
   stage: deploy_and_get_app_url
   before_script:
     - ansible-galaxy collection install kubernetes.core
