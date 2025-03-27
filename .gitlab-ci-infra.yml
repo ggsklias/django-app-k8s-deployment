@@ -55,11 +55,10 @@ terraform_destroy:
   script:
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli
-    - cd provision/terraform
     - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate .
     - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl .
-    - terraform init
-    - terraform destroy -auto-approve
+    - terraform -chdir=provision/terraform init
+    - terraform -chdir=provision/terraform destroy -auto-approve
     - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
