@@ -5,6 +5,9 @@ include:
   - local: '.gitlab-ci-app.yml'
     rules:
       - if: '$CI_COMMIT_MESSAGE =~ /(django|all)/'
+  - local: '.gitlab-ci-monitoring.yml'
+    rules:
+      - if: '$CI_COMMIT_MESSAGE =~ /(all)/'
   - local: '.gitlab-ci-locust.yml'
     rules:
       - if: '$CI_COMMIT_MESSAGE =~ /(all)/'
