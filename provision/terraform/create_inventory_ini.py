@@ -2,10 +2,10 @@
 import json
 
 def get_terraform_output():
-    with open("output.json", "r") as f:
+    with open("provision/terraform/output.json", "r") as f:
         return json.load(f)
 
-def generate_inventory(outputs, inventory_file="../ansible/inventory.ini"):
+def generate_inventory(outputs, inventory_file="provision/ansible/inventory.ini"):
     masters = outputs["public_ip_master"]["value"]
     workers = outputs["public_ip_worker"]["value"]
     nginx = outputs["public_ip_nginx"]["value"]

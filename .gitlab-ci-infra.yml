@@ -26,7 +26,7 @@ provision_servers_and_install_k8s_cluster:
     - terraform -chdir=provision/terraform init
     - terraform -chdir=provision/terraform apply -auto-approve
     - terraform -chdir=provision/terraform output -json > output.json
-    - python3 create_inventory_ini.py
+    - python3 provision/terraform/create_inventory_ini.py
     - terraform output alb_dns_name
     - printf "ALB_DNS=%s" "$(terraform output -raw alb_dns_name)" > .env
     - echo $ALB_DNS
