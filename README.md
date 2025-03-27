@@ -21,6 +21,7 @@
 - **ALB Integration:** Implemented an Application Load Balancer (ALB) with a properly configured listener and target groups. This design distributes incoming traffic across the worker nodes, enabling efficient load distribution and seamless failover.
 - **Automation:** Utilized Terraform for AWS resource provisioning, Ansible for OS and Kubernetes configuration, and GitLab CI/CD for streamlined production deployments.
 - **Deployment Strategies:** Supports both local testing (single-playbook execution) and automated, production-ready deployments via GitLab pipelines.
+- **Monitoring:** Implemented Prometheus monitoring through helm to monitor cpu, memory, IOPS while stress testing. 
 
 **Technologies:** Terraform, Ansible, Kubernetes, containerd, buildkit, Docker, Django, Python, PostgreSQL, AWS ALB
 
