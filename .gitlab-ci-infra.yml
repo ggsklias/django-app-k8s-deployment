@@ -5,6 +5,8 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  ANSIBLE_PATH: "$ANSIBLE_PATH"
+  TERRAFORM_PATH: "$TERRAFORM_PATH"
 
 provision_servers_and_install_k8s_cluster:
   stage: provision
@@ -23,20 +25,20 @@ provision_servers_and_install_k8s_cluster:
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - unzip awscliv2.zip
     - ./aws/install
-    - terraform -chdir=provision/terraform init
-    - terraform -chdir=provision/terraform apply -auto-approve
-    - aws s3 cp provision/terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
-    - aws s3 cp provision/terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
-    - terraform -chdir=provision/terraform output -json > provision/terraform/output.json
-    - python3 provision/terraform/create_inventory_ini.py
-    - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
+    - terraform -chdir=$TERRAFORM_PATH init
+    - terraform -chdir=$TERRAFORM_PATH apply -auto-approve
+    - aws s3 cp $TERRAFORM_PATH/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
+    - aws s3 cp $TERRAFORM_PATH/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
+    - terraform -chdir=$TERRAFORM_PATH output -json > $TERRAFORM_PATH/output.json
+    - python3 $TERRAFORM_PATH/create_inventory_ini.py
+    - aws s3 cp $ANSIBLE_PATH/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - terraform output alb_dns_name
     - printf "ALB_DNS=%s" "$(terraform output -raw alb_dns_name)" > .env
     - echo $ALB_DNS
-    - chmod 755 provision/ansible
-    - echo "$SSH_PRIVATE_KEY" > provision/ansible/ssh_key.pem
-    - chmod 600 provision/ansible/ssh_key.pem
-    - ansible-playbook -i provision/ansible/inventory.ini provision/ansible/gitlab_provisioning_k8s_cluster.yml
+    - chmod 755 $ANSIBLE_PATH
+    - echo "$SSH_PRIVATE_KEY" > $ANSIBLE_PATH/ssh_key.pem
+    - chmod 600 $ANSIBLE_PATH/ssh_key.pem
+    - ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/gitlab_provisioning_k8s_cluster.yml
   artifacts:
     reports:
       dotenv: .env
@@ -49,10 +51,10 @@ terraform_destroy:
   script:
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate provision/terraform/
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl provision/terraform/
-    - terraform -chdir=provision/terraform init
-    - terraform -chdir=provision/terraform destroy -auto-approve
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate $TERRAFORM_PATH/
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl $TERRAFORM_PATH/
+    - terraform -chdir=$TERRAFORM_PATH init
+    - terraform -chdir=$TERRAFORM_PATH destroy -auto-approve
     - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl

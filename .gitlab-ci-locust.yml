@@ -4,6 +4,8 @@ stages:
 variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  ANSIBLE_PATH: "$ANSIBLE_PATH"
+  TERRAFORM_PATH: "$TERRAFORM_PATH"
 
 deploy_locust:
   stage: deploy_locust
@@ -17,6 +19,6 @@ deploy_locust:
   script:
     - echo $ALB_DNS
     - source ./scripts/default_ansible.sh
-    - ansible-playbook -i provision/ansible/inventory.ini provision/ansible/deploy_locust.yml -v
+    - ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/deploy_locust.yml -v
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
