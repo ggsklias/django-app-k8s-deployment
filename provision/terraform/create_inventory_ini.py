@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 import json
 
+INVENTORY_FILE="provision/ansible/inventory.ini"
+
 def get_terraform_output():
     with open("provision/terraform/output.json", "r") as f:
         return json.load(f)
 
-def generate_inventory(outputs, inventory_file="provision/ansible/inventory.ini"):
+def generate_inventory(outputs, inventory_file=INVENTORY_FILE):
     masters = outputs["public_ip_master"]["value"]
     workers = outputs["public_ip_worker"]["value"]
     nginx = outputs["public_ip_nginx"]["value"]
@@ -34,4 +36,4 @@ def generate_inventory(outputs, inventory_file="provision/ansible/inventory.ini"
 if __name__ == "__main__":
     tf_outputs = get_terraform_output()
     generate_inventory(tf_outputs)
-    print("inventory.ini generated successfully.")
+    print("inventory.ini generated successfully at %s." % INVENTORY_FILE)
