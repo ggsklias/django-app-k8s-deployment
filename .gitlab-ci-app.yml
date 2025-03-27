@@ -56,7 +56,7 @@ deploy_and_get_app_url:
     KUBECONFIG: "/tmp/kubeconfig"
   script:
     - source ./scripts/ansible_helm_and_kube_dependencies.sh
-    - ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/deploy_app.yml -v
+    - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/deploy_app.yml -v
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - ./scripts/default_terraform.sh
