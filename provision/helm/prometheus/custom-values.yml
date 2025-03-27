@@ -11,3 +11,7 @@ alertmanager:
   persistentVolume:
     enabled: false
     emptyDir: {}
+pushgateway:
+  persistentVolume:
+    enabled: false
+    emptyDir: {}

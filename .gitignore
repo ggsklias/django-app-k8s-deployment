@@ -25,6 +25,7 @@ provision/ansible/ssh_key.pem
 provision/ansible/inventory.ini
 provision/ansible/quick_tests.yml
 provision/helm/djangoarticleapp/templates/def1*
+provision/helm/cluster-resources*
 provision/terraform/.terraform.tfstate.lock.info
 provision/terraform/output*
 provision/DevOpsApp.code-workspace

@@ -1,0 +1,28 @@
+# custom-values.yaml for Grafana
+
+# Expose Grafana using a NodePort service.
+service:
+  type: NodePort
+  port: 80                # External port on the service
+  nodePort: 32013         # The NodePort number you want to expose externally
+  targetPort: 3000        # The port Grafana listens on inside the container
+
+# Disable persistence if you don't require data retention in this testing environment.
+persistence:
+  enabled: false
+  emptyDir: {}
+
+# Set Grafana admin credentials (change as needed)
+admin:
+  password: "Lagsl137!"
+
+# Automatically configure Prometheus as a data source in Grafana.
+datasources:
+  datasources.yaml:
+    apiVersion: 1
+    datasources:
+      - name: Prometheus
+        type: prometheus
+        access: proxy
+        url: http://prometheus-server.monitoring.svc.cluster.local:80
+        isDefault: true

@@ -2,10 +2,13 @@ stages:
   - provision   # Required for infra jobs
   - build
   - deploy_and_get_app_url
-  - locust_deploy
+  - deploy_prometheus
+  - deploy_grafana
+  - deploy_locust
   - cleanup
 
 include:
+  - local: 'ci_templates.yml'
   - local: '.gitlab-ci-infra.yml'
     rules:
       - if: '$CI_COMMIT_MESSAGE =~ /(infra|all)/'
