@@ -17,32 +17,26 @@ provision_servers_and_install_k8s_cluster:
     entrypoint: [""]
   script:
     - echo "Provisioning EC2 instances using Terraform"
-    - apt-get update && apt-get install -y wget unzip rsync curl
+    - apt-get update && apt-get install -y wget unzip rsync curl tar
     - wget https://releases.hashicorp.com/terraform/1.10.5/terraform_1.10.5_linux_amd64.zip
     - unzip terraform_1.10.5_linux_amd64.zip -d /usr/local/bin/
     - curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
     - unzip awscliv2.zip
     - ./aws/install
-    - cd provision/terraform
-    - terraform init
-    - terraform apply -auto-approve
-    - terraform output -json > output.json
+    - terraform -chdir=provision/terraform init
+    - terraform -chdir=provision/terraform apply -auto-approve
+    - terraform -chdir=provision/terraform output -json > output.json
     - python3 create_inventory_ini.py
     - terraform output alb_dns_name
     - printf "ALB_DNS=%s" "$(terraform output -raw alb_dns_name)" > .env
     - echo $ALB_DNS
-    - mv .env ../../
-    - cd ../../
-    - cd provision
     - aws s3 cp ansible/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 cp terraform/.terraform.lock.hcl s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
     - aws s3 cp terraform/terraform.tfstate s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
-    - chmod 755 ansible
-    - cd ansible
-    - echo "$SSH_PRIVATE_KEY" > ssh_key.pem
-    - chmod 600 ssh_key.pem
-    - ansible-playbook -i inventory.ini gitlab_provisioning_k8s_cluster.yml
-    - cd ../../
+    - chmod 755 provision/ansible
+    - echo "$SSH_PRIVATE_KEY" > provision/ansible/ssh_key.pem
+    - chmod 600 provision/ansible/ssh_key.pem
+    - ansible-playbook -i provision/ansible/inventory.ini provision/ansible/gitlab_provisioning_k8s_cluster.yml
   artifacts:
     reports:
       dotenv: .env
@@ -55,8 +49,8 @@ terraform_destroy:
   script:
     - apk update && apk add --no-cache unzip curl
     - apk add --no-cache aws-cli
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate .
-    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl .
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate provision/terraform/
+    - aws s3 cp s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl provision/terraform/
     - terraform -chdir=provision/terraform init
     - terraform -chdir=provision/terraform destroy -auto-approve
     - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
