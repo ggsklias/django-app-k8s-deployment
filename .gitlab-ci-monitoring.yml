@@ -43,4 +43,4 @@ deploy_grafana:
     - helm repo update
     - helm upgrade --install grafana grafana/grafana --namespace monitoring -f provision/helm/grafana/custom-values.yml
     - helm list --all-namespaces
-    - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/get_monitoring_resources.yml -vv
+    - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/get_monitoring_resources_grafana.yml -vv

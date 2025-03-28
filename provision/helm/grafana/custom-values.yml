@@ -13,8 +13,8 @@ persistence:
   emptyDir: {}
 
 # Set Grafana admin credentials (change as needed)
-admin:
-  password: "Lagsl137!"
+adminPassword: "Lagsl137!"
+
 
 # Automatically configure Prometheus as a data source in Grafana.
 datasources:

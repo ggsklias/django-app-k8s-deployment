@@ -12,20 +12,10 @@
   register: svc_output
   changed_when: false
 
-- name: Display services output
-  ansible.builtin.debug:
-    msg: "{{ svc_output.stdout }}"
-
-- name: Get NodePort for the prometheus-server service (assuming port 80)
-  ansible.builtin.command: kubectl get svc prometheus-server -n monitoring -o jsonpath='{.spec.ports[?(@.port==80)].nodePort}'
-  register: prometheus_nodeport
-  changed_when: false
-
-- name: Get external IP of the first node
-  ansible.builtin.command: kubectl get nodes -o jsonpath='{.items[0].status.addresses[?(@.type=="ExternalIP")].address}'
-  register: node_external_ip
-  changed_when: false
-
 - name: Show Prometheus access URL using NodePort
   ansible.builtin.debug:
     msg: "Prometheus is accessible at http://{{ hostvars[groups['master'][0]].ansible_host }}:30013"
+
+- name: Show Grafana access URL using NodePort
+  ansible.builtin.debug:
+    msg: "Prometheus is accessible at http://{{ hostvars[groups['locust'][0]].ansible_host }}:32013"

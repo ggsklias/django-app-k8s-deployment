@@ -13,6 +13,7 @@ provision/exports.sh
 .ansible-lint
 .ansible*
 .vscode*
+aws_commands
 provision/ansible/test.yml
 provision/terraform/terraform.tfstate.backup
 provision/terraform/terraform.tfstate
