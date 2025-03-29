@@ -205,6 +205,11 @@ output "public_ip_locust" {
   value = flatten(module.locust.public_ip)
 }
 
+output "public_ip_elk" {
+  value = flatten(module.elk.public_ip)
+}
+
+
 resource "aws_security_group" "allow_ssh_and_k8s" {
   name        = "allow-ssh-and-k8s"
   description = "Allow SSH and Kubernetes traffic"
