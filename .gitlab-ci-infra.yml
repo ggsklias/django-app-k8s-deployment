@@ -34,7 +34,6 @@ provision_servers_and_install_k8s_cluster:
     - aws s3 cp $ANSIBLE_PATH/inventory.ini s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - terraform -chdir=$TERRAFORM_PATH output alb_dns_name
     - printf "ALB_DNS=%s" "$(terraform -chdir=$TERRAFORM_PATH output -raw alb_dns_name)" > .env
-    - echo $ALB_DNS
     - chmod 755 $ANSIBLE_PATH
     - echo "$SSH_PRIVATE_KEY" > $ANSIBLE_PATH/ssh_key.pem
     - chmod 600 $ANSIBLE_PATH/ssh_key.pem
