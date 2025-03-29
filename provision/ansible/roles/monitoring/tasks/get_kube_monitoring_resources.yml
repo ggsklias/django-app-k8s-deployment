@@ -5,7 +5,7 @@
 
 - name: Display pods output
   ansible.builtin.debug:
-    msg: "{{ pods_output.stdout }}"
+    msg: "{{ pods_output.stdout_lines }}"
 
 - name: Get services in the monitoring namespace
   ansible.builtin.command: kubectl get svc -n monitoring
