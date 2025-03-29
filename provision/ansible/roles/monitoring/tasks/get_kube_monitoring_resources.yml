@@ -18,4 +18,4 @@
 
 - name: Show Grafana access URL using NodePort
   ansible.builtin.debug:
-    msg: "Prometheus is accessible at http://{{ hostvars[groups['locust'][0]].ansible_host }}:32013"
+    msg: "Grafana is accessible at http://{{ hostvars[groups['locust'][0]].ansible_host }}:32013"
