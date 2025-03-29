@@ -17,3 +17,10 @@
   loop: "{{ groups['locust'] }}"
   register: locust_label_output
   changed_when: false
+
+- name: Label all elk nodes
+  ansible.builtin.command:
+    kubectl label node {{ hostvars[item].elk_hostname }} node-type={{ hostvars[item].node_role }} --overwrite
+  loop: "{{ groups['elk'] }}"
+  register: elk_label_output
+  changed_when: false

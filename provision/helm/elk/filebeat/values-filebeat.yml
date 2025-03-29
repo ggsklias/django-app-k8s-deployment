@@ -1,0 +1,22 @@
+filebeatConfig:
+  filebeat.yml: |
+    filebeat.inputs:
+      - type: container
+        paths:
+          - /var/log/containers/*.log
+    # Uncomment one of the outputs depending on your setup:
+    # Send logs directly to Elasticsearch:
+    output.elasticsearch:
+      hosts: ["http://elasticsearch.logging.svc.cluster.local:9200"]
+    # Or send logs through Logstash:
+    # output.logstash:
+    #   hosts: ["logstash.logging.svc.cluster.local:5044"]
+
+# Ensure the Filebeat DaemonSet mounts the container log directory from the host:
+extraVolumes:
+  - name: varlog
+    hostPath:
+      path: /var/log
+extraVolumeMounts:
+  - name: varlog
+    mountPath: /var/log

@@ -12,8 +12,12 @@
     cmd: "{{ kubeadm_join_command }}"
     creates: /etc/kubernetes/kubelet.conf
   environment:
-    KUBELET_EXTRA_ARGS: "--node-labels=role={{ node_role }}"
+    KUBELET_EXTRA_ARGS: "--node-labels=node-type={{ node_role }}"
   register: join_status
+
+- name: Check if node joined successfully
+  ansible.builtin.debug:
+    msg: "{{ join_status.stdout }}"
 
 - name: Check if node joined successfully
   ansible.builtin.debug:

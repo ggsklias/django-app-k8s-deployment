@@ -352,6 +352,20 @@ module "locust" {
 
 }
 
+module "elk" {
+  source = "./modules/elk"
+
+  ami                  = "ami-0764af88874b6b852"
+  size                 = "t2.micro"
+  iam_instance_profile = "secretsRole"
+  ec2_ssh_key          = "ssh_key"
+  subnet_id            = aws_subnet.public1.id
+  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
+  instance_name        = "elk"
+  instance_count       = 1
+
+}
+
 resource "aws_security_group" "allow_connections_for_locust" {
   name        = "allow-connections-for-locust"
   description = "Allow SSH traffic"

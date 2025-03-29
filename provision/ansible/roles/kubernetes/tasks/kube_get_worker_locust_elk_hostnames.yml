@@ -1,0 +1,36 @@
+---
+- name: Save hostname result
+  ansible.builtin.command: hostname
+  register: hostname_command
+  changed_when: false
+  when: "'worker' in group_names"
+
+- name: Save hostname result
+  ansible.builtin.set_fact:
+    worker_hostname: >-
+      "{{ hostname_command.stdout }}"
+  when: "'worker' in group_names"
+
+- name: Save hostname result
+  ansible.builtin.command: hostname
+  register: hostname_command
+  changed_when: false
+  when: "'locust' in group_names"
+
+- name: Save hostname result
+  ansible.builtin.set_fact:
+    locust_hostname: >-
+      "{{ hostname_command.stdout }}"
+  when: "'locust' in group_names"
+
+- name: Save hostname result
+  ansible.builtin.command: hostname
+  register: hostname_command
+  changed_when: false
+  when: "'elk' in group_names"
+
+- name: Save hostname result
+  ansible.builtin.set_fact:
+    locust_hostname: >-
+      "{{ hostname_command.stdout }}"
+  when: "'elk' in group_names"

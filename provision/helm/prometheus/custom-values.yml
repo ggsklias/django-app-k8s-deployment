@@ -15,3 +15,9 @@ pushgateway:
   persistentVolume:
     enabled: false
     emptyDir: {}
+# Configure NodeExporter as headless to be able to srape data from all nodes
+nodeExporter:
+  enabled: true
+  service:
+    type: ClusterIP
+    clusterIP: "None"

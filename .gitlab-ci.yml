@@ -18,5 +18,6 @@ stages:
   - deploy_and_get_app_url
   - deploy_prometheus
   - deploy_grafana
+  - deploy_elk
   - deploy_locust
   - cleanup

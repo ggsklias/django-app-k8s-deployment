@@ -1,8 +1,4 @@
 ---
-- name: Debug every variable for each host in inventory_hostname
-  ansible.builtin.debug:
-    msg: "{{ hostvars[groups['nginx'][0]].ansible_host }}"
-
 - name: Initialize the Kubernetes cluster (if not already initialized)
   ansible.builtin.command: >
     kubeadm init --pod-network-cidr=10.244.0.0/16

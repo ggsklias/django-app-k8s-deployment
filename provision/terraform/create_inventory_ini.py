@@ -12,6 +12,7 @@ def generate_inventory(outputs, inventory_file=INVENTORY_FILE):
     workers = outputs["public_ip_worker"]["value"]
     nginx = outputs["public_ip_nginx"]["value"]
     locust = outputs["public_ip_locust"]["value"]
+    elk = outputs["public_ip_elk"]["value"]
 
     with open(inventory_file, "w") as f:
         f.write("[master]\n")
@@ -29,6 +30,9 @@ def generate_inventory(outputs, inventory_file=INVENTORY_FILE):
         f.write("\n[locust]\n")
         for idx, ip in enumerate(locust, start=1):
             f.write(f"locust{idx} ansible_host={ip} ansible_user=ec2-user node_role=locust\n")
+        f.write("\n[elk]\n")
+        for idx, ip in enumerate(elk, start=1):
+            f.write(f"elk{idx} ansible_host={ip} ansible_user=ec2-user node_role=elk\n")
         # Optionally, add group variables:
         f.write("\n[all:vars]\n")
         f.write("ansible_ssh_private_key_file=provision/ansible/ssh_key.pem\n")
