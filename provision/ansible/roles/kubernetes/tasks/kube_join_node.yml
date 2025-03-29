@@ -7,6 +7,10 @@
   ansible.builtin.debug:
     msg: "{{ kubeadm_join_command }}"
 
+- name: Show the node_role per node
+  ansible.builtin.debug:
+    msg: "{{ node_role }}"
+
 - name: Join the nodes to the master
   ansible.builtin.command:
     cmd: "{{ kubeadm_join_command }}"

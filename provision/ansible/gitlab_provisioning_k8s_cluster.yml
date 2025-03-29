@@ -95,21 +95,21 @@
         name: kubernetes
         tasks_from: kube_join_node.yml
 
-#     - name: Get worker/locust/elk hostname and set it to worker_hostname
-#       ansible.builtin.include_role:
-#         name: kubernetes
-#         tasks_from: kube_get_worker_locust_elk_hostnames.yml
+    - name: Get worker/locust/elk hostname and set it to worker_hostname
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: kube_get_worker_locust_elk_hostnames.yml
 
-# - name: Set node labels to worker nodes so that nodeSelector can be used
-#   hosts: master
-#   gather_facts: true
-#   become: true
-#   become_user: "{{ ansible_user }}"
-#   vars_files:
-#     - group_vars/all
-#   tasks:
-#     - name: Get worker hostname and set it to worker_hostname
-#       ansible.builtin.include_role:
-#         name: kubernetes
-#         tasks_from: kube_set_node_labels.yml
-#       when: hostvars[inventory_hostname].role == "primary"
+- name: Set node labels to worker nodes so that nodeSelector can be used
+  hosts: master
+  gather_facts: true
+  become: true
+  become_user: "{{ ansible_user }}"
+  vars_files:
+    - group_vars/all
+  tasks:
+    - name: Get worker hostname and set it to worker_hostname
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: kube_set_node_labels.yml
+      when: hostvars[inventory_hostname].role == "primary"

@@ -38,7 +38,7 @@ provision_servers_and_install_k8s_cluster:
     - chmod 755 $ANSIBLE_PATH
     - echo "$SSH_PRIVATE_KEY" > $ANSIBLE_PATH/ssh_key.pem
     - chmod 600 $ANSIBLE_PATH/ssh_key.pem
-    - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/gitlab_provisioning_k8s_cluster.yml
+    - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/gitlab_provisioning_k8s_cluster.yml -vvv
   artifacts:
     reports:
       dotenv: .env
