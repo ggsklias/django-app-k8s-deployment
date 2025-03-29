@@ -3,13 +3,13 @@
   ansible.builtin.command: hostname
   register: hostname_command
   changed_when: false
-  when: "'worker' in group_names"
+  when: "'workers' in group_names"
 
 - name: Save hostname result
   ansible.builtin.set_fact:
     worker_hostname: >-
       "{{ hostname_command.stdout }}"
-  when: "'worker' in group_names"
+  when: "'workers' in group_names"
 
 - name: Save hostname result
   ansible.builtin.command: hostname
