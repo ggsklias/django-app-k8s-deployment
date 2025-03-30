@@ -34,4 +34,4 @@
 
 - name: Show the new hostname
   ansible.builtin.debug:
-    msg: "New hostname is: {{ hostname_output.stdout }}"
+    msg: "New hostname is: {{ hostname_output.stdout_lines }}"

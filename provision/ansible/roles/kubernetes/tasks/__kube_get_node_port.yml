@@ -9,7 +9,7 @@
 
 - name: Print Node port
   ansible.builtin.debug:
-    var: django_nodeport.stdout
+    var: django_nodeport.stdout_lines
 
 # This needs CI_PROJECT_DIR to be set because gitlab reads files from that
 - name: Write NodePort value to .env file

@@ -14,14 +14,14 @@
 
 - name: Debug the first pod name
   ansible.builtin.debug:
-    var: pod_name.stdout
+    var: pod_name.stdout_lines
 
 - name: Fetch logs of the first pod
   ansible.builtin.shell: |
-    kubectl logs {{ pod_name.stdout }}
+    kubectl logs {{ pod_name.stdout_lines }}
   register: pod_logs
   changed_when: false
 
 - name: Display the logs
   ansible.builtin.debug:
-    var: pod_logs.stdout
+    var: pod_logs.stdout_lines

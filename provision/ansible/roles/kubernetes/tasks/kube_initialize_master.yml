@@ -14,7 +14,7 @@
 
 - name: Set the join command as a fact
   ansible.builtin.set_fact:
-    kubeadm_join_command: "{{ join_command.stdout }}"
+    kubeadm_join_command: "{{ join_command.stdout_lines }}"
 
 - name: Show the join command
   ansible.builtin.debug:
@@ -27,7 +27,7 @@
 
 - name: Set the certificates command as a fact
   ansible.builtin.set_fact:
-    kubeadm_certificate_key: "{{ certificates.stdout }}"
+    kubeadm_certificate_key: "{{ certificates.stdout_lines }}"
 
 - name: Extract clean certificate key (last non-empty line)
   ansible.builtin.set_fact:

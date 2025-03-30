@@ -21,7 +21,7 @@
 
 - name: Check if node joined successfully
   ansible.builtin.debug:
-    msg: "{{ join_status.stdout }}"
+    msg: "{{ join_status.stdout_lines }}"
 
 - name: Check if node joined successfully
   ansible.builtin.debug:

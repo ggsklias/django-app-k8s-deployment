@@ -28,4 +28,4 @@
 
 - name: Show Helm status output
   ansible.builtin.debug:
-    msg: "{{ helm_status_output.stdout }}"
+    msg: "{{ helm_status_output.stdout_lines }}"

@@ -8,7 +8,7 @@
 - name: Save hostname result
   ansible.builtin.set_fact:
     worker_hostname: >-
-      "{{ hostname_command.stdout }}"
+      "{{ hostname_command.stdout_lines }}"
   when: "'workers' in group_names"
 
 - name: Save hostname result
@@ -20,7 +20,7 @@
 - name: Save hostname result
   ansible.builtin.set_fact:
     locust_hostname: >-
-      "{{ hostname_command.stdout }}"
+      "{{ hostname_command.stdout_lines }}"
   when: "'locust' in group_names"
 
 - name: Save hostname result
@@ -31,6 +31,6 @@
 
 - name: Save hostname result
   ansible.builtin.set_fact:
-    locust_hostname: >-
-      "{{ hostname_command.stdout }}"
+    elk_hostname: >-
+      "{{ hostname_command.stdout_lines }}"
   when: "'elk' in group_names"
