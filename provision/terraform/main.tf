@@ -209,6 +209,34 @@ output "public_ip_elk" {
   value = flatten(module.elk.public_ip)
 }
 
+module "locust" {
+  source = "./modules/locust"
+
+  ami                  = "ami-0764af88874b6b852"
+  size                 = "t2.micro"
+  iam_instance_profile = "secretsRole"
+  ec2_ssh_key          = "ssh_key"
+  subnet_id            = aws_subnet.public1.id
+  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
+  instance_name        = "locust"
+  instance_count       = 1
+
+}
+
+module "elk" {
+  source = "./modules/elk"
+
+  ami                  = "ami-0764af88874b6b852"
+  size                 = "t2.medium"
+  iam_instance_profile = "secretsRole"
+  ec2_ssh_key          = "ssh_key"
+  subnet_id            = aws_subnet.public1.id
+  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
+  instance_name        = "elk"
+  instance_count       = 1
+
+}
+
 
 resource "aws_security_group" "allow_ssh_and_k8s" {
   name        = "allow-ssh-and-k8s"
@@ -343,64 +371,34 @@ resource "aws_security_group" "allow_ssh_and_k8s" {
   }
 }
 
-module "locust" {
-  source = "./modules/locust"
+# resource "aws_security_group" "allow_connections_for_locust" {
+#   name        = "allow-connections-for-locust"
+#   description = "Allow SSH traffic"
+#   vpc_id      = aws_vpc.main.id
 
-  ami                  = "ami-0764af88874b6b852"
-  size                 = "t2.micro"
-  iam_instance_profile = "secretsRole"
-  ec2_ssh_key          = "ssh_key"
-  subnet_id            = aws_subnet.public1.id
-  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
-  instance_name        = "locust"
-  instance_count       = 1
+#   ingress {
+#     from_port   = 22
+#     to_port     = 22
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-}
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
-module "elk" {
-  source = "./modules/elk"
-
-  ami                  = "ami-0764af88874b6b852"
-  size                 = "t2.micro"
-  iam_instance_profile = "secretsRole"
-  ec2_ssh_key          = "ssh_key"
-  subnet_id            = aws_subnet.public1.id
-  security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
-  instance_name        = "elk"
-  instance_count       = 1
-
-}
-
-resource "aws_security_group" "allow_connections_for_locust" {
-  name        = "allow-connections-for-locust"
-  description = "Allow SSH traffic"
-  vpc_id      = aws_vpc.main.id
-
-  ingress {
-    from_port   = 22
-    to_port     = 22
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-
-  ingress {
-    from_port   = 30089
-    to_port     = 30089
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
+#   ingress {
+#     from_port   = 30089
+#     to_port     = 30089
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
 
   
-}
-
-
+# }
 
 # provider "tls" {}
 

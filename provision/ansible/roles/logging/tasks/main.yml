@@ -1,0 +1,3 @@
+---
+- name: Include task to install on all hosts
+  ansible.builtin.include_tasks: check_elasticsearch_pod_status.yml

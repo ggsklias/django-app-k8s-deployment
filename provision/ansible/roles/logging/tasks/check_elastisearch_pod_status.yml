@@ -1,0 +1,11 @@
+- name: Check Elasticsearch logs until ready
+  ansible.builtin.command: "kubectl logs elasticsearch-master-0 -n logging"
+  register: es_logs
+  retries: 30
+  delay: 10
+  until: "'started' in es_logs.stdout"
+  changed_when: false
+
+- name: Confirm Elasticsearch is running
+  ansible.builtin.debug:
+    msg: "Elasticsearch is up and running."
