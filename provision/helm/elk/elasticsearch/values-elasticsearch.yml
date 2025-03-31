@@ -1,4 +1,4 @@
 persistence:
   enabled: false
-nodeSelector:
-  node-type: elk
+# nodeSelector:
+#   node-type: elk
