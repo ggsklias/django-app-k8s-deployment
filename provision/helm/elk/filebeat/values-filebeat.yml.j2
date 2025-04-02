@@ -9,7 +9,7 @@ filebeatConfig:
     output.elasticsearch:
       hosts: ["https://elasticsearch-master.logging.svc.cluster.local:9200"]
       username: "elastic"
-      password: "lagsl137"
+      password: "{{ elastic_password }}""
       ssl.verification_mode: "none"
     # Or send logs through Logstash:
     # output.logstash:

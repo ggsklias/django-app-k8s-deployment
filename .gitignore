@@ -10,6 +10,7 @@ provision/terraform/.terraform
 provision/terraform/.terraform.lock.hcl
 djangoarticleapp/.DS_Store
 provision/exports.sh
+provision/k8s-manifests-app
 .ansible-lint
 .ansible*
 .vscode*
