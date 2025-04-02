@@ -66,7 +66,7 @@ deploy_elk:
         --version 8.17.3 \
         --create-namespace \
         -f provision/helm/elk/elasticsearch/values-elasticsearch.yml
-    # -  helm install elasticsearch elastic/elasticsearch --namespace logging 
+    # -  helm install elasticsearch elastic/elasticsearch --namespace logging
     # --create-namespace --version 8.17.3 -f provision/helm/elk/elasticsearch/values-elasticsearch.yml
     - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/set_elasticsearch_password.yml -vv
     - helm install kibana elastic/kibana -n logging --version 8.17.3 -f provision/helm/elk/kibana/values-kibana.yml
