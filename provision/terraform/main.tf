@@ -233,7 +233,7 @@ module "elk" {
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
   instance_name        = "elk"
-  instance_count       = 1
+  instance_count       = 3
 
 }
 
