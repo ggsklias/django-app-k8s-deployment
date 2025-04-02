@@ -7,7 +7,7 @@ filebeatConfig:
     # Uncomment one of the outputs depending on your setup:
     # Send logs directly to Elasticsearch:
     output.elasticsearch:
-      hosts: ["http://elasticsearch.logging.svc.cluster.local:9200"]
+      hosts: ["http://elasticsearch-master.logging.svc.cluster.local:9200"]
     # Or send logs through Logstash:
     # output.logstash:
     #   hosts: ["logstash.logging.svc.cluster.local:5044"]
