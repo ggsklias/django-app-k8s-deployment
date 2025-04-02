@@ -2,8 +2,6 @@ persistence:
   enabled: false
 nodeSelector:
   node-type: elk
-elasticsearch:
-  elasticPassword: "lagsl137"
 tolerations:
   - key: "node-role.kubernetes.io/control-plane"
     operator: "Exists"
