@@ -57,4 +57,5 @@ terraform_destroy:
     - aws s3 rm s3://$AWS_BUCKET_NAME/ansible/inventory.ini
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/terraform.tfstate
     - aws s3 rm s3://$AWS_BUCKET_NAME/terraform/.terraform.lock.hcl
+    - aws s3 rm s3://$AWS_BUCKET_NAME/filebeat-default-values.yml
   when: manual
