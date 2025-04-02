@@ -1,0 +1,51 @@
+- name: Get Kibana pod info from the logging namespace
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: Pod
+    namespace: logging
+    label_selectors: "app=kibana"
+  register: kibana_pods
+
+- name: Debug kibana kibana_pods.
+  ansible.builtin.debug:
+    msg: "{{ kibana_pods }}"
+
+- name: Set Kibana node name from the first Kibana pod
+  ansible.builtin.set_fact:
+    kibana_node_name: "{{ kibana_pods.resources[0].spec.nodeName }}"
+
+- name: Debug kibana node name.
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_name }}"
+
+- name: Get Node info for the Kibana node
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: Node
+    name: "{{ kibana_node_name }}"
+  register: kibana_node_info
+
+- name: Debug kibana kibana_node_name.
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_name }}"
+
+- name: Retrieve the public IP of the Kibana node using AWS CLI
+  ansible.builtin.command: >
+    aws ec2 describe-instances
+    --filters "Name=private-ip-address,Values={{ kibana_node_internal_ip }}"
+    --query 'Reservations[*].Instances[*].PublicIpAddress'
+    --output text
+  register: kibana_node_public_ip
+  changed_when: false
+
+- name: Debug kibana kibana_node_public_ip.
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_public_ip }}"
+
+- name: Display Kibana node public IP
+  ansible.builtin.debug:
+    msg: "Kibana node public IP is: {{ kibana_node_public_ip.stdout }}"
+
+- name: Display Kibana URL
+  ansible.builtin.debug:
+    msg: "http://{{ kibana_node_public_ip.stdout }}:32055"

@@ -1,3 +1,9 @@
 ---
 - name: Include task to install on all hosts
   ansible.builtin.include_tasks: check_elasticsearch_pod_status.yml
+
+- name: Get logging resources
+  ansible.builtin.include_tasks: get_kube_logging_resources.yml
+
+- name: Get Kibana public IP
+  ansible.builtin.include_tasks: get_kibana_public_ip.yml
