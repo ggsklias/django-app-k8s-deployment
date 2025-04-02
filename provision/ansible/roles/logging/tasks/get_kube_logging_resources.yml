@@ -1,0 +1,17 @@
+- name: Get pods in the monitoring namespace
+  ansible.builtin.command: kubectl get pods -n logging
+  register: pods_output
+  changed_when: false
+
+- name: Display pods output
+  ansible.builtin.debug:
+    msg: "{{ pods_output.stdout_lines }}"
+
+- name: Get services in the monitoring namespace
+  ansible.builtin.command: kubectl get svc -n logging
+  register: svc_output
+  changed_when: false
+
+- name: Display pods output
+  ansible.builtin.debug:
+    msg: "{{ svc_output.stdout_lines }}"
