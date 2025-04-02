@@ -1,4 +1,8 @@
 persistence:
   enabled: false
-# nodeSelector:
-#   node-type: elk
+nodeSelector:
+  node-type: elk
+tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"

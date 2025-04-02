@@ -1,5 +1,15 @@
 service:
   type: NodePort
   nodePort: 32055
+nodeSelector:
+  node-type: elk
+tolerations:
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+    effect: "NoSchedule"
 # nodeSelector:
-#   node-type: elk
+#   "node-role.kubernetes.io/control-plane": ""
+# tolerations:
+#   - key: "node-role.kubernetes.io/control-plane"
+#     operator: "Exists"
+#     effect: "NoSchedule"

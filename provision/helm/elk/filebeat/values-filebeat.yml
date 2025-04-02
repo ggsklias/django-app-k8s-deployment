@@ -11,6 +11,12 @@ filebeatConfig:
     # Or send logs through Logstash:
     # output.logstash:
     #   hosts: ["logstash.logging.svc.cluster.local:5044"]
+# # Override settings for Filebeat
+# tolerations:
+#   - key: "node-role.kubernetes.io/control-plane"
+#     operator: "Exists"
+#     effect: "NoSchedule"
+
 
 # Ensure the Filebeat DaemonSet mounts the container log directory from the host:
 extraVolumes:
