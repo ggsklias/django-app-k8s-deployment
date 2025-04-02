@@ -67,8 +67,8 @@ deploy_elk:
         -f provision/helm/elk/elasticsearch/values-elasticsearch.yml
     - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/set_elasticsearch_password.yml -vv
     - helm install kibana elastic/kibana -n logging --version 8.17.3 -f provision/helm/elk/kibana/values-kibana.yml
-    # - helm show values elastic/filebeat > filebeat-default-values.yml
-    # - aws s3 cp filebeat-default-values.yml s3://$AWS_BUCKET_NAME/filebeat-default-values.yml
     - helm upgrade --install filebeat elastic/filebeat -n logging --version 8.17.3 -f provision/helm/elk/filebeat/values-filebeat.yml
     - helm list --all-namespaces
     - ANSIBLE_CONFIG=$ANSIBLE_PATH/ansible.cfg ansible-playbook -i $ANSIBLE_PATH/inventory.ini $ANSIBLE_PATH/get_logging_resources.yml -vv
+    # - helm show values elastic/filebeat > filebeat-default-values.yml
+    # - aws s3 cp filebeat-default-values.yml s3://$AWS_BUCKET_NAME/filebeat-default-values.yml
