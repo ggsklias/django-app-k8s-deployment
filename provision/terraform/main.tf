@@ -227,7 +227,7 @@ module "elk" {
   source = "./modules/elk"
 
   ami                  = "ami-0764af88874b6b852"
-  size                 = "t2.micro"
+  size                 = "t2.medium"
   iam_instance_profile = "secretsRole"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
