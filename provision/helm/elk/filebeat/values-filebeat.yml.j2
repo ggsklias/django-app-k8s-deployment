@@ -4,7 +4,6 @@ filebeatConfig:
       - type: container
         paths:
           - /var/log/containers/*.log
-    # Uncomment one of the outputs depending on your setup:
     # Send logs directly to Elasticsearch:
     output.elasticsearch:
       hosts: ["https://elasticsearch-master.logging.svc.cluster.local:9200"]
