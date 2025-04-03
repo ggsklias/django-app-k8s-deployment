@@ -7,10 +7,10 @@ include:
       - if: '$CI_COMMIT_MESSAGE =~ /(django|all)/'
   - local: '.gitlab-ci-monitoring.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /(locust|all)/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(monitoring|all)/'
   - local: '.gitlab-ci-locust.yml'
     rules:
-      - if: '$CI_COMMIT_MESSAGE =~ /(monitoring|all)/'
+      - if: '$CI_COMMIT_MESSAGE =~ /(locust|all)/'
 
 stages:
   - provision   # Required for infra jobs
