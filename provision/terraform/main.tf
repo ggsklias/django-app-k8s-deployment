@@ -105,7 +105,7 @@ module "masters" {
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
-  iam_instance_profile = aws_iam_role.ci-infrastructure-access
+  iam_instance_profile = "ci-infrastructure-access"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
@@ -119,7 +119,7 @@ module "workers" {
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
-  iam_instance_profile = aws_iam_role.ci-infrastructure-access
+  iam_instance_profile = "ci-infrastructure-access"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
@@ -133,7 +133,7 @@ module "nginx" {
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
-  iam_instance_profile = aws_iam_role.ci-infrastructure-access
+  iam_instance_profile = "ci-infrastructure-access"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
@@ -237,7 +237,7 @@ module "locust" {
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.micro"
-  iam_instance_profile = aws_iam_role.ci-infrastructure-access
+  iam_instance_profile = "ci-infrastructure-access"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
@@ -251,7 +251,7 @@ module "elk" {
 
   ami                  = "ami-0764af88874b6b852"
   size                 = "t2.medium"
-  iam_instance_profile = aws_iam_role.ci-infrastructure-access
+  iam_instance_profile = "ci-infrastructure-access"
   ec2_ssh_key          = "ssh_key"
   subnet_id            = aws_subnet.public1.id
   security_groups      = [aws_security_group.allow_ssh_and_k8s.id]
