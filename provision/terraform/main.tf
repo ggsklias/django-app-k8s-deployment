@@ -77,6 +77,29 @@ resource "aws_route_table_association" "public2" {
   route_table_id = aws_route_table.public.id
 }
 
+resource "aws_iam_role" "secrets_role" {
+  name               = "secretsRole"
+  assume_role_policy = file("trust_policy.json")
+}
+
+resource "aws_iam_role_policy" "elb_policy" {
+  name   = "AllowELBDescribeTargetHealth"
+  role   = aws_iam_role.secrets_role.id
+  policy = file("elb_policy.json")
+}
+
+resource "aws_iam_role_policy" "describe_instances_policy" {
+  name   = "AllowDescribeInstances"
+  role   = aws_iam_role.secrets_role.id
+  policy = file("describe_instances_policy.json")
+}
+
+resource "aws_iam_role_policy" "get_secret_policy" {
+  name   = "AllowGetSecretValue"
+  role   = aws_iam_role.secrets_role.id
+  policy = file("get_secret_policy.json")
+}
+
 module "masters" {
   source = "./modules/master"
 
