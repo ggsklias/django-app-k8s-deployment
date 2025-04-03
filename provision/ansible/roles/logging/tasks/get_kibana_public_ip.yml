@@ -55,8 +55,8 @@
     aws ec2 describe-instances
     --filters "Name=private-ip-address,Values={{ kibana_node_internal_ip }}"
     --query 'Reservations[*].Instances[*].PublicIpAddress'
-    --output text
     --region eu-central-1
+    --output text
   register: kibana_node_public_ip
   changed_when: false
 
