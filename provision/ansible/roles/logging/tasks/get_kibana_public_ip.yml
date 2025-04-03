@@ -29,6 +29,31 @@
   ansible.builtin.debug:
     msg: "{{ kibana_node_name }}"
 
+- name: Debug kibana kibana_node_info.resources[0].
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_info.resources[0] }}"
+
+- name: Debug kibana kibana_node_info.resources[0]status.
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_info.resources[0].status }}"
+
+- name: Debug kibana kibana_node_info.resources[0].status.addresses
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_info.resources[0].status.addresses }}"
+
+- name: Set Kibana node internal IP
+  ansible.builtin.set_fact:
+    kibana_node_internal_ip: >-
+      {{
+        (kibana_node_info.resources[0].status.addresses
+          | selectattr('type', 'equalto', 'InternalIP')
+          | list)[0].address
+      }}
+
+- name: Debug kibana kibana_node_public_ip.
+  ansible.builtin.debug:
+    msg: "{{ kibana_node_internal_ip }}"
+
 - name: Retrieve the public IP of the Kibana node using AWS CLI
   ansible.builtin.command: >
     aws ec2 describe-instances
