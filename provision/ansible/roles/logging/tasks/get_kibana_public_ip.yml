@@ -44,11 +44,7 @@
 - name: Set Kibana node internal IP
   ansible.builtin.set_fact:
     kibana_node_internal_ip: >-
-      {{
-        (kibana_node_info.resources[0].status.addresses
-          | selectattr('type', 'equalto', 'InternalIP')
-          | list)[0].address
-      }}
+      {{ (kibana_node_info.resources[0].status.addresses | selectattr('type', 'equalto', 'InternalIP') | list)[0].address }}
 
 - name: Debug kibana kibana_node_public_ip.
   ansible.builtin.debug:
@@ -60,6 +56,7 @@
     --filters "Name=private-ip-address,Values={{ kibana_node_internal_ip }}"
     --query 'Reservations[*].Instances[*].PublicIpAddress'
     --output text
+    --region eu-central-1
   register: kibana_node_public_ip
   changed_when: false
 
