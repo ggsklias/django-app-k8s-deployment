@@ -60,13 +60,21 @@
   register: kibana_node_public_ip
   changed_when: false
 
-- name: Debug kibana kibana_node_public_ip.
-  ansible.builtin.debug:
-    msg: "{{ kibana_node_public_ip }}"
+- name: Get elasticsearch secret info
+  community.kubernetes.k8s_info:
+    api_version: v1
+    kind: Secret
+    namespace: logging
+    name: elasticsearch-master-credentials
+  register: elastic_secret_info
 
-- name: Display Kibana node public IP
+- name: Set elasticsearch password fact
+  ansible.builtin.set_fact:
+    elastic_password: "{{ elastic_secret_info.resources[0].data.password | b64decode }}"
+
+- name: Debug - show the Elasticsearch password
   ansible.builtin.debug:
-    msg: "Kibana node public IP is: {{ kibana_node_public_ip.stdout }}"
+    msg: "Elasticsearch password is: {{ elastic_password }}"
 
 - name: Display Kibana URL
   ansible.builtin.debug:
