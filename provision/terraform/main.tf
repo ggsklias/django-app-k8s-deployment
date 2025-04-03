@@ -84,19 +84,19 @@ resource "aws_iam_role" "ci-infrastructure-access" {
 
 resource "aws_iam_role_policy" "elb_policy" {
   name   = "AllowELBDescribeTargetHealth"
-  role   = aws_iam_role.secrets_role.id
+  role   = aws_iam_role.ci-infrastructure-access.id
   policy = file("elb_policy.json")
 }
 
 resource "aws_iam_role_policy" "describe_instances_policy" {
   name   = "AllowDescribeInstances"
-  role   = aws_iam_role.secrets_role.id
+  role   = aws_iam_role.ci-infrastructure-access.id
   policy = file("describe_instances_policy.json")
 }
 
 resource "aws_iam_role_policy" "get_secret_policy" {
   name   = "AllowGetSecretValue"
-  role   = aws_iam_role.secrets_role.id
+  role   = aws_iam_role.ci-infrastructure-access.id
   policy = file("get_secret_policy.json")
 }
 
