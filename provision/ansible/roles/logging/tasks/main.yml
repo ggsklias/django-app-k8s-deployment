@@ -7,3 +7,6 @@
 
 - name: Get Kibana public IP
   ansible.builtin.include_tasks: get_kibana_public_ip.yml
+
+- name: Get elasticsearch password
+  ansible.builtin.include_tasks: get_kibana_public_ip.yml
