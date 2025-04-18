@@ -22,8 +22,8 @@ spec:
         ports:
         - containerPort: {{ .Values.postgres.containerPort }}
         envFrom:
-        - secretRef:
-          name: postgres-init
+          - secretRef:
+              name: postgres-init
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data
