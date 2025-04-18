@@ -22,8 +22,8 @@ spec:
         ports:
         - containerPort: {{ .Values.postgres.containerPort }}
         envFrom:
-        - configMapRef:
-            name: django-config
+        - secretRef:
+          name: postgres-init
         volumeMounts:
         - name: postgres-data
           mountPath: /var/lib/postgresql/data

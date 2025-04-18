@@ -36,7 +36,7 @@ spec:
         - containerPort: {{ .Values.django.containerPort }}
         envFrom:
         - configMapRef:
-            name: django-config
+          name: django-config
         readinessProbe:
           httpGet:
             path: {{ .Values.django.readinessProbe.path }}

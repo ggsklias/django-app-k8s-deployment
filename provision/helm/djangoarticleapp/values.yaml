@@ -20,6 +20,9 @@ django:
     # postgresUser: "postgres"
     # postgresPassword: "postgres"
 postgres:
+  database: "djangoarticleapp"
+  user: "postgres"
+  password: "postgres"
   port: 5432
   targetPort: 5432
   replicaCount: 1
