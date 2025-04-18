@@ -36,6 +36,7 @@ class ArticleUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     success_url = reverse_lazy("home")
     context_object_name = "article"
 
+    # enables user authorization - checks if current user is the owner of the article
     def test_func(self) -> bool | None:
         return self.request.user == self.get_object().creator
 
@@ -45,31 +46,9 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     success_url = reverse_lazy("home")
     context_object_name = "article"
 
+    # enables user authorization - checks if current user is the owner of the article
     def test_func(self) -> bool | None:
         return self.request.user == self.get_object().creator
 
 def healthz(request):
     return JsonResponse({'status': 'ok'})
-
-
-# def home(request):
-#     articles = Article.objects.all()
-#     return render(request, "articleApp/home.html", {"articles": articles})
-
-# def create_article(request):
-#     if request.method == "POST":
-#         form = CreateArticleForm(request.POST)
-#         if form.is_valid():
-#             form_data = form.cleaned_data()
-#             new_article = Article(
-#                 title=form_data["title"],
-#                 status=form_data["status"],
-#                 content=form_data["content"],
-#                 word_count=form_data["word_count"],
-#                 twitter_post=form_data["twitter_post"],
-#             )
-#             new_article.save()
-#             return redirect("home")
-#     else:
-#         form = CreateArticleForm()
-#     return render(request, "articleApp/article_create.html", {"form": form})

@@ -16,6 +16,7 @@ provision/k8s-manifests-app
 .vscode*
 aws_commands
 filebeat-default-values.yml
+provision/packer*
 provision/ansible/test.yml
 provision/terraform/terraform.tfstate.backup
 provision/terraform/terraform.tfstate

@@ -36,7 +36,7 @@ spec:
         - containerPort: 8000
         envFrom:
         - configMapRef:
-            name: django-config
+          name: django-config
         readinessProbe:
           httpGet:
             path: /healthz

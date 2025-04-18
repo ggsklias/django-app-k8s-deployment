@@ -3,8 +3,7 @@ kind: ConfigMap
 metadata:
   name: django-config
 data:
-  SECRET_KEY: {{ .Values.django.config.secretKey | quote }}
   DATABASE_URL: {{ .Values.django.config.databaseUrl | quote }}
-  POSTGRES_DB: {{ .Values.django.config.postgresDb | quote }}
-  POSTGRES_USER: {{ .Values.django.config.postgresUser | quote }}
-  POSTGRES_PASSWORD: {{ .Values.django.config.postgresPassword | quote }}
+  # POSTGRES_DB: {{ .Values.django.config.postgresDb | quote }}
+  # POSTGRES_USER: {{ .Values.django.config.postgresUser | quote }}
+  # POSTGRES_PASSWORD: {{ .Values.django.config.postgresPassword | quote }}
