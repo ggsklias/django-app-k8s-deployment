@@ -16,9 +16,6 @@ django:
     nodePort: 31131
   config:
     databaseUrl: "postgresql://postgres:postgres@db:5432/djangoarticleapp"
-    # postgresDb: "djangoarticleapp"
-    # postgresUser: "postgres"
-    # postgresPassword: "postgres"
 postgres:
   database: "djangoarticleapp"
   user: "postgres"
