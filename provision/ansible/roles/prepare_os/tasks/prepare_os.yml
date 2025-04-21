@@ -87,6 +87,17 @@
       - pyyaml
       - kubernetes
 
+- name: Install kubectl alias
+  ansible.builtin.copy:
+    dest: /etc/profile.d/kubectl_alias.sh
+    content: |
+      alias k='kubectl'
+      if type kubectl &>/dev/null && type complete &>/dev/null; then
+        source <(kubectl completion bash)
+        complete -F __start_kubectl k
+      fi
+    mode: '0644'
+
 # - name: Ensure SELinux is disabled
 #   ansible.builtin.selinux:
 #     state: disabled
