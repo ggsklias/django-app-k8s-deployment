@@ -18,6 +18,7 @@ pushgateway:
 # Configure NodeExporter as headless to be able to srape data from all nodes
 nodeExporter:
   enabled: true
+  hostNetwork: false
   service:
     type: ClusterIP
     clusterIP: "None"
