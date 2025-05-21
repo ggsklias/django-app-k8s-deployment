@@ -2,9 +2,16 @@ filebeatConfig:
   filebeat.yml: |
     # === Filebeat global logging ===
     logging.level: debug
-    logging.selectors: ["*"]
-    logging.to_files: false
-    logging.json: true
+    logging.selectors: ["*"]    # get all debug output
+
+    setup.kibana:
+      host: "kibana-kibana.logging.svc.cluster.local:5601"
+      protocol: "http"
+      username: "elastic"
+      password: "{{ elastic_password }}"
+    setup.dashboards:
+      enabled: true
+      index: "filebeat-*"
 
     # === Inputs ===
     filebeat.inputs:
@@ -13,11 +20,7 @@ filebeatConfig:
           - /var/log/containers/*.log
         processors:
           # ONLY decode JSON from non-filebeat containers:
-          - when:
-              not:
-                contains:
-                  kubernetes.container.name: "filebeat"
-            decode_json_fields:
+          - decode_json_fields:
               fields: ["message"]
               process_array: false
               max_depth: 1
