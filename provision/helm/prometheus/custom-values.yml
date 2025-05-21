@@ -8,11 +8,11 @@ server:
     enabled: false
     emptyDir: {}
 alertmanager:
-  persistentVolume:
+  persistence:
     enabled: false
     emptyDir: {}
 pushgateway:
-  persistentVolume:
+  persistence:
     enabled: false
     emptyDir: {}
 # Configure NodeExporter as headless to be able to srape data from all nodes
