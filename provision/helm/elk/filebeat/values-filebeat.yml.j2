@@ -1,51 +1,57 @@
-logging.level: debug
-logging.selectors: ["*"]
 filebeatConfig:
   filebeat.yml: |
+    # === Filebeat global logging ===
+    logging.level: debug
+    logging.selectors: ["*"]
+    logging.to_files: false
+    logging.json: true
+
+    # === Inputs ===
     filebeat.inputs:
       - type: container
         paths:
           - /var/log/containers/*.log
         processors:
-          - decode_json_fields:
+          # ONLY decode JSON from non-filebeat containers:
+          - when:
+              not:
+                contains:
+                  kubernetes.container.name: "filebeat"
+            decode_json_fields:
               fields: ["message"]
               process_array: false
               max_depth: 1
               target: ""             # merge decoded fields at top-level
               overwrite_keys: true
-            when:
-              not:
-                contains:
-                  kubernetes.container.name: "filebeat"
+
+          # Enrich *all* container logs with k8s metadata:
           - add_kubernetes_metadata:
-              host: ${NODE_NAME}          # auto-injected by the chart into each pod
-              in_cluster: true             # talk to the k8s API from inside the cluster
+              host: ${NODE_NAME}
+              in_cluster: true
               matchers:
                 - logs_path:
                     logs_path: "/var/log/containers/"
+
       - type: journald
         enabled: true
-        # only grab lines coming from these units
         include_matchers:
           - _SYSTEMD_UNIT=kubelet.service
-          - _SYSTEMD_UNIT=kube-apiserver.service   # if you have one
+          - _SYSTEMD_UNIT=kube-apiserver.service
         processors:
           - add_host_metadata: ~
           - add_cloud_metadata: ~
+
+    # === Modules ===
     filebeat.modules:
       - module: system
-        # syslog (e.g. /var/log/syslog or /var/log/messages)
         syslog:
           enabled: true
-        # auth (e.g. /var/log/auth.log or /var/log/secure)
-        # change paths below if your distro puts these elsewhere
         auth:
           enabled: true
+
+    # === Output ===
     output.elasticsearch:
       hosts: ["https://elasticsearch-master.logging.svc.cluster.local:9200"]
       username: "elastic"
       password: "{{ elastic_password }}"
       ssl.verification_mode: "none"
-    # Or send logs through Logstash:
-    # output.logstash:
-    #   hosts: ["logstash.logging.svc.cluster.local:5044"]
