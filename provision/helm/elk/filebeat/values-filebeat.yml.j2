@@ -1,3 +1,5 @@
+logging.level: debug
+logging.selectors: ["*"]
 filebeatConfig:
   filebeat.yml: |
     filebeat.inputs:
@@ -5,15 +7,16 @@ filebeatConfig:
         paths:
           - /var/log/containers/*.log
         processors:
-          - when:
-              contains:
-                kubernetes.pod.name: "filebeat-filebeat"
-            decode_json_fields:
+          - decode_json_fields:
               fields: ["message"]
               process_array: false
               max_depth: 1
               target: ""             # merge decoded fields at top-level
               overwrite_keys: true
+            when:
+              not:
+                contains:
+                  kubernetes.container.name: "filebeat"
           - add_kubernetes_metadata:
               host: ${NODE_NAME}          # auto-injected by the chart into each pod
               in_cluster: true             # talk to the k8s API from inside the cluster
