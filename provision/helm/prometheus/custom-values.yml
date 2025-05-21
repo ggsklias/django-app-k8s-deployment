@@ -16,7 +16,7 @@ pushgateway:
     enabled: false
     emptyDir: {}
 # Configure NodeExporter as headless to be able to srape data from all nodes
-nodeExporter:
+prometheus-node-exporter:
   enabled: true
   hostNetwork: false
   service:
