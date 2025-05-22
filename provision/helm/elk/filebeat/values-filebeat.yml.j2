@@ -24,10 +24,10 @@ filebeatConfig:
                     logs_path: "/var/log/containers/"
 
           # 2) Immediately drop Filebeat’s own logs
-          - drop_event:
+          {# - drop_event:
               when:
                 equals:
-                  kubernetes.container.name: "filebeat"
+                  kubernetes.container.name: "filebeat" #}
 
           # 3) Decode JSON in everyone else’s logs
           - decode_json_fields:
