@@ -1,19 +1,5 @@
 filebeatConfig:
   filebeat.yml: |
-    # === Filebeat global logging ===
-    logging.level: debug
-    logging.selectors: ["*"]    # get all debug output
-
-    setup.kibana:
-      host: "kibana-kibana.logging.svc.cluster.local:5601"
-      protocol: "http"
-      username: "elastic"
-      password: "{{ elastic_password }}"
-    setup.dashboards:
-      enabled: true
-      index: "filebeat-*"
-
-    # === Inputs ===
     filebeat.inputs:
       - type: container
         paths:
