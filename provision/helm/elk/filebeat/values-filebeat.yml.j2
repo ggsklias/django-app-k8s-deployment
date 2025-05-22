@@ -1,11 +1,11 @@
 filebeatConfig:
   filebeat.yml: |
 
-    # ———————————————————————————————
+    {# # ———————————————————————————————
     #  1) GLOBAL LOGGING
     # ———————————————————————————————
     logging.level: debug            # ← turn on DEBUG-level logging
-    logging.selectors: ["*"]        # ← (optional) capture all components
+    logging.selectors: ["*"]        # ← (optional) capture all components #}
 
     # ———————————————————————————————
     #  2) INPUTS
@@ -22,40 +22,6 @@ filebeatConfig:
               matchers:
                 - logs_path:
                     logs_path: "/var/log/containers/"
-
-          # 2) Immediately drop Filebeat’s own logs
-          {# - drop_event:
-              when:
-                equals:
-                  kubernetes.container.name: "filebeat" #}
-
-          # 3) Decode JSON in everyone else’s logs
-          - decode_json_fields:
-              fields: ["message"]
-              process_array: false
-              max_depth: 1
-              target: ""
-              overwrite_keys: true
-
-      - type: journald
-        enabled: true
-        include_matchers:
-          - _SYSTEMD_UNIT=kubelet.service
-          - _SYSTEMD_UNIT=kube-apiserver.service
-        processors:
-          - add_host_metadata: ~
-          - add_cloud_metadata: ~
-
-    # ———————————————————————————————
-    #  3) MODULES
-    # ———————————————————————————————
-    filebeat.modules:
-      - module: system
-        syslog:
-          enabled: true
-        auth:
-          enabled: true
-
     # ———————————————————————————————
     #  4) OUTPUT
     # ———————————————————————————————
