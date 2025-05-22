@@ -28,8 +28,10 @@ provision/ansible_logs/*
 provision/ansible/ssh_key.pem
 provision/ansible/inventory.ini
 provision/ansible/quick_tests.yml
+provision/ansible/config
 provision/helm/djangoarticleapp/templates/def1*
 provision/helm/cluster-resources*
+provision/helm/elk/filebeat/values-filebeat_updater_local.yml
 provision/terraform/.terraform.tfstate.lock.info
 provision/terraform/output.json
 provision/DevOpsApp.code-workspace

@@ -1,25 +1,38 @@
 filebeatConfig:
   filebeat.yml: |
+
+    # ———————————————————————————————
+    #  1) GLOBAL LOGGING
+    # ———————————————————————————————
+    logging.level: debug            # ← turn on DEBUG-level logging
+    logging.selectors: ["*"]        # ← (optional) capture all components
+
+    # ———————————————————————————————
+    #  2) INPUTS
+    # ———————————————————————————————
     filebeat.inputs:
       - type: container
         paths:
           - /var/log/containers/*.log
         processors:
           # ONLY decode JSON from non-filebeat containers:
-          - decode_json_fields:
-              fields: ["message"]
-              process_array: false
-              max_depth: 1
-              target: ""             # merge decoded fields at top-level
-              overwrite_keys: true
-
-          # Enrich *all* container logs with k8s metadata:
           - add_kubernetes_metadata:
               host: ${NODE_NAME}
               in_cluster: true
               matchers:
                 - logs_path:
                     logs_path: "/var/log/containers/"
+
+          - decode_json_fields:
+              fields: ["message"]
+              process_array: false
+              max_depth: 1
+              target: ""
+              overwrite_keys: true
+              when:
+                not:
+                  equals:
+                    kubernetes.container.name: "filebeat"
 
       - type: journald
         enabled: true
@@ -30,7 +43,9 @@ filebeatConfig:
           - add_host_metadata: ~
           - add_cloud_metadata: ~
 
-    # === Modules ===
+    # ———————————————————————————————
+    #  3) MODULES
+    # ———————————————————————————————
     filebeat.modules:
       - module: system
         syslog:
@@ -38,7 +53,9 @@ filebeatConfig:
         auth:
           enabled: true
 
-    # === Output ===
+    # ———————————————————————————————
+    #  4) OUTPUT
+    # ———————————————————————————————
     output.elasticsearch:
       hosts: ["https://elasticsearch-master.logging.svc.cluster.local:9200"]
       username: "elastic"
